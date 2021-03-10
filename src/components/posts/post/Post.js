@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "@material-ui/core";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -19,7 +20,6 @@ import { useStyles } from "./styles";
 const Post = ({ post }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-  console.log(post);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -41,7 +41,10 @@ const Post = ({ post }) => {
         title={post.title}
         subheader={moment(post.createdAt).fromNow()}
       />
-      <CardMedia className={classes.media} image={post.image} title="image" />
+      <Link href={post.url} target="_blank">
+        <CardMedia className={classes.media} image={post.image} title="image" />
+      </Link>
+
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {post.description}

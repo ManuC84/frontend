@@ -8,4 +8,10 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     margin: "20px 0",
   },
+  progress: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+  },
 }));

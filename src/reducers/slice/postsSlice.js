@@ -6,7 +6,13 @@ export const postsSlice = createSlice({
   initialState: [],
   reducers: {
     fetchAll: (state, action) => (state = action.payload),
-    create: (state, action) => [...state, action.payload],
+    create: (state, action) => {
+      if (action.payload.message === "Existing Post") {
+        return action.payload.response;
+      } else {
+        return [action.payload];
+      }
+    },
   },
 });
 
