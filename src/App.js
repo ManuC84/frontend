@@ -2,9 +2,8 @@ import React from "react";
 import { Container } from "@material-ui/core";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Nav from "./components/navbar/Nav";
-import Search from "./components/searchbar/Search";
-import Posts from "./components/posts/Posts";
 import Home from "./components/home/Home";
+import Auth from "./components/auth/Auth";
 
 function App() {
   return (
@@ -13,7 +12,7 @@ function App() {
         <Nav />
         <Switch>
           <Route path="/" exact component={Home} />
-          {/* <Route path="/auth" exact component={Auth} /> */}
+          <Route path="/auth" exact component={Auth} />
         </Switch>
       </Container>
     </BrowserRouter>

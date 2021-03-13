@@ -3,6 +3,9 @@ import { makeStyles } from "@material-ui/core/styles";
 export default makeStyles((theme) => ({
   navSpacer: {
     marginTop: "100px",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: "140px",
+    },
   },
   paper: {
     display: "flex",
