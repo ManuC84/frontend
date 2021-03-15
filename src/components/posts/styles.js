@@ -14,4 +14,10 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     height: "100vh",
   },
+  tagError: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "70vh",
+  },
 }));

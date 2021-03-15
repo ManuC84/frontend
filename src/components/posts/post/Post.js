@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "@material-ui/core";
+import React, { useState, useRef } from "react";
+import { Link, TextField, Button } from "@material-ui/core";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -16,13 +16,25 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import moment from "moment";
 import { useStyles } from "./styles";
+import { addTag } from "../../../actions/posts";
+import { useDispatch, useSelector } from "react-redux";
 
 const Post = ({ post }) => {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [tag, setTag] = useState("");
+  const dispatch = useDispatch();
+  const textRef = useRef(null);
+  const posts = useSelector((state) => state.posts);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const handleAddTags = () => {
+    dispatch(addTag(post._id, { tag: tag }));
+    setTag("");
+    textRef.current.value = "";
   };
 
   return (
@@ -46,9 +58,43 @@ const Post = ({ post }) => {
       </Link>
 
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant="body1" color="textSecondary" component="p">
           {post.description}
         </Typography>
+      </CardContent>
+      <CardContent>
+        <Typography>Tags</Typography>
+        {!post.tags.length ? (
+          <Typography variant="body2" color="textSecondary" component="p">
+            This post contains no tags, add some!
+          </Typography>
+        ) : (
+          <Typography
+            style={{ marginBottom: "5px" }}
+            variant="body2"
+            color="textSecondary"
+            component="p"
+          >
+            {post.tags.map((tag) => "#" + tag + ", ")}
+          </Typography>
+        )}
+
+        <TextField
+          label="Tag"
+          size="small"
+          required
+          onChange={(e) => setTag(e.target.value)}
+          inputRef={textRef}
+        ></TextField>
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          className={classes.addTagButton}
+          onClick={handleAddTags}
+        >
+          Add tag!
+        </Button>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">

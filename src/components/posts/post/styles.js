@@ -15,6 +15,7 @@ export const useStyles = makeStyles((theme) => ({
   media: {
     height: 0,
     paddingTop: "56.25%", // 16:9
+    backgroundSize: "contain",
   },
   expand: {
     transform: "rotate(0deg)",
@@ -28,5 +29,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: red[500],
+  },
+  addTagButton: {
+    margin: "15px 0 0 5px",
   },
 }));

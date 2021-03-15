@@ -7,3 +7,5 @@ export const getPosts = () => API.get("/posts");
 export const createPost = (url) => API.post("/posts", url);
 
 export const getPostsByTags = (tags) => API.post("posts/tags", tags);
+
+export const addTags = (id, tag) => API.post(`posts/tags/addTags/${id}`, tag);
