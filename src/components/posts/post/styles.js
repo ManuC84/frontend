@@ -30,7 +30,12 @@ export const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
+
   addTagButton: {
-    margin: "15px 0 0 5px",
+    marginTop: "15px",
+  },
+  addTagInput: {
+    marginRight: "10px",
+    width: "10%",
   },
 }));

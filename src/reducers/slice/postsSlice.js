@@ -2,26 +2,62 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const postsSlice = createSlice({
   name: "posts",
-  initialState: {},
+  initialState: {
+    posts: [],
+    isLoading: false,
+    error: false,
+  },
   reducers: {
-    fetchAll: (state, action) => (state = action.payload),
-    create: (action) => {
+    startLoading: (state) => {
+      state.isLoading = true;
+    },
+    hasError: (state, action) => {
+      state.error = action.payload;
+      state.isLoading = false;
+    },
+    fetchAll: (state, action) => {
+      // We need to return a new state object
+      return {
+        // that has all the existing state data
+        ...state,
+        // but has a new array for the `posts` field
+        posts:
+          // and the new posts object
+          action.payload,
+        isLoading: false,
+      };
+    },
+    create: (state, action) => {
       if (action.payload.message === "Existing Post") {
-        return action.payload.response;
-      } else if (action.payload.errorMessage) {
-        return action.payload.errorMessage;
+        return { ...state, posts: action.payload.response };
       } else {
-        return [action.payload];
+        return { ...state, posts: [action.payload, ...state.posts] };
       }
     },
-    fetchByTag: (action) => action.payload,
+    fetchByTag: (state, action) => {
+      return {
+        ...state,
+        posts: action.payload,
+        isLoading: false,
+      };
+    },
     addTags: (state, action) => {
-      return state.map((post) =>
-        post._id === action.payload._id ? action.payload : post
-      );
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post._id === action.payload._id ? action.payload : post
+        ),
+      };
     },
   },
 });
 
-export const { create, fetchAll, fetchByTag, addTags } = postsSlice.actions;
+export const {
+  create,
+  fetchAll,
+  fetchByTag,
+  addTags,
+  startLoading,
+  hasError,
+} = postsSlice.actions;
 export default postsSlice.reducer;

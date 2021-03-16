@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Link, TextField, Button } from "@material-ui/core";
 import clsx from "clsx";
-import Card from "@material-ui/core/Card";
+import { Card } from "@material-ui/core";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
@@ -25,13 +25,14 @@ const Post = ({ post }) => {
   const [tag, setTag] = useState("");
   const dispatch = useDispatch();
   const textRef = useRef(null);
-  const posts = useSelector((state) => state.posts);
+  const { error } = useSelector((state) => state.posts);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const handleAddTags = () => {
+  const handleAddTags = (e) => {
+    e.preventDefault();
     dispatch(addTag(post._id, { tag: tag }));
     setTag("");
     textRef.current.value = "";
@@ -78,23 +79,27 @@ const Post = ({ post }) => {
             {post.tags.map((tag) => "#" + tag + ", ")}
           </Typography>
         )}
-
-        <TextField
-          label="Tag"
-          size="small"
-          required
-          onChange={(e) => setTag(e.target.value)}
-          inputRef={textRef}
-        ></TextField>
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          className={classes.addTagButton}
-          onClick={handleAddTags}
-        >
-          Add tag!
-        </Button>
+      </CardContent>
+      <CardContent>
+        <form onSubmit={handleAddTags}>
+          <TextField
+            label="Tag"
+            size="small"
+            required
+            onChange={(e) => setTag(e.target.value)}
+            inputRef={textRef}
+            className={classes.addTagInput}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            className={classes.addTagButton}
+            type="submit"
+          >
+            Add tag!
+          </Button>
+        </form>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">

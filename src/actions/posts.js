@@ -4,6 +4,8 @@ import {
   fetchAll,
   fetchByTag,
   addTags,
+  startLoading,
+  hasError,
 } from "../reducers/slice/postsSlice";
 
 export const submitSearchUrl = (url) => async (dispatch) => {
@@ -17,20 +19,24 @@ export const submitSearchUrl = (url) => async (dispatch) => {
 };
 
 export const fetchPosts = () => async (dispatch) => {
+  dispatch(hasError(false));
+  dispatch(startLoading());
   try {
     const { data } = await API.getPosts();
     dispatch(fetchAll(data));
   } catch (error) {
-    console.log(error);
+    dispatch(hasError(error.response.data));
   }
 };
 
 export const fetchPostsByTags = (tags) => async (dispatch) => {
+  dispatch(hasError(false));
+  dispatch(startLoading());
   try {
     const { data } = await API.getPostsByTags(tags);
     dispatch(fetchByTag(data));
   } catch (error) {
-    console.log(error);
+    dispatch(hasError(error.response.data));
   }
 };
 
@@ -39,6 +45,6 @@ export const addTag = (id, tag) => async (dispatch) => {
     const { data } = await API.addTags(id, tag);
     dispatch(addTags(data));
   } catch (error) {
-    console.log(error);
+    dispatch(hasError(error.response.data));
   }
 };

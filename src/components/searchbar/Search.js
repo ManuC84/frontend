@@ -63,6 +63,7 @@ const Search = () => {
     if (searchType === "url") {
       dispatch(submitSearchUrl({ url: searchUrl }));
       setSearchError(false);
+      setSearchUrl("");
     }
 
     if (searchType === "tags") {

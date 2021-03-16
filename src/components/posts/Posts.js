@@ -11,17 +11,17 @@ import Post from "./post/Post";
 import { useStyles } from "./styles";
 
 const Posts = () => {
-  var posts = useSelector((state) => state.posts);
+  var { posts, isLoading, error } = useSelector((state) => state.posts);
 
   const classes = useStyles();
 
-  return !posts.length && typeof posts.errorMessage === "undefined" ? (
+  return isLoading ? (
     <Container className={classes.progress}>
       <CircularProgress />
     </Container>
-  ) : typeof posts.errorMessage !== "undefined" ? (
+  ) : error.message === "Your search yielded no results, please try again" ? (
     <Container className={classes.tagError}>
-      <Alert severity="info">{posts.errorMessage}</Alert>
+      <Alert severity="info">{error.message}</Alert>
     </Container>
   ) : (
     <Container maxWidth="lg" className={classes.root}>
