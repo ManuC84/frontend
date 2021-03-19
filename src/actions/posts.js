@@ -6,6 +6,8 @@ import {
   addTags,
   startLoading,
   hasError,
+  fetchInfinite,
+  hasMore,
 } from "../reducers/slice/postsSlice";
 
 export const submitSearchUrl = (url) => async (dispatch) => {
@@ -20,10 +22,23 @@ export const submitSearchUrl = (url) => async (dispatch) => {
 
 export const fetchPosts = () => async (dispatch) => {
   dispatch(hasError(false));
+  dispatch(hasMore(true));
   dispatch(startLoading());
   try {
     const { data } = await API.getPosts();
     dispatch(fetchAll(data));
+  } catch (error) {
+    dispatch(hasError(error.response.data));
+  }
+};
+export const infiniteFetch = (skip) => async (dispatch) => {
+  try {
+    const { data } = await API.getInfiniteScroll(skip);
+    if (!data.length) {
+      dispatch(hasError("You've reached the end"));
+      dispatch(hasMore(false));
+    }
+    dispatch(fetchInfinite(data));
   } catch (error) {
     dispatch(hasError(error.response.data));
   }

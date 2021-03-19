@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
   container: {
-    marginTop: "15%",
+    marginTop: 100,
   },
   paper: {
     marginTop: theme.spacing(8),
@@ -10,6 +10,9 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     padding: "30px",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: 150,
+    },
   },
   avatar: {
     margin: theme.spacing(1),

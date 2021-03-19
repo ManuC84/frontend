@@ -1,15 +1,18 @@
 import React, { useState, useRef } from "react";
+import ReactPlayer from "react-player";
 import { Link, TextField, Button } from "@material-ui/core";
 import clsx from "clsx";
-import { Card } from "@material-ui/core";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
+import {
+  Card,
+  CardHeader,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Collapse,
+  Avatar,
+  IconButton,
+  Typography,
+} from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -20,12 +23,14 @@ import { addTag } from "../../../actions/posts";
 import { useDispatch, useSelector } from "react-redux";
 
 const Post = ({ post }) => {
-  const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
-  const [tag, setTag] = useState("");
-  const dispatch = useDispatch();
-  const textRef = useRef(null);
   const { error } = useSelector((state) => state.posts);
+  const [tag, setTag] = useState("");
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+
+  const textRef = useRef(null);
+  const dispatch = useDispatch();
+  const classes = useStyles();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -39,10 +44,15 @@ const Post = ({ post }) => {
   };
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.card}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
+          <Avatar
+            aria-label="recipe"
+            className={classes.avatar}
+            alt="avatar"
+            title="avatar"
+          >
             R
           </Avatar>
         }
@@ -55,7 +65,20 @@ const Post = ({ post }) => {
         subheader={moment(post.createdAt).fromNow()}
       />
       <Link href={post.url} target="_blank">
-        <CardMedia className={classes.media} image={post.image} title="image" />
+        {post.url.includes("youtube") ? (
+          <ReactPlayer
+            url={post.url}
+            width="100%"
+            height="500px"
+            config={{ youtube: { playerVars: { enablejsapi: 1 } } }}
+          />
+        ) : (
+          <CardMedia
+            className={classes.media}
+            image={post.image}
+            title="image"
+          />
+        )}
       </Link>
 
       <CardContent>
@@ -80,7 +103,7 @@ const Post = ({ post }) => {
           </Typography>
         )}
       </CardContent>
-      <CardContent>
+      <CardContent className={classes.addTagContainer}>
         <form onSubmit={handleAddTags}>
           <TextField
             label="Tag"

@@ -139,6 +139,7 @@ const Search = () => {
   const handleUrlButton = () => {
     setSearchType("url");
     setSearchTags("");
+    setTagButtonContent([]);
     setSearchError(false);
   };
 
@@ -149,9 +150,9 @@ const Search = () => {
   };
 
   return (
-    <Container maxWidth="lg" className={classes.navSpacer}>
+    <div className={classes.mainContainer}>
       <Paper elevation={3} className={classes.paper}>
-        <Container className={classes.searchBarContainer}>
+        <div className={classes.searchBarContainer}>
           <SearchBar
             value={searchType === "url" ? searchUrl : searchTags}
             onChange={
@@ -160,7 +161,7 @@ const Search = () => {
                 : (newValue) => setSearchTags(newValue)
             }
             onCancelSearch={() => dispatch(fetchPosts())}
-            className={classes.search}
+            className={classes.searchBar}
             placeholder={
               searchType === "url" ? "Search url..." : "Search tags..."
             }
@@ -197,25 +198,27 @@ const Search = () => {
           >
             Search
           </Button>
-        </Container>
-        <Container className={classes.tagsContainer}>
-          {tagButtonContent.map((tag, index) => (
-            <Button
-              variant="contained"
-              color="secondary"
-              key={index}
-              size="small"
-              className={classes.tagButton}
-              startIcon={<CloseIcon />}
-              onClick={() => handleTagDelete(index)}
-            >
-              {tag}
-            </Button>
-          ))}
-        </Container>
+        </div>
+        {tagButtonContent.length > 0 && (
+          <div className={classes.tagsContainer}>
+            {tagButtonContent.map((tag, index) => (
+              <Button
+                variant="contained"
+                color="secondary"
+                key={index}
+                size="small"
+                className={classes.tagButton}
+                startIcon={<CloseIcon />}
+                onClick={() => handleTagDelete(index)}
+              >
+                {tag}
+              </Button>
+            ))}
+          </div>
+        )}
+        {searchError && <Alert severity="error">{errorMessage}</Alert>}
       </Paper>
-      {searchError && <Alert severity="error">{errorMessage}</Alert>}
-    </Container>
+    </div>
   );
 };
 

@@ -6,6 +6,7 @@ export const postsSlice = createSlice({
     posts: [],
     isLoading: false,
     error: false,
+    loadMorePosts: true,
   },
   reducers: {
     startLoading: (state) => {
@@ -14,6 +15,9 @@ export const postsSlice = createSlice({
     hasError: (state, action) => {
       state.error = action.payload;
       state.isLoading = false;
+    },
+    hasMore: (state, action) => {
+      state.loadMorePosts = action.payload;
     },
     fetchAll: (state, action) => {
       // We need to return a new state object
@@ -25,6 +29,12 @@ export const postsSlice = createSlice({
           // and the new posts object
           action.payload,
         isLoading: false,
+      };
+    },
+    fetchInfinite: (state, action) => {
+      return {
+        ...state,
+        posts: state.posts.concat(action.payload),
       };
     },
     create: (state, action) => {
@@ -59,5 +69,7 @@ export const {
   addTags,
   startLoading,
   hasError,
+  fetchInfinite,
+  hasMore,
 } = postsSlice.actions;
 export default postsSlice.reducer;

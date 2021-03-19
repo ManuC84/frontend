@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { AppBar, Button } from "@material-ui/core";
+import {
+  AppBar,
+  Button,
+  Container,
+  Avatar,
+  Typography,
+} from "@material-ui/core";
 import logo from "../../img/logo.png";
 import makeStyles from "./styles";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import LockIcon from "@material-ui/icons/Lock";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { fetchPosts } from "../../actions/posts";
@@ -45,27 +52,38 @@ const Nav = () => {
           <img src={logo} alt="logo" className={classes.logo} />
         </Link>
         {!user ? (
-          <Button
-            component={Link}
-            to="/auth"
-            className={classes.logInButton}
-            size="medium"
-            variant="contained"
-            startIcon={<AccountCircleIcon />}
-          >
-            Log In
-          </Button>
+          <div className={classes.logInButtonContainer}>
+            <Button
+              component={Link}
+              to="/auth"
+              className={classes.logInButton}
+              variant="contained"
+              startIcon={<AccountCircleIcon />}
+            >
+              Log In
+            </Button>
+          </div>
         ) : (
-          <Button
-            component={Link}
-            to="/"
-            className={classes.logInButton}
-            variant="contained"
-            startIcon={<AccountCircleIcon />}
-            onClick={signout}
-          >
-            Log Out
-          </Button>
+          <div className={classes.userInfoContainer}>
+            <Avatar
+              alt={`${user.result.givenName}${user.result.familyName}`}
+              src={user.result.imageUrl}
+              className={classes.avatar}
+            />
+            <Typography
+              className={classes.userName}
+            >{`${user.result.givenName} ${user.result.familyName}`}</Typography>
+            <Button
+              component={Link}
+              to="/"
+              className={classes.logInButton}
+              variant="contained"
+              startIcon={<LockIcon />}
+              onClick={signout}
+            >
+              Log Out
+            </Button>
+          </div>
         )}
       </nav>
     </AppBar>
