@@ -5,6 +5,7 @@ export const postsSlice = createSlice({
   initialState: {
     posts: [],
     isLoading: false,
+    hasReceivedData: false,
     error: false,
     loadMorePosts: true,
   },
@@ -20,15 +21,18 @@ export const postsSlice = createSlice({
       state.loadMorePosts = action.payload;
     },
     fetchAll: (state, action) => {
-      // We need to return a new state object
       return {
-        // that has all the existing state data
         ...state,
-        // but has a new array for the `posts` field
-        posts:
-          // and the new posts object
-          action.payload,
+        posts: action.payload,
         isLoading: false,
+      };
+    },
+    fetchSinglePost: (state, action) => {
+      return {
+        ...state,
+        posts: action.payload,
+        hasReceivedData: true,
+        loadMorePosts: false,
       };
     },
     fetchInfinite: (state, action) => {
@@ -38,22 +42,25 @@ export const postsSlice = createSlice({
       };
     },
     create: (state, action) => {
-      if (action.payload.message === "Existing Post") {
-        return { ...state, posts: action.payload.response };
-      } else {
-        return { ...state, posts: [action.payload, ...state.posts] };
-      }
+      return {
+        ...state,
+        posts: action.payload,
+        loadMorePosts: false,
+        error: false,
+      };
     },
     fetchByTag: (state, action) => {
       return {
         ...state,
         posts: action.payload,
         isLoading: false,
+        loadMorePosts: false,
       };
     },
     addTags: (state, action) => {
       return {
         ...state,
+        error: false,
         posts: state.posts.map((post) =>
           post._id === action.payload._id ? action.payload : post
         ),
@@ -71,5 +78,6 @@ export const {
   hasError,
   fetchInfinite,
   hasMore,
+  fetchSinglePost,
 } = postsSlice.actions;
 export default postsSlice.reducer;

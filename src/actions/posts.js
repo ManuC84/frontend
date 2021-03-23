@@ -8,6 +8,7 @@ import {
   hasError,
   fetchInfinite,
   hasMore,
+  fetchSinglePost,
 } from "../reducers/slice/postsSlice";
 
 export const submitSearchUrl = (url) => async (dispatch) => {
@@ -31,6 +32,16 @@ export const fetchPosts = () => async (dispatch) => {
     dispatch(hasError(error.response.data));
   }
 };
+
+export const getSinglePost = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.getSinglePost(id);
+    dispatch(fetchSinglePost(data));
+  } catch (error) {
+    dispatch(hasError(error.response.data));
+  }
+};
+
 export const infiniteFetch = (skip) => async (dispatch) => {
   try {
     const { data } = await API.getInfiniteScroll(skip);
@@ -58,6 +69,7 @@ export const fetchPostsByTags = (tags) => async (dispatch) => {
 export const addTag = (id, tag) => async (dispatch) => {
   try {
     const { data } = await API.addTags(id, tag);
+    console.log(data);
     dispatch(addTags(data));
   } catch (error) {
     dispatch(hasError(error.response.data));

@@ -15,8 +15,9 @@ import { useDispatch } from "react-redux";
 import { fetchPosts } from "../../actions/posts";
 import { logout } from "../../reducers/slice/authSlice";
 import decode from "jwt-decode";
+import HideOnScroll from "../../utils/HideNav";
 
-const Nav = () => {
+const Nav = ({ appProps }) => {
   const classes = makeStyles();
   const dispatch = useDispatch();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
@@ -42,51 +43,54 @@ const Nav = () => {
   };
 
   return (
-    <AppBar className={classes.root}>
-      <nav className={classes.nav}>
-        <Link
-          to="/"
-          className={classes.link}
-          onClick={() => dispatch(fetchPosts())}
-        >
-          <img src={logo} alt="logo" className={classes.logo} />
-        </Link>
-        {!user ? (
-          <div className={classes.logInButtonContainer}>
-            <Button
-              component={Link}
-              to="/auth"
-              className={classes.logInButton}
-              variant="contained"
-              startIcon={<AccountCircleIcon />}
-            >
-              Log In
-            </Button>
-          </div>
-        ) : (
-          <div className={classes.userInfoContainer}>
-            <Avatar
-              alt={`${user.result.givenName}${user.result.familyName}`}
-              src={user.result.imageUrl}
-              className={classes.avatar}
-            />
-            <Typography
-              className={classes.userName}
-            >{`${user.result.givenName} ${user.result.familyName}`}</Typography>
-            <Button
-              component={Link}
-              to="/"
-              className={classes.logInButton}
-              variant="contained"
-              startIcon={<LockIcon />}
-              onClick={signout}
-            >
-              Log Out
-            </Button>
-          </div>
-        )}
-      </nav>
-    </AppBar>
+    <HideOnScroll {...appProps}>
+      <AppBar className={classes.root}>
+        <nav className={classes.nav}>
+          <Link
+            to="/"
+            className={classes.link}
+            onClick={() => dispatch(fetchPosts())}
+          >
+            <img src={logo} alt="logo" className={classes.logo} />
+          </Link>
+          {!user ? (
+            <div className={classes.logInButtonContainer}>
+              <Button
+                component={Link}
+                to="/auth"
+                className={classes.logInButton}
+                variant="contained"
+                startIcon={<AccountCircleIcon />}
+              >
+                Log In
+              </Button>
+            </div>
+          ) : (
+            <div className={classes.userInfoContainer}>
+              <Avatar
+                alt={`${user.result.givenName}${user.result.familyName}`}
+                src={user.result.imageUrl}
+                className={classes.avatar}
+              />
+              <Typography
+                className={classes.userName}
+              >{`${user.result.givenName} ${user.result.familyName}`}</Typography>
+
+              <Button
+                component={Link}
+                to="/"
+                className={classes.logInButton}
+                variant="contained"
+                startIcon={<LockIcon />}
+                onClick={signout}
+              >
+                Log Out
+              </Button>
+            </div>
+          )}
+        </nav>
+      </AppBar>
+    </HideOnScroll>
   );
 };
 

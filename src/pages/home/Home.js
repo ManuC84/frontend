@@ -1,7 +1,7 @@
 import React from "react";
 
-import Search from "../searchbar/Search";
-import Posts from "../posts/Posts";
+import Search from "../../components/searchbar/Search";
+import Posts from "../../components/posts/Posts";
 import useStyles from "./styles";
 import { useSelector } from "react-redux";
 

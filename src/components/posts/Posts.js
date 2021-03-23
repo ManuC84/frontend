@@ -12,17 +12,17 @@ import Post from "./post/Post";
 import { useStyles } from "./styles";
 import { infiniteFetch } from "../../actions/posts";
 import InfiniteScroll from "react-infinite-scroll-component";
+import "./styleOverride.css";
 
 const Posts = () => {
   const { posts, isLoading, error, loadMorePosts } = useSelector(
     (state) => state.posts
   );
-
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const fetchImages = () => {
-    dispatch(infiniteFetch(posts.length + 5));
+    dispatch(infiniteFetch(posts.length));
   };
 
   return isLoading ? (
@@ -39,6 +39,7 @@ const Posts = () => {
     <section className={classes.postsContainer}>
       <InfiniteScroll
         className={classes.infiniteComponent}
+        width="100%"
         dataLength={posts.length}
         next={fetchImages}
         hasMore={loadMorePosts}

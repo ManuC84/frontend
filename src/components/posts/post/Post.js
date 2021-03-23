@@ -13,6 +13,7 @@ import {
   IconButton,
   Typography,
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -61,7 +62,11 @@ const Post = ({ post }) => {
             <MoreVertIcon />
           </IconButton>
         }
-        title={post.title}
+        title={
+          <Link href={`http://localhost:3000/posts/post/?id=${post._id}`}>
+            {post.title}
+          </Link>
+        }
         subheader={moment(post.createdAt).fromNow()}
       />
       <Link href={post.url} target="_blank">
@@ -80,9 +85,8 @@ const Post = ({ post }) => {
           />
         )}
       </Link>
-
       <CardContent>
-        <Typography variant="body1" color="textSecondary" component="p">
+        <Typography variant="body1" color="textPrimary" component="p">
           {post.description}
         </Typography>
       </CardContent>
@@ -123,24 +127,43 @@ const Post = ({ post }) => {
             Add tag!
           </Button>
         </form>
+        <Collapse in={error}>
+          {error && <Alert severity="error">{error.message}</Alert>}
+        </Collapse>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
+
+      <CardActions
+        style={{ display: "flex", justifyContent: "space-between" }}
+        disableSpacing
+      >
+        <div>
+          <IconButton aria-label="add to favorites">
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton aria-label="share">
+            <ShareIcon />
+          </IconButton>
+        </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Typography
+            variant="button"
+            color="textSecondary"
+            style={{ height: "20px" }}
+          >
+            Show Comments
+          </Typography>
+
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </div>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent></CardContent>

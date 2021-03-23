@@ -11,6 +11,8 @@ import {
   FormControlLabel,
   FormControl,
   Input,
+  Collapse,
+  Grow,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import CloseIcon from "@material-ui/icons/Close";
@@ -31,6 +33,7 @@ const Search = () => {
   const [searchType, setSearchType] = useState("url");
   const [searchError, setSearchError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const user = JSON.parse(localStorage.getItem("profile"));
 
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts);
@@ -202,21 +205,25 @@ const Search = () => {
         {tagButtonContent.length > 0 && (
           <div className={classes.tagsContainer}>
             {tagButtonContent.map((tag, index) => (
-              <Button
-                variant="contained"
-                color="secondary"
-                key={index}
-                size="small"
-                className={classes.tagButton}
-                startIcon={<CloseIcon />}
-                onClick={() => handleTagDelete(index)}
-              >
-                {tag}
-              </Button>
+              <Grow in={handleTags}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  key={index}
+                  size="small"
+                  className={classes.tagButton}
+                  startIcon={<CloseIcon />}
+                  onClick={() => handleTagDelete(index)}
+                >
+                  {tag}
+                </Button>
+              </Grow>
             ))}
           </div>
         )}
-        {searchError && <Alert severity="error">{errorMessage}</Alert>}
+        <Collapse in={searchError}>
+          {searchError && <Alert severity="error">{errorMessage}</Alert>}
+        </Collapse>
       </Paper>
     </div>
   );

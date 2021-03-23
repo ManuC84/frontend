@@ -3,7 +3,7 @@ import { red } from "@material-ui/core/colors";
 
 export default makeStyles((theme) => ({
   root: {
-    backgroundColor: "#6B95BC",
+    backgroundColor: "#009ED5",
   },
   nav: {
     display: "flex",

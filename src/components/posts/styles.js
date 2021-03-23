@@ -21,6 +21,9 @@ export const useStyles = makeStyles((theme) => ({
     padding: "20px",
   },
   infiniteComponent: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
     width: "100%",
   },
   tagError: {
