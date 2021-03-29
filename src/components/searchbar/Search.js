@@ -64,7 +64,7 @@ const Search = () => {
     }
 
     if (searchType === "url") {
-      dispatch(submitSearchUrl({ url: searchUrl }));
+      dispatch(submitSearchUrl({ url: searchUrl, creator: user?.result }));
       setSearchError(false);
       setSearchUrl("");
     }
@@ -157,6 +157,13 @@ const Search = () => {
       <Paper elevation={3} className={classes.paper}>
         <div className={classes.searchBarContainer}>
           <SearchBar
+            inputProps={
+              searchType === "tags"
+                ? {
+                    maxLength: 32,
+                  }
+                : {}
+            }
             value={searchType === "url" ? searchUrl : searchTags}
             onChange={
               searchType === "url"
@@ -196,7 +203,7 @@ const Search = () => {
           <Button
             type="submit"
             variant="contained"
-            color="primary"
+            className={classes.searchButton}
             onClick={handleSubmit}
           >
             Search

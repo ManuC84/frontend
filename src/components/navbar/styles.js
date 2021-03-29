@@ -3,8 +3,11 @@ import { red } from "@material-ui/core/colors";
 
 export default makeStyles((theme) => ({
   root: {
-    backgroundColor: "#009ED5",
+    // backgroundImage:
+    //   "linear-gradient(to right, #00aaa5, #00b4a4, #18bfa1, #31c99c, #4ad295)",
+    backgroundColor: "#1E1E38",
   },
+
   nav: {
     display: "flex",
     alignItems: "center",
@@ -24,9 +27,9 @@ export default makeStyles((theme) => ({
   },
   logInButton: {
     color: theme.palette.getContrastText(red[500]),
-    backgroundColor: red[500],
+    backgroundColor: red[700],
     "&:hover": {
-      backgroundColor: red[700],
+      backgroundColor: red[500],
     },
     [theme.breakpoints.down("xs")]: {
       width: "50%",

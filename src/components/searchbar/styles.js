@@ -4,7 +4,6 @@ export default makeStyles((theme) => ({
   mainContainer: {
     display: "flex",
     justifyContent: "center",
-    marginTop: "20px",
     width: "100%",
     [theme.breakpoints.down("xs")]: {
       marginTop: "80px",
@@ -55,6 +54,13 @@ export default makeStyles((theme) => ({
     marginRight: "5px",
     [theme.breakpoints.down("xs")]: {
       marginTop: "5px",
+    },
+  },
+  searchButton: {
+    color: "white",
+    backgroundColor: "#00AAA5",
+    "&:hover": {
+      backgroundColor: "#4AD295",
     },
   },
 }));

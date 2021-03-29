@@ -8,7 +8,7 @@ export const getSinglePost = (id) => API.get(`/posts/post?id=${id}`);
 
 export const getInfiniteScroll = (skip) => API.get(`/posts?skip=${skip}`);
 
-export const createPost = (url) => API.post("/posts", url);
+export const createPost = (data) => API.post("/posts", data);
 
 export const getPostsByTags = (tags) => API.post("posts/tags", tags);
 

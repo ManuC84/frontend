@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { CircularProgress, Container } from "@material-ui/core";
 

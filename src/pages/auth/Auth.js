@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { GoogleLogin } from "react-google-login";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -20,7 +20,7 @@ import { auth } from "../../reducers/slice/authSlice";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant="body2" style={{ color: "white" }} align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
         FreelyComment
@@ -36,6 +36,8 @@ export default function Auth() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const user = JSON.parse(localStorage.getItem("profile"));
 
   const switchMode = () => {
     setIsSignup((prev) => !prev);
@@ -57,7 +59,7 @@ export default function Auth() {
     console.log("Google sign in was unsuccessful. Try Again later");
   };
 
-  return (
+  return !user ? (
     <Container component="main" maxWidth="xs" className={classes.container}>
       <CssBaseline />
       <Paper elevation={3} className={classes.paper}>
@@ -232,5 +234,7 @@ export default function Auth() {
         <Copyright />
       </Box>
     </Container>
+  ) : (
+    <Redirect to={"/"} />
   );
 }

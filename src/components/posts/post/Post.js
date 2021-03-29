@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ReactPlayer from "react-player";
 import { Link, TextField, Button } from "@material-ui/core";
 import clsx from "clsx";
@@ -17,17 +17,20 @@ import { Alert } from "@material-ui/lab";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { ThumbUp, ThumbDown } from "@material-ui/icons";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import moment from "moment";
 import { useStyles } from "./styles";
 import { addTag } from "../../../actions/posts";
 import { useDispatch, useSelector } from "react-redux";
+import Comments from "../../comments/Comments";
+import ReadMore from "../../../utils/readMore/ReadMore";
 
 const Post = ({ post }) => {
   const [expanded, setExpanded] = useState(false);
-  const { error } = useSelector((state) => state.posts);
+  const { error, posts } = useSelector((state) => state.posts);
   const [tag, setTag] = useState("");
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const [addTagError, setAddTagError] = useState({ error: "", bool: false });
 
   const textRef = useRef(null);
   const dispatch = useDispatch();
@@ -39,10 +42,30 @@ const Post = ({ post }) => {
 
   const handleAddTags = (e) => {
     e.preventDefault();
+    for (let i = 0; i < posts.length; i++) {
+      if (posts[i]._id === post._id && posts[i].tags.includes(tag)) {
+        setAddTagError({
+          error: "This tag already exists",
+          bool: true,
+          postsId: posts[i]._id,
+        });
+        return;
+      }
+    }
     dispatch(addTag(post._id, { tag: tag }));
     setTag("");
     textRef.current.value = "";
+    setAddTagError({ bool: false });
   };
+
+  // Set timeout for addTag error
+  useEffect(() => {
+    if (addTagError.bool) {
+      setTimeout(() => {
+        setAddTagError({ bool: false });
+      }, 5000);
+    }
+  }, [addTagError.bool]);
 
   return (
     <Card className={classes.card}>
@@ -52,10 +75,14 @@ const Post = ({ post }) => {
             aria-label="recipe"
             className={classes.avatar}
             alt="avatar"
-            title="avatar"
-          >
-            R
-          </Avatar>
+            title={
+              post?.creator[0]
+                ? `${post.creator[0]?.givenName}, ${post.creator[0]?.familyName} `
+                : "Annonymous"
+            }
+            // src={post.creator[0]?.imageUrl}
+            src={post.icon}
+          />
         }
         action={
           <IconButton aria-label="settings">
@@ -63,13 +90,18 @@ const Post = ({ post }) => {
           </IconButton>
         }
         title={
-          <Link href={`http://localhost:3000/posts/post/?id=${post._id}`}>
-            {post.title}
+          <Link href={post.url} target="_blank" title="Go to source">
+            <Typography style={{ fontSize: "1rem" }} variant="body1">
+              {post.provider}
+            </Typography>
           </Link>
         }
         subheader={moment(post.createdAt).fromNow()}
       />
-      <Link href={post.url} target="_blank">
+      <Link
+        href={`http://localhost:3000/posts/post/?id=${post._id}`}
+        style={{ textDecorations: "none", color: "inherit" }}
+      >
         {post.url.includes("youtube") ? (
           <ReactPlayer
             url={post.url}
@@ -86,9 +118,13 @@ const Post = ({ post }) => {
         )}
       </Link>
       <CardContent>
-        <Typography variant="body1" color="textPrimary" component="p">
-          {post.description}
-        </Typography>
+        <Typography variant="h6">{post.title}</Typography>
+        <ReadMore
+          lines={150}
+          content={post.description}
+          variant={"body2"}
+          color={"textPrimary"}
+        />
       </CardContent>
       <CardContent>
         <Typography>Tags</Typography>
@@ -97,14 +133,12 @@ const Post = ({ post }) => {
             This post contains no tags, add some!
           </Typography>
         ) : (
-          <Typography
-            style={{ marginBottom: "5px" }}
-            variant="body2"
-            color="textSecondary"
-            component="p"
-          >
-            {post.tags.map((tag) => "#" + tag + ", ")}
-          </Typography>
+          <ReadMore
+            lines={80}
+            content={post.tags.map((tag) => "#" + tag + ", ").join("")}
+            variant={"body2"}
+            color={"textSecondary"}
+          />
         )}
       </CardContent>
       <CardContent className={classes.addTagContainer}>
@@ -127,8 +161,15 @@ const Post = ({ post }) => {
             Add tag!
           </Button>
         </form>
-        <Collapse in={error}>
-          {error && <Alert severity="error">{error.message}</Alert>}
+        <Collapse in={addTagError.bool}>
+          {addTagError.bool && post._id === addTagError.postsId ? (
+            <Alert
+              severity="error"
+              onClick={() => setAddTagError({ bool: false })}
+            >
+              {addTagError.error}
+            </Alert>
+          ) : null}
         </Collapse>
       </CardContent>
 
@@ -137,8 +178,11 @@ const Post = ({ post }) => {
         disableSpacing
       >
         <div>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
+          <IconButton aria-label="Like">
+            <ThumbUp />
+          </IconButton>
+          <IconButton aria-label="dislike">
+            <ThumbDown />
           </IconButton>
           <IconButton aria-label="share">
             <ShareIcon />
@@ -150,7 +194,7 @@ const Post = ({ post }) => {
             color="textSecondary"
             style={{ height: "20px" }}
           >
-            Show Comments
+            {!expanded ? "Show Comments" : "Hide Comments"}
           </Typography>
 
           <IconButton
@@ -166,7 +210,9 @@ const Post = ({ post }) => {
         </div>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent></CardContent>
+        <CardContent style={{ paddingTop: "0" }}>
+          <Comments />
+        </CardContent>
       </Collapse>
     </Card>
   );

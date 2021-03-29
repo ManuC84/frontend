@@ -4,16 +4,16 @@ import { red } from "@material-ui/core/colors";
 export const useStyles = makeStyles((theme) => ({
   card: {
     [theme.breakpoints.down("xl")]: {
-      width: 1000,
+      width: 700,
     },
     [theme.breakpoints.down("lg")]: {
-      width: 800,
+      width: 600,
     },
     [theme.breakpoints.down("md")]: {
-      maxWidth: 700,
+      maxWidth: 500,
     },
     [theme.breakpoints.down("sm")]: {
-      maxWidth: 600,
+      maxWidth: 500,
     },
     [theme.breakpoints.down("xs")]: {
       width: "100%",
