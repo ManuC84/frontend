@@ -4,12 +4,15 @@ const API = axios.create({ baseURL: "http://localhost:8000" });
 
 export const getPosts = () => API.get("/posts");
 
-export const getSinglePost = (id) => API.get(`/posts/post?id=${id}`);
+export const getSinglePost = (id) => API.get(`/posts/${id}`);
 
 export const getInfiniteScroll = (skip) => API.get(`/posts?skip=${skip}`);
 
-export const createPost = (data) => API.post("/posts", data);
+export const createPost = (payload) => API.post("/posts", payload);
 
 export const getPostsByTags = (tags) => API.post("posts/tags", tags);
 
 export const addTags = (id, tag) => API.post(`posts/tags/addTags/${id}`, tag);
+
+export const addComments = (id, payload) =>
+  API.post(`posts/${id}/comments`, payload);

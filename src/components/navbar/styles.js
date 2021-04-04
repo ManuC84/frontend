@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
   root: {
     // backgroundImage:
     //   "linear-gradient(to right, #00aaa5, #00b4a4, #18bfa1, #31c99c, #4ad295)",
-    backgroundColor: "#1E1E38",
+    // backgroundColor: "#091E3A",
   },
 
   nav: {

@@ -18,7 +18,7 @@ export const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       width: "100%",
     },
-    margin: "20px 0",
+    margin: "10px 0",
   },
   media: {
     height: 0,

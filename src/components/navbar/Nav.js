@@ -44,7 +44,7 @@ const Nav = ({ appProps }) => {
 
   return (
     <HideOnScroll {...appProps}>
-      <AppBar elevation={0} className={classes.root}>
+      <AppBar color="transparent" elevation={0} className={classes.root}>
         <nav className={classes.nav}>
           <Link
             to="/"

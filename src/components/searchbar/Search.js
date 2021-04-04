@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
   Container,
@@ -13,6 +13,7 @@ import {
   Input,
   Collapse,
   Grow,
+  Chip,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import CloseIcon from "@material-ui/icons/Close";
@@ -203,7 +204,7 @@ const Search = () => {
           <Button
             type="submit"
             variant="contained"
-            className={classes.searchButton}
+            color="primary"
             onClick={handleSubmit}
           >
             Search
@@ -213,17 +214,13 @@ const Search = () => {
           <div className={classes.tagsContainer}>
             {tagButtonContent.map((tag, index) => (
               <Grow in={handleTags}>
-                <Button
-                  variant="contained"
-                  color="secondary"
+                <Chip
+                  label={tag}
+                  onDelete={() => handleTagDelete(index)}
+                  color="primary"
                   key={index}
-                  size="small"
                   className={classes.tagButton}
-                  startIcon={<CloseIcon />}
-                  onClick={() => handleTagDelete(index)}
-                >
-                  {tag}
-                </Button>
+                />
               </Grow>
             ))}
           </div>

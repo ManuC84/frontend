@@ -18,12 +18,12 @@ function App(props) {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/auth" exact component={Auth} />
-          <Route path="/posts/post" exact component={SinglePost} />
+          <Route path="/posts/:id" exact component={SinglePost} />
           <Route component={RedirectToMain} />
         </Switch>
       </Container>
       <ScrollTop {...props}>
-        <Fab color="secondary" size="small" aria-label="scroll back to top">
+        <Fab color="primary" size="small" aria-label="scroll back to top">
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>

@@ -5,7 +5,6 @@ export const postsSlice = createSlice({
   initialState: {
     posts: [],
     isLoading: false,
-    hasReceivedData: false,
     error: false,
     loadMorePosts: true,
   },
@@ -31,8 +30,8 @@ export const postsSlice = createSlice({
       return {
         ...state,
         posts: action.payload,
-        hasReceivedData: true,
         loadMorePosts: false,
+        isLoading: false,
       };
     },
     fetchInfinite: (state, action) => {
@@ -66,6 +65,17 @@ export const postsSlice = createSlice({
         ),
       };
     },
+    createComment: (state, action) => {
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post._id === action.payload.comments[0].parentPostId
+            ? action.payload
+            : post
+        ),
+        isLoading: false,
+      };
+    },
   },
 });
 
@@ -79,5 +89,6 @@ export const {
   fetchInfinite,
   hasMore,
   fetchSinglePost,
+  createComment,
 } = postsSlice.actions;
 export default postsSlice.reducer;

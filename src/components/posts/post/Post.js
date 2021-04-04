@@ -75,12 +75,7 @@ const Post = ({ post }) => {
             aria-label="recipe"
             className={classes.avatar}
             alt="avatar"
-            title={
-              post?.creator[0]
-                ? `${post.creator[0]?.givenName}, ${post.creator[0]?.familyName} `
-                : "Annonymous"
-            }
-            // src={post.creator[0]?.imageUrl}
+            title={post.provider}
             src={post.icon}
           />
         }
@@ -90,18 +85,33 @@ const Post = ({ post }) => {
           </IconButton>
         }
         title={
-          <Link href={post.url} target="_blank" title="Go to source">
-            <Typography style={{ fontSize: "1rem" }} variant="body1">
-              {post.provider}
-            </Typography>
-          </Link>
+          <>
+            <Link href={post.url} target="_blank" title="Go to source">
+              <Typography
+                style={{ fontSize: "1rem", display: "inline" }}
+                variant="body1"
+              >
+                {post.provider}
+              </Typography>
+            </Link>
+          </>
         }
-        subheader={moment(post.createdAt).fromNow()}
+        subheader={
+          <>
+            {post.creator[0]?.name
+              ? "Created by " + post.creator[0]?.name
+              : "Created by Annonymous"}
+
+            {" - " + moment(post.createdAt).fromNow()}
+          </>
+        }
       />
+
       <Link
-        href={`http://localhost:3000/posts/post/?id=${post._id}`}
+        href={`http://localhost:3000/posts/${post._id}`}
         style={{ textDecorations: "none", color: "inherit" }}
       >
+        {/* RENDER IMAGE OR VIDEO CONDITIONALLY */}
         {post.url.includes("youtube") ? (
           <ReactPlayer
             url={post.url}
@@ -118,15 +128,18 @@ const Post = ({ post }) => {
         )}
       </Link>
       <CardContent>
-        <Typography variant="h6">{post.title}</Typography>
+        <Typography variant="h6" style={{ fontSize: "1.2rem" }}>
+          {post.title}
+        </Typography>
         <ReadMore
-          lines={150}
+          lines={200}
           content={post.description}
           variant={"body2"}
-          color={"textPrimary"}
+          color={"textSecondary"}
         />
       </CardContent>
-      <CardContent>
+      {/* TAGS PENDING TO FIT THEM SOMEWHERE */}
+      {/* <CardContent style={{ padding: "0 16px" }}>
         <Typography>Tags</Typography>
         {!post.tags.length ? (
           <Typography variant="body2" color="textSecondary" component="p">
@@ -171,7 +184,7 @@ const Post = ({ post }) => {
             </Alert>
           ) : null}
         </Collapse>
-      </CardContent>
+      </CardContent> */}
 
       <CardActions
         style={{ display: "flex", justifyContent: "space-between" }}
@@ -211,7 +224,7 @@ const Post = ({ post }) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent style={{ paddingTop: "0" }}>
-          <Comments />
+          <Comments post={post} />
         </CardContent>
       </Collapse>
     </Card>

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import { CircularProgress, Container } from "@material-ui/core";
 
@@ -8,9 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Posts from "../../components/posts/Posts";
 
 const SinglePost = (props) => {
-  const { posts, hasReceivedData, error } = useSelector((state) => state.posts);
-  const query = new URLSearchParams(props.location.search);
-  const postId = query.get("id");
+  const { posts, isLoading, error } = useSelector((state) => state.posts);
+
+  const { id: postId } = useParams();
 
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -19,7 +20,7 @@ const SinglePost = (props) => {
     dispatch(getSinglePost(postId));
   }, []);
 
-  return !hasReceivedData ? (
+  return isLoading ? (
     <Container className={classes.progressContainer}>
       <CircularProgress justify="center" />
     </Container>
