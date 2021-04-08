@@ -61,7 +61,6 @@ export default function Auth() {
 
   return !user ? (
     <Container component="main" maxWidth="xs" className={classes.container}>
-      <CssBaseline />
       <Paper elevation={3} className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />

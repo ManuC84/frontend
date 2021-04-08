@@ -14,5 +14,13 @@ export const getPostsByTags = (tags) => API.post("posts/tags", tags);
 
 export const addTags = (id, tag) => API.post(`posts/tags/addTags/${id}`, tag);
 
+export const getComments = (id) => API.get(`posts/${id}/comments`);
+
 export const addComments = (id, payload) =>
   API.post(`posts/${id}/comments`, payload);
+
+export const getCommentReplies = (postId, commentId) =>
+  API.get(`posts/${postId}/comments/${commentId}`);
+
+export const addCommentReply = (postId, commentId, payload) =>
+  API.post(`posts/${postId}/comments/${commentId}`, payload);

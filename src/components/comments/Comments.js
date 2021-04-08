@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { CircularProgress, Typography, Paper } from "@material-ui/core";
+import {
+  CircularProgress,
+  Typography,
+  Paper,
+  Button,
+  Collapse,
+} from "@material-ui/core";
 import TextEditor from "../textEditor/TextEditor";
 import { useStyles } from "./styles";
 import Comment from "./comment/Comment";
@@ -9,6 +15,7 @@ import Pagination from "@material-ui/lab/Pagination";
 export default function Comments({ post }) {
   const [commentsPerPage] = useState(5);
   const [page, setPage] = React.useState(1);
+  const [showEditor, setShowEditor] = useState(false);
   const classes = useStyles();
   const user = useState(JSON.parse(localStorage.getItem("profile")));
   const { isLoading } = useSelector((state) => state.posts);
@@ -29,7 +36,27 @@ export default function Comments({ post }) {
     <CircularProgress />
   ) : (
     <div className="App">
-      <TextEditor post={post} user={user} />
+      {!showEditor && (
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            style={{ margin: "10px 0" }}
+            color="primary"
+            variant="outlined"
+            onClick={() => setShowEditor(true)}
+          >
+            Write a comment
+          </Button>
+        </div>
+      )}
+      <Collapse in={showEditor} timeout="auto">
+        <TextEditor
+          post={post}
+          user={user}
+          type={"comments"}
+          setShowEditor={setShowEditor}
+        />
+      </Collapse>
+
       <h3 style={{ margin: "0 0 10px 0" }}>Comments</h3>
       {post.comments.length === 0 ? (
         <Paper>
@@ -39,7 +66,12 @@ export default function Comments({ post }) {
         </Paper>
       ) : (
         currentComments.map((comment) => (
-          <Comment comment={comment} key={comment._id} />
+          <Comment
+            comment={comment}
+            user={user}
+            post={post}
+            key={comment._id}
+          />
         ))
       )}
       <div style={{ display: "flex", justifyContent: "center" }}>

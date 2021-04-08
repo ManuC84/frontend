@@ -18,7 +18,7 @@ export const submitSearchUrl = (payload) => async (dispatch) => {
 
     dispatch(create(data));
   } catch (error) {
-    console.log(error);
+    dispatch(hasError(error.response.data));
   }
 };
 

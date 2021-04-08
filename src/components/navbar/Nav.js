@@ -6,7 +6,7 @@ import {
   Avatar,
   Typography,
 } from "@material-ui/core";
-import logo from "../../img/logo.png";
+import logo from "../../img/logo-final.png";
 import makeStyles from "./styles";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import LockIcon from "@material-ui/icons/Lock";
@@ -56,6 +56,7 @@ const Nav = ({ appProps }) => {
           {!user ? (
             <div className={classes.logInButtonContainer}>
               <Button
+                color="secondary"
                 component={Link}
                 to="/auth"
                 className={classes.logInButton}
@@ -83,6 +84,7 @@ const Nav = ({ appProps }) => {
                 variant="contained"
                 startIcon={<LockIcon />}
                 onClick={signout}
+                color="secondary"
               >
                 Log Out
               </Button>

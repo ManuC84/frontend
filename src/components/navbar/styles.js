@@ -1,11 +1,9 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { red } from "@material-ui/core/colors";
 
 export default makeStyles((theme) => ({
   root: {
-    // backgroundImage:
-    //   "linear-gradient(to right, #00aaa5, #00b4a4, #18bfa1, #31c99c, #4ad295)",
-    // backgroundColor: "#091E3A",
+    // background: "rgba(255,255,255,0.4)",
+    // borderBottom: "1px solid rgba(225,225,225,0.5)",
   },
 
   nav: {
@@ -26,11 +24,12 @@ export default makeStyles((theme) => ({
     height: "100%",
   },
   logInButton: {
-    color: theme.palette.getContrastText(red[500]),
-    backgroundColor: red[700],
-    "&:hover": {
-      backgroundColor: red[500],
-    },
+    borderRadius: "50px",
+    // color: theme.palette.getContrastText("#7324A3"),
+    // backgroundColor: "#7324A3",
+    // "&:hover": {
+    //   backgroundColor: "#A372F0",
+    // },
     [theme.breakpoints.down("xs")]: {
       width: "50%",
     },
@@ -69,6 +68,7 @@ export default makeStyles((theme) => ({
     },
   },
   userName: {
+    color: "white",
     [theme.breakpoints.down("xs")]: {
       display: "none",
     },

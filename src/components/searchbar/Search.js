@@ -36,6 +36,8 @@ const Search = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const user = JSON.parse(localStorage.getItem("profile"));
 
+  const uniqueTags = new Set(tagButtonContent);
+
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts);
   const classes = makeStyles();
@@ -71,7 +73,7 @@ const Search = () => {
     }
 
     if (searchType === "tags") {
-      dispatch(fetchPostsByTags({ tags: tagButtonContent }));
+      dispatch(fetchPostsByTags({ tags: Array.from(uniqueTags) }));
       setTagButtonContent([]);
       setSearchError(false);
     }
@@ -213,7 +215,7 @@ const Search = () => {
         {tagButtonContent.length > 0 && (
           <div className={classes.tagsContainer}>
             {tagButtonContent.map((tag, index) => (
-              <Grow in={handleTags}>
+              <Grow in={true}>
                 <Chip
                   label={tag}
                   onDelete={() => handleTagDelete(index)}

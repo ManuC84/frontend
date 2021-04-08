@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 export const postsSlice = createSlice({
   name: "posts",
@@ -65,16 +65,50 @@ export const postsSlice = createSlice({
         ),
       };
     },
-    createComment: (state, action) => {
+    fetchComments: (state, action) => {
       return {
         ...state,
         posts: state.posts.map((post) =>
-          post._id === action.payload.comments[0].parentPostId
-            ? action.payload
+          post._id === action.payload[0].parentPostId
+            ? { ...post, comments: action.payload }
             : post
         ),
         isLoading: false,
       };
+    },
+    createComment: (state, action) => {
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post._id === action.payload.parentPostId
+            ? { ...post, comments: [action.payload, ...post.comments] }
+            : post
+        ),
+        isLoading: false,
+      };
+    },
+    fetchCommentReplies: (state, action) => {
+      state.posts.map((post) => {
+        if (post._id === action.payload[0].parentPostId) {
+          post.comments.map((comment) => {
+            if (comment._id === action.payload[0].parentCommentId) {
+              comment.commentReplies = action.payload;
+              state.isLoading = false;
+            }
+          });
+        }
+      });
+    },
+    createCommentReply: (state, action) => {
+      state.posts.map((post) => {
+        if (post._id === action.payload.parentPostId) {
+          post.comments.map((comment) => {
+            if (comment._id === action.payload.parentCommentId) {
+              comment.commentReplies.push(action.payload);
+            }
+          });
+        }
+      });
     },
   },
 });
@@ -90,5 +124,8 @@ export const {
   hasMore,
   fetchSinglePost,
   createComment,
+  fetchComments,
+  createCommentReply,
+  fetchCommentReplies,
 } = postsSlice.actions;
 export default postsSlice.reducer;

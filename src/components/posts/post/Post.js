@@ -22,6 +22,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import moment from "moment";
 import { useStyles } from "./styles";
 import { addTag } from "../../../actions/posts";
+import { getComments } from "../../../actions/comments";
 import { useDispatch, useSelector } from "react-redux";
 import Comments from "../../comments/Comments";
 import ReadMore from "../../../utils/readMore/ReadMore";
@@ -36,7 +37,22 @@ const Post = ({ post }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
+  //Use ReactPlayer for streaming urls
+  var streamingProviders = [
+    "youtube",
+    "facebook",
+    "twitch",
+    "soundcloud",
+    "vimeo",
+    "wistia",
+    "mixcloud",
+    "dailymotion",
+    "kaltura",
+  ];
+  var isStreaming = new RegExp(streamingProviders.join("|")).test(post.url);
+
   const handleExpandClick = () => {
+    dispatch(getComments(post._id));
     setExpanded(!expanded);
   };
 
@@ -112,13 +128,27 @@ const Post = ({ post }) => {
         style={{ textDecorations: "none", color: "inherit" }}
       >
         {/* RENDER IMAGE OR VIDEO CONDITIONALLY */}
-        {post.url.includes("youtube") ? (
-          <ReactPlayer
-            url={post.url}
-            width="100%"
-            height="500px"
-            config={{ youtube: { playerVars: { enablejsapi: 1 } } }}
-          />
+        {isStreaming && post?.type?.includes("video") ? (
+          <div style={{ position: "relative", paddingTop: "56.25%" }}>
+            <ReactPlayer
+              url={post.url}
+              style={{ position: "absolute", top: "0", left: "0" }}
+              width="100%"
+              height="100%"
+              config={{
+                vimeo: {
+                  playerOptions: {
+                    controls: true,
+                  },
+                },
+                dailymotion: {
+                  params: {
+                    controls: true,
+                  },
+                },
+              }}
+            />
+          </div>
         ) : (
           <CardMedia
             className={classes.media}
