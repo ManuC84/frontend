@@ -28,4 +28,10 @@ export const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(1, 0, 2),
   },
+  textField: {
+    width: "100%", // Fix IE 11 issue.
+  },
+  margin: {
+    margin: theme.spacing(1),
+  },
 }));

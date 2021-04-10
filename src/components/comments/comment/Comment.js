@@ -7,10 +7,12 @@ import {
   Grow,
   Collapse,
   IconButton,
-  CardContent,
-  Divider,
   Button,
+  Menu,
+  MenuItem,
 } from "@material-ui/core";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+
 import { ThumbUp, ThumbDown } from "@material-ui/icons";
 import Pagination from "@material-ui/lab/Pagination";
 
@@ -29,10 +31,20 @@ const Comment = ({ comment, user, post }) => {
   const [showEditor, setShowEditor] = useState(false);
   const [page, setPage] = React.useState(1);
   const [commentsPerPage] = useState(5);
-
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  // Comment's drop down menu related
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  // Pagination related
   const handleChange = (event, value) => {
     setPage(value);
   };
@@ -45,6 +57,7 @@ const Comment = ({ comment, user, post }) => {
     indexOfLastComment
   );
 
+  //Get comment replies when expanding comments
   const handleExpandClick = () => {
     dispatch(getCommentReplies(post._id, comment._id));
     setExpanded(!expanded);
@@ -86,13 +99,57 @@ const Comment = ({ comment, user, post }) => {
               variant={"body2"}
               color={"textPrimary"}
             />
-
-            {/* <Typography
-                variant="body2"
-                style={{ textAlign: "left", padding: "10px 0" }}
-                dangerouslySetInnerHTML={{ __html: comment.comment }}
-              ></Typography> */}
           </Grid>
+          <Grid>
+            <IconButton aria-label="settings">
+              <MoreVertIcon onClick={handleClick} />
+            </IconButton>
+          </Grid>
+
+          {user[0]?.result.googleId ===
+          comment?.creator[0]?.result?.googleId ? (
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+              getContentAnchorEl={null}
+              disableScrollLock={true}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}
+            >
+              <MenuItem onClick={handleClose}>Edit</MenuItem>
+              <MenuItem onClick={handleClose}>Delete</MenuItem>
+              <MenuItem onClick={handleClose}>Report</MenuItem>
+            </Menu>
+          ) : (
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+              getContentAnchorEl={null}
+              disableScrollLock={true}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}
+            >
+              <MenuItem onClick={handleClose}>Report</MenuItem>
+            </Menu>
+          )}
         </Grid>
         <div
           style={{

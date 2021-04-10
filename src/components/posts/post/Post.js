@@ -231,15 +231,22 @@ const Post = ({ post }) => {
             <ShareIcon />
           </IconButton>
         </div>
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
           <Typography
             variant="button"
             color="textSecondary"
-            style={{ height: "20px" }}
+            style={{ marginRight: "5px" }}
           >
             {!expanded ? "Show Comments" : "Hide Comments"}
           </Typography>
-
+          <Typography style={{ lineHeight: "0" }} variant="button">
+            {post?.comments?.length}
+          </Typography>
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,

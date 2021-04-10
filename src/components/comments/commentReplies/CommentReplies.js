@@ -8,7 +8,11 @@ import {
   Divider,
   Grow,
   CircularProgress,
+  Menu,
+  MenuItem,
 } from "@material-ui/core";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+
 import { ThumbUp, ThumbDown } from "@material-ui/icons";
 import ReadMore from "../../../utils/readMore/ReadMore";
 import moment from "moment";
@@ -16,6 +20,16 @@ import { useSelector } from "react-redux";
 
 const CommentReplies = ({ post, comment, user, commentReply }) => {
   const { isLoading } = useSelector((state) => state.posts);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  // Comment's drop down menu related
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return isLoading ? (
     <CircularProgress />
   ) : (
@@ -54,6 +68,55 @@ const CommentReplies = ({ post, comment, user, commentReply }) => {
                 color={"textPrimary"}
               />
             </Grid>
+            <Grid>
+              <IconButton aria-label="settings">
+                <MoreVertIcon onClick={handleClick} />
+              </IconButton>
+            </Grid>
+            {user[0]?.result.googleId ===
+            commentReply?.creator[0]?.result?.googleId ? (
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+                getContentAnchorEl={null}
+                disableScrollLock={true}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "center",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "center",
+                }}
+              >
+                <MenuItem onClick={handleClose}>Edit</MenuItem>
+                <MenuItem onClick={handleClose}>Delete</MenuItem>
+                <MenuItem onClick={handleClose}>Report</MenuItem>
+              </Menu>
+            ) : (
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+                getContentAnchorEl={null}
+                disableScrollLock={true}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "center",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "center",
+                }}
+              >
+                <MenuItem onClick={handleClose}>Report</MenuItem>
+              </Menu>
+            )}
           </Grid>
           <div
             style={{

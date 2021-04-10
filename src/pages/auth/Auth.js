@@ -2,21 +2,30 @@ import React, { useState } from "react";
 import { GoogleLogin } from "react-google-login";
 import { useDispatch } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import { Paper } from "@material-ui/core";
 import { useStyles } from "./styles";
 import { auth } from "../../reducers/slice/authSlice";
+import { signin, signup } from "../../actions/auth";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import {
+  OutlinedInput,
+  FormControl,
+  InputLabel,
+  IconButton,
+  InputAdornment,
+  Paper,
+  Container,
+  Typography,
+  Box,
+  Grid,
+  Link,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+  Button,
+  Avatar,
+} from "@material-ui/core/";
 
 function Copyright() {
   return (
@@ -31,8 +40,19 @@ function Copyright() {
   );
 }
 
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  repeatPassword: "",
+};
+
 export default function Auth() {
   const [isSignup, setIsSignup] = useState(false);
+  const [formData, setFormData] = useState(initialState);
+  const [showPassword, setShowPassword] = useState(false);
+
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -41,12 +61,37 @@ export default function Auth() {
 
   const switchMode = () => {
     setIsSignup((prev) => !prev);
+    setFormData(initialState);
   };
 
+  const handleShowPassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  //JWB auth
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (isSignup) {
+      dispatch(signup(formData, history));
+    } else {
+      dispatch(signin(formData, history));
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  //Google OAUTH
   const googleSuccess = async (res) => {
     const result = res?.profileObj;
     const token = res?.tokenId;
-
+    console.log({ data: { result, token } });
     try {
       dispatch(auth({ data: { result, token } }));
       history.push("/");
@@ -71,7 +116,7 @@ export default function Auth() {
             <Typography component="h1" variant="h5">
               Sign up
             </Typography>
-            <form className={classes.form} noValidate>
+            <form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -83,6 +128,7 @@ export default function Auth() {
                     id="firstName"
                     label="First Name"
                     autoFocus
+                    onChange={handleChange}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -94,6 +140,7 @@ export default function Auth() {
                     label="Last Name"
                     name="lastName"
                     autoComplete="lname"
+                    onChange={handleChange}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -105,30 +152,52 @@ export default function Auth() {
                     label="Email Address"
                     name="email"
                     autoComplete="email"
+                    onChange={handleChange}
                   />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControl
+                    required
+                    variant="outlined"
+                    className={classes.textField}
+                  >
+                    <InputLabel htmlFor="outlined-adornment-password">
+                      Password
+                    </InputLabel>
+                    <OutlinedInput
+                      variant="outlined"
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      autoComplete="current-password"
+                      onChange={handleChange}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                    />
+                  </FormControl>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     variant="outlined"
                     required
                     fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="password"
+                    name="repeatPassword"
                     label="Repeat Password"
                     type="password"
                     id="repeatPassword"
                     autoComplete="current-password"
+                    onChange={handleChange}
                   />
                 </Grid>
                 <Grid item xs={12}></Grid>
@@ -156,7 +225,7 @@ export default function Auth() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <form className={classes.form} noValidate>
+            <form className={classes.form} onSubmit={handleSubmit}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -167,18 +236,39 @@ export default function Auth() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={handleChange}
               />
-              <TextField
-                variant="outlined"
-                margin="normal"
+              <FormControl
                 required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
+                variant="outlined"
+                className={classes.textField}
+              >
+                <InputLabel htmlFor="outlined-adornment-password">
+                  Password
+                </InputLabel>
+                <OutlinedInput
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={handleChange}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
