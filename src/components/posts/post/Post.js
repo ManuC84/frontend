@@ -244,7 +244,11 @@ const Post = ({ post }) => {
           >
             {!expanded ? "Show Comments" : "Hide Comments"}
           </Typography>
-          <Typography style={{ lineHeight: "0" }} variant="button">
+          <Typography
+            style={{ lineHeight: "0" }}
+            color="textSecondary"
+            variant="button"
+          >
             {post?.comments?.length}
           </Typography>
           <IconButton

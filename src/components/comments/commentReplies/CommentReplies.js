@@ -40,9 +40,9 @@ const CommentReplies = ({ post, comment, user, commentReply }) => {
           <Grid container wrap="nowrap" spacing={2}>
             <Grid item>
               <Avatar
-                title={commentReply.creator[0]?.result?.name}
+                title={commentReply.creator[0]?.data?.result?.name}
                 alt="avatar"
-                src={commentReply.creator[0]?.result?.imageUrl}
+                src={commentReply.creator[0]?.data?.result?.imageUrl}
               />
             </Grid>
             <Grid item xs zeroMinWidth>
@@ -50,7 +50,7 @@ const CommentReplies = ({ post, comment, user, commentReply }) => {
                 variant="h6"
                 style={{ margin: 0, textAlign: "left", fontSize: "0.9rem" }}
               >
-                {commentReply.creator[0]?.result?.name}
+                {commentReply.creator[0]?.data?.result?.name}
               </Typography>
               <Typography
                 style={{
@@ -73,8 +73,10 @@ const CommentReplies = ({ post, comment, user, commentReply }) => {
                 <MoreVertIcon onClick={handleClick} />
               </IconButton>
             </Grid>
-            {user[0]?.result.googleId ===
-            commentReply?.creator[0]?.result?.googleId ? (
+            {user[0]?.data?.result?.googleId ===
+              commentReply?.creator[0]?.data?.result?.googleId ||
+            user[0]?.data?.result?._id ===
+              commentReply?.creator[0]?.data?.result?._id ? (
               <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}

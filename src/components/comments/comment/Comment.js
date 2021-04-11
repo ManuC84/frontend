@@ -76,9 +76,9 @@ const Comment = ({ comment, user, post }) => {
         <Grid container wrap="nowrap" spacing={2}>
           <Grid item>
             <Avatar
-              title={comment.creator[0]?.result?.name}
+              title={comment.creator[0]?.data?.result?.name}
               alt="avatar"
-              src={comment.creator[0]?.result?.imageUrl}
+              src={comment.creator[0]?.data?.result?.imageUrl}
             />
           </Grid>
           <Grid item xs zeroMinWidth>
@@ -86,7 +86,7 @@ const Comment = ({ comment, user, post }) => {
               variant="h6"
               style={{ margin: 0, textAlign: "left", fontSize: "0.9rem" }}
             >
-              {comment.creator[0]?.result?.name}
+              {comment.creator[0]?.data?.result?.name}
             </Typography>
             <Typography
               style={{ textAlign: "left", color: "gray", fontSize: "0.8rem" }}
@@ -106,8 +106,10 @@ const Comment = ({ comment, user, post }) => {
             </IconButton>
           </Grid>
 
-          {user[0]?.result.googleId ===
-          comment?.creator[0]?.result?.googleId ? (
+          {user[0]?.data?.result?.googleId ===
+            comment?.creator[0]?.data?.result?.googleId ||
+          user[0]?.data?.result?._id ===
+            comment?.creator[0]?.data?.result?._id ? (
             <Menu
               id="simple-menu"
               anchorEl={anchorEl}
@@ -170,9 +172,16 @@ const Comment = ({ comment, user, post }) => {
             <Typography
               variant="button"
               color="textSecondary"
-              style={{ height: "20px" }}
+              style={{ height: "20px", marginRight: "5px" }}
             >
               {!expanded ? "Show Replies" : "Hide Replies"}
+            </Typography>
+            <Typography
+              style={{ lineHeight: "0" }}
+              color="textSecondary"
+              variant="button"
+            >
+              {comment?.commentReplies?.length}
             </Typography>
 
             <IconButton

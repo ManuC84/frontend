@@ -24,8 +24,6 @@ const Nav = ({ appProps }) => {
   const history = useHistory();
   const location = useLocation();
 
-  console.log(user);
-
   useEffect(() => {
     const token = user?.token;
     //TOKEN EXPIRY
@@ -72,12 +70,12 @@ const Nav = ({ appProps }) => {
             <div className={classes.userInfoContainer}>
               <Avatar
                 alt={`${user?.result?.name}`}
-                src={user?.result?.imageUrl}
+                src={user?.data?.result?.imageUrl}
                 className={classes.avatar}
               />
               <Typography
                 className={classes.userName}
-              >{`${user?.result?.name}`}</Typography>
+              >{`${user?.data?.result?.name}`}</Typography>
 
               <Button
                 component={Link}
