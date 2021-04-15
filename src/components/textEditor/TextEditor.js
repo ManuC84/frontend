@@ -4,17 +4,24 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Button } from "@material-ui/core";
 import { addComment, addCommentReply } from "../../actions/comments";
+import { useHistory } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
 import "./styles.css";
 
 const TextEditor = ({ post, user, type, comment, setShowEditor, props }) => {
   const [body, setBody] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
   const [editorValue, setEditorValue] = useState(null);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!body) {
+      setErrorMessage("Please enter a value");
+      return;
+    }
 
     if (type === "comments") {
       dispatch(addComment(post._id, { comment: body, creator: user }));
@@ -28,6 +35,8 @@ const TextEditor = ({ post, user, type, comment, setShowEditor, props }) => {
         })
       );
     }
+    setErrorMessage(null);
+
     editorValue.data.set("");
   };
 
@@ -47,6 +56,7 @@ const TextEditor = ({ post, user, type, comment, setShowEditor, props }) => {
             setBody(data);
           }}
         />
+        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
         <Button
           variant="contained"
           size="small"
@@ -56,6 +66,7 @@ const TextEditor = ({ post, user, type, comment, setShowEditor, props }) => {
         >
           Submit
         </Button>
+
         <Button
           variant="contained"
           size="small"

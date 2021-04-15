@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   CircularProgress,
   Typography,
@@ -11,6 +11,10 @@ import { useStyles } from "./styles";
 import Comment from "./comment/Comment";
 import { useSelector } from "react-redux";
 import Pagination from "@material-ui/lab/Pagination";
+import { logout } from "../../reducers/slice/authSlice";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import decode from "jwt-decode";
 
 export default function Comments({ post }) {
   const [commentsPerPage] = useState(5);
@@ -19,9 +23,30 @@ export default function Comments({ post }) {
   const classes = useStyles();
   const user = useState(JSON.parse(localStorage.getItem("profile")));
   const { isLoading } = useSelector((state) => state.posts);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  console.log(user[0]?.data?.token);
 
   const handleChange = (event, value) => {
     setPage(value);
+  };
+
+  //verify Token before opening text editor
+  useEffect(() => {
+    const token = user[0]?.data?.token;
+    //TOKEN EXPIRY
+    if (token) {
+      const decodedToken = decode(token);
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
+        signout();
+      }
+    }
+  }, [showEditor]);
+
+  const signout = () => {
+    dispatch(logout());
+    history.push("/auth");
   };
 
   // Get current comments

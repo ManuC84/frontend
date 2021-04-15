@@ -21,17 +21,23 @@ import { ThumbUp, ThumbDown } from "@material-ui/icons";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import moment from "moment";
 import { useStyles } from "./styles";
-import { addTag } from "../../../actions/posts";
+import { addTag, likePost } from "../../../actions/posts";
 import { getComments } from "../../../actions/comments";
 import { useDispatch, useSelector } from "react-redux";
 import Comments from "../../comments/Comments";
 import ReadMore from "../../../utils/readMore/ReadMore";
+import { TwitterTweetEmbed } from "react-twitter-embed";
 
 const Post = ({ post }) => {
   const [expanded, setExpanded] = useState(false);
   const { error, posts } = useSelector((state) => state.posts);
   const [tag, setTag] = useState("");
   const [addTagError, setAddTagError] = useState({ error: "", bool: false });
+  const user = useState(JSON.parse(localStorage.getItem("profile")));
+  const userId =
+    user[0] && (user[0]?.data?.result?.googleId || user[0]?.data?.result?._id);
+
+  const tweetId = post?.url.split("/").slice(-1)[0];
 
   const textRef = useRef(null);
   const dispatch = useDispatch();
@@ -52,7 +58,7 @@ const Post = ({ post }) => {
   var isStreaming = new RegExp(streamingProviders.join("|")).test(post.url);
 
   const handleExpandClick = () => {
-    dispatch(getComments(post._id));
+    // dispatch(getComments(post._id));
     setExpanded(!expanded);
   };
 
@@ -102,7 +108,7 @@ const Post = ({ post }) => {
         }
         title={
           <>
-            <Link href={post.url} target="_blank" title="Go to source">
+            <Link href={post.url} target="_blank" title="Go to website">
               <Typography
                 style={{ fontSize: "1rem", display: "inline" }}
                 variant="body1"
@@ -113,117 +119,85 @@ const Post = ({ post }) => {
           </>
         }
         subheader={
-          <>
-            {post.creator[0]?.name
-              ? "Created by " + post.creator[0]?.name
-              : "Created by Annonymous"}
+          <Link
+            href={`http://localhost:3000/posts/${post._id}`}
+            style={{ textDecorations: "none", color: "inherit" }}
+            title="Go to post"
+          >
+            <>
+              {post.creator[0]?.name
+                ? "Created by " + post.creator[0]?.name
+                : "Created by Annonymous"}
 
-            {" - " + moment(post.createdAt).fromNow()}
-          </>
+              {" - " + moment(post.createdAt).fromNow()}
+            </>
+          </Link>
         }
       />
 
-      <Link
-        href={`http://localhost:3000/posts/${post._id}`}
-        style={{ textDecorations: "none", color: "inherit" }}
-      >
-        {/* RENDER IMAGE OR VIDEO CONDITIONALLY */}
-        {isStreaming && post?.type?.includes("video") ? (
-          <div style={{ position: "relative", paddingTop: "56.25%" }}>
-            <ReactPlayer
-              url={post.url}
-              style={{ position: "absolute", top: "0", left: "0" }}
-              width="100%"
-              height="100%"
-              config={{
-                vimeo: {
-                  playerOptions: {
-                    controls: true,
-                  },
+      {/* RENDER IMAGE OR VIDEO CONDITIONALLY */}
+      {isStreaming && post?.type?.includes("video") ? (
+        <div style={{ position: "relative", paddingTop: "56.25%" }}>
+          <ReactPlayer
+            url={post.url}
+            style={{ position: "absolute", top: "0", left: "0" }}
+            width="100%"
+            height="100%"
+            config={{
+              vimeo: {
+                playerOptions: {
+                  controls: true,
                 },
-                dailymotion: {
-                  params: {
-                    controls: true,
-                  },
+              },
+              dailymotion: {
+                params: {
+                  controls: true,
                 },
-              }}
-            />
-          </div>
-        ) : (
+              },
+            }}
+          />
+        </div>
+      ) : post?.provider === "Twitter" ? (
+        <CardContent style={{ paddingTop: "0" }}>
+          <TwitterTweetEmbed tweetId={tweetId} />
+        </CardContent>
+      ) : (
+        <Link href={post.image} target="_blank" title="Go to image">
           <CardMedia
             className={classes.media}
             image={post.image}
             title="image"
           />
-        )}
-      </Link>
-      <CardContent>
-        <Typography variant="h6" style={{ fontSize: "1.2rem" }}>
-          {post.title}
-        </Typography>
-        <ReadMore
-          lines={200}
-          content={post.description}
-          variant={"body2"}
-          color={"textSecondary"}
-        />
-      </CardContent>
-      {/* TAGS PENDING TO FIT THEM SOMEWHERE */}
-      {/* <CardContent style={{ padding: "0 16px" }}>
-        <Typography>Tags</Typography>
-        {!post.tags.length ? (
-          <Typography variant="body2" color="textSecondary" component="p">
-            This post contains no tags, add some!
+        </Link>
+      )}
+
+      {post?.provider !== "Twitter" && (
+        <CardContent>
+          <Typography variant="h6" style={{ fontSize: "1rem" }}>
+            {post.title}
           </Typography>
-        ) : (
           <ReadMore
-            lines={80}
-            content={post.tags.map((tag) => "#" + tag + ", ").join("")}
+            lines={200}
+            content={post.description}
             variant={"body2"}
             color={"textSecondary"}
           />
-        )}
-      </CardContent>
-      <CardContent className={classes.addTagContainer}>
-        <form onSubmit={handleAddTags}>
-          <TextField
-            label="Tag"
-            size="small"
-            required
-            onChange={(e) => setTag(e.target.value)}
-            inputRef={textRef}
-            className={classes.addTagInput}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            className={classes.addTagButton}
-            type="submit"
-          >
-            Add tag!
-          </Button>
-        </form>
-        <Collapse in={addTagError.bool}>
-          {addTagError.bool && post._id === addTagError.postsId ? (
-            <Alert
-              severity="error"
-              onClick={() => setAddTagError({ bool: false })}
-            >
-              {addTagError.error}
-            </Alert>
-          ) : null}
-        </Collapse>
-      </CardContent> */}
+        </CardContent>
+      )}
 
-      <CardActions
-        style={{ display: "flex", justifyContent: "space-between" }}
-        disableSpacing
-      >
+      <CardActions className={classes.cardActionsSocial} disableSpacing>
         <div>
-          <IconButton aria-label="Like">
+          <IconButton
+            aria-label="Like"
+            disabled={!user[0]}
+            onClick={() => {
+              dispatch(likePost(post._id, { userId: userId }));
+            }}
+            color={post.likes.includes(userId) ? "primary" : "default"}
+          >
             <ThumbUp />
           </IconButton>
+          {post.likes.length}
           <IconButton aria-label="dislike">
             <ThumbDown />
           </IconButton>

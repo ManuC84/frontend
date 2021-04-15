@@ -9,7 +9,7 @@ import {
   fetchInfinite,
   hasMore,
   fetchSinglePost,
-  createComment,
+  addPostLike,
 } from "../reducers/slice/postsSlice";
 
 export const submitSearchUrl = (payload) => async (dispatch) => {
@@ -72,6 +72,15 @@ export const addTag = (id, tag) => async (dispatch) => {
   try {
     const { data } = await API.addTags(id, tag);
     dispatch(addTags(data));
+  } catch (error) {
+    dispatch(hasError(error.response.data));
+  }
+};
+
+export const likePost = (postId, userId) => async (dispatch) => {
+  try {
+    const { data } = await API.addPostLikes(postId, userId);
+    dispatch(addPostLike(data));
   } catch (error) {
     dispatch(hasError(error.response.data));
   }

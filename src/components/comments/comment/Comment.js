@@ -57,9 +57,9 @@ const Comment = ({ comment, user, post }) => {
     indexOfLastComment
   );
 
-  //Get comment replies when expanding comments
+  //Get comment replies when expanding comments(not needed any more)
   const handleExpandClick = () => {
-    dispatch(getCommentReplies(post._id, comment._id));
+    // dispatch(getCommentReplies(post._id, comment._id));
     setExpanded(!expanded);
   };
 

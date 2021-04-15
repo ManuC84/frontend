@@ -14,7 +14,7 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     padding: "30px",
     [theme.breakpoints.down("xs")]: {
-      marginTop: 150,
+      marginTop: 100,
     },
   },
   avatar: {

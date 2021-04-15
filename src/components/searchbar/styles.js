@@ -6,7 +6,7 @@ export default makeStyles((theme) => ({
     justifyContent: "center",
     width: "100%",
     [theme.breakpoints.down("xs")]: {
-      marginTop: "80px",
+      marginTop: "60px",
     },
   },
 
@@ -44,7 +44,7 @@ export default makeStyles((theme) => ({
   },
 
   searchBar: {
-    width: "50%",
+    width: "40%",
     [theme.breakpoints.down("xs")]: {
       width: "90%",
     },
@@ -57,10 +57,8 @@ export default makeStyles((theme) => ({
     },
   },
   searchButton: {
-    color: "white",
-    backgroundColor: "#00AAA5",
-    "&:hover": {
-      backgroundColor: "#4AD295",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: "10px",
     },
   },
 }));

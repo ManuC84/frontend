@@ -11,9 +11,12 @@ import {
   FormControlLabel,
   FormControl,
   Input,
+  InputLabel,
   Collapse,
   Grow,
   Chip,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import CloseIcon from "@material-ui/icons/Close";
@@ -35,6 +38,7 @@ const Search = () => {
   const [searchError, setSearchError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const user = JSON.parse(localStorage.getItem("profile"));
+  const [selectedValue, setSelectedValue] = useState(1);
 
   const uniqueTags = new Set(tagButtonContent);
 
@@ -67,7 +71,9 @@ const Search = () => {
     }
 
     if (searchType === "url") {
-      dispatch(submitSearchUrl({ url: searchUrl, creator: user?.result }));
+      dispatch(
+        submitSearchUrl({ url: searchUrl, creator: user?.data?.result })
+      );
       setSearchError(false);
       setSearchUrl("");
     }
@@ -203,11 +209,48 @@ const Search = () => {
               />
             </RadioGroup>
           </FormControl>
+          <div
+            style={{ display: "flex", flexDirection: "column", width: "150px" }}
+          >
+            <FormControl variant="outlined">
+              <InputLabel id="demo-simple-select-label">Category</InputLabel>
+              <Select
+                style={{ width: 150 }}
+                value={selectedValue}
+                label="category"
+                onChange={(event) => setSelectedValue(event.target.value)}
+                MenuProps={{
+                  anchorOrigin: {
+                    vertical: "bottom",
+                    horizontal: "center",
+                  },
+                  transformOrigin: {
+                    vertical: "top",
+                    horizontal: "center",
+                  },
+                  getContentAnchorEl: null,
+                  disableScrollLock: true,
+                }}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={1}>News</MenuItem>
+                <MenuItem value={2}>Videos</MenuItem>
+                <MenuItem value={3}>Social Media</MenuItem>
+                <MenuItem value={4}>Gossip</MenuItem>
+                <MenuItem value={5}>Technology</MenuItem>
+                <MenuItem value={6}>Funny</MenuItem>
+                <MenuItem value={7}>Music</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
           <Button
             type="submit"
             variant="contained"
             color="primary"
             onClick={handleSubmit}
+            className={classes.searchButton}
           >
             Search
           </Button>

@@ -65,50 +65,34 @@ export const postsSlice = createSlice({
         ),
       };
     },
-    fetchComments: (state, action) => {
-      return {
-        ...state,
-        posts: state.posts.map((post) =>
-          post._id === action.payload[0].parentPostId
-            ? { ...post, comments: action.payload }
-            : post
-        ),
-        isLoading: false,
-      };
-    },
+
     createComment: (state, action) => {
       return {
         ...state,
         posts: state.posts.map((post) =>
-          post._id === action.payload.parentPostId
-            ? { ...post, comments: [action.payload, ...post.comments] }
-            : post
+          post._id === action.payload._id ? action.payload : post
         ),
         isLoading: false,
       };
     },
-    fetchCommentReplies: (state, action) => {
-      state.posts.map((post) => {
-        if (post._id === action.payload[0].parentPostId) {
-          post.comments.map((comment) => {
-            if (comment._id === action.payload[0].parentCommentId) {
-              comment.commentReplies = action.payload;
-              state.isLoading = false;
-            }
-          });
-        }
-      });
-    },
+
     createCommentReply: (state, action) => {
-      state.posts.map((post) => {
-        if (post._id === action.payload.parentPostId) {
-          post.comments.map((comment) => {
-            if (comment._id === action.payload.parentCommentId) {
-              comment.commentReplies.push(action.payload);
-            }
-          });
-        }
-      });
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post._id === action.payload._id ? action.payload : post
+        ),
+        isLoading: false,
+      };
+    },
+
+    addPostLike: (state, action) => {
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post._id === action.payload._id ? action.payload : post
+        ),
+      };
     },
   },
 });
@@ -124,8 +108,7 @@ export const {
   hasMore,
   fetchSinglePost,
   createComment,
-  fetchComments,
   createCommentReply,
-  fetchCommentReplies,
+  addPostLike,
 } = postsSlice.actions;
 export default postsSlice.reducer;

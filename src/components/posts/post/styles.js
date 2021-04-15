@@ -49,4 +49,12 @@ export const useStyles = makeStyles((theme) => ({
     marginRight: "10px",
     minWidth: "10%",
   },
+  cardActionsSocial: {
+    display: "flex",
+    justifyContent: "space-between",
+    [theme.breakpoints.down("xs")]: {
+      display: "flex",
+      flexDirection: "column",
+    },
+  },
 }));

@@ -5,6 +5,8 @@ export const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     justifyContent: "center",
+    alignItems: "center",
+    height: "90vh",
   },
   progressContainer: {
     display: "flex",

@@ -91,7 +91,6 @@ export default function Auth() {
   const googleSuccess = async (res) => {
     const result = res?.profileObj;
     const token = res?.tokenId;
-    console.log({ data: { result, token } });
     try {
       dispatch(auth({ data: { result, token } }));
       history.push("/");

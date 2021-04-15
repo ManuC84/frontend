@@ -6,7 +6,7 @@ const API = axios.create({ baseURL: "http://localhost:8000" });
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("profile")) {
     req.headers.Authorization = `Bearer ${
-      JSON.parse(localStorage.getItem("profile")).token
+      JSON.parse(localStorage.getItem("profile"))?.data?.token
     }`;
   }
   return req;
@@ -27,16 +27,19 @@ export const getPostsByTags = (tags) => API.post("posts/tags", tags);
 export const addTags = (id, tag) => API.post(`posts/tags/addTags/${id}`, tag);
 
 //Comments
-export const getComments = (id) => API.get(`posts/${id}/comments`);
 
 export const addComments = (id, payload) =>
   API.post(`posts/${id}/comments`, payload);
 
-export const getCommentReplies = (postId, commentId) =>
-  API.get(`posts/${postId}/comments/${commentId}`);
-
 export const addCommentReply = (postId, commentId, payload) =>
   API.post(`posts/${postId}/comments/${commentId}`, payload);
+
+//Post likes
+export const addPostLikes = (postId, userId) =>
+  API.post(`posts/${postId}/likes`, userId);
+//Post dislikes
+export const addPostDislikes = (postId, userId) =>
+  API.post(`posts/${postId}/dislikes`, userId);
 
 //Auth
 export const signIn = (formData) => API.post("/users/signin", formData);

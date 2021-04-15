@@ -31,16 +31,21 @@ export default makeStyles((theme) => ({
     //   backgroundColor: "#A372F0",
     // },
     [theme.breakpoints.down("xs")]: {
-      width: "50%",
+      display: "none",
     },
   },
   userInfoContainer: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "20%",
     margin: "0px",
     padding: "0px",
+    [theme.breakpoints.down("xl")]: {
+      width: "10%",
+    },
+    [theme.breakpoints.down("lg")]: {
+      width: "20%",
+    },
     [theme.breakpoints.down("md")]: {
       width: "30%",
     },
@@ -72,5 +77,19 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       display: "none",
     },
+  },
+
+  list: {
+    width: 250,
+  },
+  menuIcon: {
+    fontSize: 30,
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 40,
+    },
+  },
+  mediumAvatar: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
   },
 }));
