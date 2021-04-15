@@ -10,6 +10,7 @@ import {
   hasMore,
   fetchSinglePost,
   addPostLike,
+  addPostDislike,
 } from "../reducers/slice/postsSlice";
 
 export const submitSearchUrl = (payload) => async (dispatch) => {
@@ -81,6 +82,15 @@ export const likePost = (postId, userId) => async (dispatch) => {
   try {
     const { data } = await API.addPostLikes(postId, userId);
     dispatch(addPostLike(data));
+  } catch (error) {
+    dispatch(hasError(error.response.data));
+  }
+};
+
+export const dislikePost = (postId, userId) => async (dispatch) => {
+  try {
+    const { data } = await API.addPostDislikes(postId, userId);
+    dispatch(addPostDislike(data));
   } catch (error) {
     dispatch(hasError(error.response.data));
   }

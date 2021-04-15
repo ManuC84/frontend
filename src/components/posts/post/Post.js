@@ -21,7 +21,7 @@ import { ThumbUp, ThumbDown } from "@material-ui/icons";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import moment from "moment";
 import { useStyles } from "./styles";
-import { addTag, likePost } from "../../../actions/posts";
+import { addTag, likePost, dislikePost } from "../../../actions/posts";
 import { getComments } from "../../../actions/comments";
 import { useDispatch, useSelector } from "react-redux";
 import Comments from "../../comments/Comments";
@@ -197,8 +197,15 @@ const Post = ({ post }) => {
           >
             <ThumbUp />
           </IconButton>
-          {post.likes.length}
-          <IconButton aria-label="dislike">
+          {post.likes.length - post.dislikes.length}
+          <IconButton
+            aria-label="dislike"
+            disabled={!user[0]}
+            onClick={() => {
+              dispatch(dislikePost(post._id, { userId: userId }));
+            }}
+            color={post.dislikes.includes(userId) ? "secondary" : "default"}
+          >
             <ThumbDown />
           </IconButton>
           <IconButton aria-label="share">

@@ -94,6 +94,14 @@ export const postsSlice = createSlice({
         ),
       };
     },
+    addPostDislike: (state, action) => {
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post._id === action.payload._id ? action.payload : post
+        ),
+      };
+    },
   },
 });
 
@@ -110,5 +118,6 @@ export const {
   createComment,
   createCommentReply,
   addPostLike,
+  addPostDislike,
 } = postsSlice.actions;
 export default postsSlice.reducer;
