@@ -21,7 +21,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ReadMore from "../../../utils/readMore/ReadMore";
 import clsx from "clsx";
 import TextEditor from "../../textEditor/TextEditor";
-import { getCommentReplies } from "../../../actions/comments";
+import { likeComment } from "../../../actions/comments";
 import moment from "moment";
 import CommentReplies from "../commentReplies/CommentReplies";
 import { useDispatch } from "react-redux";
@@ -34,6 +34,9 @@ const Comment = ({ comment, user, post }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  const userId =
+    user[0] && (user[0]?.data?.result?.googleId || user[0]?.data?.result?._id);
 
   // Comment's drop down menu related
   const handleClick = (event) => {
@@ -59,8 +62,12 @@ const Comment = ({ comment, user, post }) => {
 
   //Get comment replies when expanding comments(not needed any more)
   const handleExpandClick = () => {
-    // dispatch(getCommentReplies(post._id, comment._id));
     setExpanded(!expanded);
+  };
+
+  const handleLikeComment = () => {
+    if (user[0])
+      dispatch(likeComment(post._id, comment._id, { userId: userId }));
   };
 
   return (
@@ -162,8 +169,14 @@ const Comment = ({ comment, user, post }) => {
             justifyContent: "space-between",
           }}
         >
+          {/* LIKE AND DISLIKE BUTTONS */}
           <div style={{ marginLeft: "2.5rem" }}>
-            <IconButton aria-label="Like">
+            <IconButton
+              aria-label="Like"
+              onClick={handleLikeComment}
+              disabled={!user[0]}
+              color={comment.likes.includes(userId) ? "primary" : "default"}
+            >
               <ThumbUp fontSize="small" />
             </IconButton>
             <IconButton aria-label="dislike">

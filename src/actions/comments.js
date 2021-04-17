@@ -4,6 +4,7 @@ import {
   createCommentReply,
   hasError,
   startLoading,
+  addCommentLike,
 } from "../reducers/slice/postsSlice";
 
 export const addComment = (id, payload) => async (dispatch) => {
@@ -23,6 +24,15 @@ export const addCommentReply = (postId, commentId, payload) => async (
   try {
     const { data } = await API.addCommentReply(postId, commentId, payload);
     dispatch(createCommentReply(data));
+  } catch (error) {
+    dispatch(hasError(error.response.data));
+  }
+};
+
+export const likeComment = (postId, commentId, userId) => async (dispatch) => {
+  try {
+    const { data } = await API.addCommentLikes(postId, commentId, userId);
+    dispatch(addCommentLike(data));
   } catch (error) {
     dispatch(hasError(error.response.data));
   }

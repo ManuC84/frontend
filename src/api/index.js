@@ -21,6 +21,13 @@ export const getInfiniteScroll = (skip) => API.get(`/posts?skip=${skip}`);
 
 export const createPost = (payload) => API.post("/posts", payload);
 
+//Post likes
+export const addPostLikes = (postId, userId) =>
+  API.post(`posts/${postId}/likes`, userId);
+//Post dislikes
+export const addPostDislikes = (postId, userId) =>
+  API.post(`posts/${postId}/dislikes`, userId);
+
 //Tags
 export const getPostsByTags = (tags) => API.post("posts/tags", tags);
 
@@ -34,12 +41,9 @@ export const addComments = (id, payload) =>
 export const addCommentReply = (postId, commentId, payload) =>
   API.post(`posts/${postId}/comments/${commentId}`, payload);
 
-//Post likes
-export const addPostLikes = (postId, userId) =>
-  API.post(`posts/${postId}/likes`, userId);
-//Post dislikes
-export const addPostDislikes = (postId, userId) =>
-  API.post(`posts/${postId}/dislikes`, userId);
+//Comment likes
+export const addCommentLikes = (postId, commentId, userId) =>
+  API.post(`posts/${postId}/comments/${commentId}/likes`, userId);
 
 //Auth
 export const signIn = (formData) => API.post("/users/signin", formData);
