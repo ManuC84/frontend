@@ -107,201 +107,203 @@ const Post = ({ post }) => {
   }, [addTagError.bool]);
 
   return (
-    <Card className={classes.card}>
-      {/* Throw alert if action attempted without valid token */}
-      {authError && (
-        <AlertDialog
-          textContent={"Please log in again to proceed"}
-          yesButton={"Go to log in page"}
-          noButton={"cancel"}
-        />
-      )}
-      <CardHeader
-        avatar={
-          <Avatar
-            aria-label="recipe"
-            className={classes.avatar}
-            alt="avatar"
-            title={post.provider}
-            src={post.icon}
-          />
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={
-          <>
-            <Link href={post.url} target="_blank" title="Go to website">
-              <Typography
-                style={{ fontSize: "1rem", display: "inline" }}
-                variant="body1"
-              >
-                {post.provider}
-              </Typography>
-            </Link>
-          </>
-        }
-        subheader={
-          <Link
-            href={`http://localhost:3000/posts/${post._id}`}
-            style={{ textDecorations: "none", color: "inherit" }}
-            title="Go to post"
-          >
-            <>
-              {post.creator[0]?.name
-                ? "Created by " + post.creator[0]?.name
-                : "Created by Annonymous"}
-
-              {" - " + moment(post.createdAt).fromNow()}
-            </>
-          </Link>
-        }
+    <>
+      <AlertDialog
+        textContent={"Please log in again to proceed"}
+        yesButton={"Go to log in page"}
+        noButton={"cancel"}
+        authError={authError}
+        setAuthError={setAuthError}
       />
 
-      {/* RENDER IMAGE OR VIDEO CONDITIONALLY */}
-      {isStreaming && post?.type?.includes("video") ? (
-        <div style={{ position: "relative", paddingTop: "56.25%" }}>
-          <ReactPlayer
-            url={post.url}
-            style={{ position: "absolute", top: "0", left: "0" }}
-            width="100%"
-            height="100%"
-            config={{
-              vimeo: {
-                playerOptions: {
-                  controls: true,
+      <Card className={classes.card}>
+        <CardHeader
+          avatar={
+            <Avatar
+              aria-label="recipe"
+              className={classes.avatar}
+              alt="avatar"
+              title={post.provider}
+              src={post.icon}
+            />
+          }
+          action={
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title={
+            <>
+              <Link href={post.url} target="_blank" title="Go to website">
+                <Typography
+                  style={{ fontSize: "1rem", display: "inline" }}
+                  variant="body1"
+                >
+                  {post.provider}
+                </Typography>
+              </Link>
+            </>
+          }
+          subheader={
+            <Link
+              href={`http://localhost:3000/posts/${post._id}`}
+              style={{ textDecorations: "none", color: "inherit" }}
+              title="Go to post"
+            >
+              <>
+                {post.creator[0]?.name
+                  ? "Created by " + post.creator[0]?.name
+                  : "Created by Annonymous"}
+
+                {" - " + moment(post.createdAt).fromNow()}
+              </>
+            </Link>
+          }
+        />
+
+        {/* RENDER IMAGE OR VIDEO CONDITIONALLY */}
+        {isStreaming && post?.type?.includes("video") ? (
+          <div style={{ position: "relative", paddingTop: "56.25%" }}>
+            <ReactPlayer
+              url={post.url}
+              style={{ position: "absolute", top: "0", left: "0" }}
+              width="100%"
+              height="100%"
+              config={{
+                vimeo: {
+                  playerOptions: {
+                    controls: true,
+                  },
                 },
-              },
-              dailymotion: {
-                params: {
-                  controls: true,
+                dailymotion: {
+                  params: {
+                    controls: true,
+                  },
                 },
-              },
+              }}
+            />
+          </div>
+        ) : post?.provider === "Twitter" ? (
+          <CardContent style={{ paddingTop: "0" }}>
+            <TwitterTweetEmbed tweetId={tweetId} />
+          </CardContent>
+        ) : (
+          <Link href={post.image} target="_blank" title="Go to image">
+            <CardMedia
+              className={classes.media}
+              image={post.image}
+              title="image"
+            />
+          </Link>
+        )}
+
+        {post?.provider !== "Twitter" && (
+          <CardContent>
+            <Typography variant="h6" style={{ fontSize: "1rem" }}>
+              {post.title}
+            </Typography>
+            <ReadMore
+              lines={200}
+              content={post.description}
+              variant={"body2"}
+              color={"textSecondary"}
+            />
+          </CardContent>
+        )}
+        {/* LIKE AND DISLIKE BUTTONS */}
+        <CardActions className={classes.cardActionsSocial} disableSpacing>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
             }}
-          />
-        </div>
-      ) : post?.provider === "Twitter" ? (
-        <CardContent style={{ paddingTop: "0" }}>
-          <TwitterTweetEmbed tweetId={tweetId} />
-        </CardContent>
-      ) : (
-        <Link href={post.image} target="_blank" title="Go to image">
-          <CardMedia
-            className={classes.media}
-            image={post.image}
-            title="image"
-          />
-        </Link>
-      )}
-
-      {post?.provider !== "Twitter" && (
-        <CardContent>
-          <Typography variant="h6" style={{ fontSize: "1rem" }}>
-            {post.title}
-          </Typography>
-          <ReadMore
-            lines={200}
-            content={post.description}
-            variant={"body2"}
-            color={"textSecondary"}
-          />
-        </CardContent>
-      )}
-      {/* LIKE AND DISLIKE BUTTONS */}
-      <CardActions className={classes.cardActionsSocial} disableSpacing>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <div
-            onClick={handleLikePost}
-            onMouseEnter={() => setShowLikeAuthAlert(true)}
-            onMouseLeave={() => setShowLikeAuthAlert(false)}
           >
-            <IconButton
-              aria-label="Like"
-              disabled={!user[0]}
-              color={post.likes.includes(userId) ? "primary" : "default"}
+            <div
+              onClick={handleLikePost}
+              onMouseEnter={() => setShowLikeAuthAlert(true)}
+              onMouseLeave={() => setShowLikeAuthAlert(false)}
             >
-              <ThumbUp />
-            </IconButton>
-          </div>
+              <IconButton
+                aria-label="Like"
+                disabled={!user[0]}
+                color={post.likes.includes(userId) ? "primary" : "default"}
+              >
+                <ThumbUp />
+              </IconButton>
+            </div>
 
-          {post.likes.length - post.dislikes.length}
-          <div
-            onClick={handleDislikePost}
-            onMouseEnter={() => setShowLikeAuthAlert(true)}
-            onMouseLeave={() => setShowLikeAuthAlert(false)}
-          >
-            <IconButton
-              aria-label="dislike"
-              disabled={!user[0]}
-              color={post.dislikes.includes(userId) ? "secondary" : "default"}
+            {post.likes.length - post.dislikes.length}
+            <div
+              onClick={handleDislikePost}
+              onMouseEnter={() => setShowLikeAuthAlert(true)}
+              onMouseLeave={() => setShowLikeAuthAlert(false)}
             >
-              <ThumbDown />
+              <IconButton
+                aria-label="dislike"
+                disabled={!user[0]}
+                color={post.dislikes.includes(userId) ? "secondary" : "default"}
+              >
+                <ThumbDown />
+              </IconButton>
+            </div>
+            <div>
+              <IconButton aria-label="share">
+                <ShareIcon />
+              </IconButton>
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              variant="button"
+              color="textSecondary"
+              style={{ marginRight: "5px" }}
+            >
+              {!expanded ? "Show Comments" : "Hide Comments"}
+            </Typography>
+            <Typography
+              style={{ lineHeight: "0" }}
+              color="textSecondary"
+              variant="button"
+            >
+              {post?.comments?.length}
+            </Typography>
+            <IconButton
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded,
+              })}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon />
             </IconButton>
           </div>
-          <div>
-            <IconButton aria-label="share">
-              <ShareIcon />
-            </IconButton>
-          </div>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            variant="button"
-            color="textSecondary"
-            style={{ marginRight: "5px" }}
-          >
-            {!expanded ? "Show Comments" : "Hide Comments"}
-          </Typography>
-          <Typography
-            style={{ lineHeight: "0" }}
-            color="textSecondary"
-            variant="button"
-          >
-            {post?.comments?.length}
-          </Typography>
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </div>
-      </CardActions>
-      {/* Like and dislike auth alert */}
-      {!user[0] && (
-        <Collapse in={showLikeAuthAlert}>
-          <CardContent style={{ padding: "0" }}>
-            {showLikeAuthAlert && (
-              <Alert severity="info">
-                Please log in to like and dislike posts
-              </Alert>
-            )}
+        </CardActions>
+        {/* Like and dislike auth alert */}
+        {!user[0] && (
+          <Collapse in={showLikeAuthAlert}>
+            <CardContent style={{ padding: "0" }}>
+              {showLikeAuthAlert && (
+                <Alert severity="info">
+                  Please log in to like and dislike posts
+                </Alert>
+              )}
+            </CardContent>
+          </Collapse>
+        )}
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent style={{ paddingTop: "0" }}>
+            <Comments post={post} />
           </CardContent>
         </Collapse>
-      )}
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent style={{ paddingTop: "0" }}>
-          <Comments post={post} />
-        </CardContent>
-      </Collapse>
-    </Card>
+      </Card>
+    </>
   );
 };
 
