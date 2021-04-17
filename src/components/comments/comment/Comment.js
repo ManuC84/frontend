@@ -21,7 +21,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ReadMore from "../../../utils/readMore/ReadMore";
 import clsx from "clsx";
 import TextEditor from "../../textEditor/TextEditor";
-import { likeComment } from "../../../actions/comments";
+import { likeComment, dislikeComment } from "../../../actions/comments";
 import moment from "moment";
 import CommentReplies from "../commentReplies/CommentReplies";
 import { useDispatch } from "react-redux";
@@ -68,6 +68,10 @@ const Comment = ({ comment, user, post }) => {
   const handleLikeComment = () => {
     if (user[0])
       dispatch(likeComment(post._id, comment._id, { userId: userId }));
+  };
+  const handleDislikeComment = () => {
+    if (user[0])
+      dispatch(dislikeComment(post._id, comment._id, { userId: userId }));
   };
 
   return (
@@ -179,7 +183,15 @@ const Comment = ({ comment, user, post }) => {
             >
               <ThumbUp fontSize="small" />
             </IconButton>
-            <IconButton aria-label="dislike">
+            {comment.likes.length - comment.dislikes.length}
+            <IconButton
+              aria-label="dislike"
+              onClick={handleDislikeComment}
+              disabled={!user[0]}
+              color={
+                comment.dislikes.includes(userId) ? "secondary" : "default"
+              }
+            >
               <ThumbDown fontSize="small" />
             </IconButton>
           </div>

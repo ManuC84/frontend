@@ -23,7 +23,6 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import moment from "moment";
 import { useStyles } from "./styles";
 import { addTag, likePost, dislikePost } from "../../../actions/posts";
-import { getComments } from "../../../actions/comments";
 import { useDispatch, useSelector } from "react-redux";
 import Comments from "../../comments/Comments";
 import ReadMore from "../../../utils/readMore/ReadMore";

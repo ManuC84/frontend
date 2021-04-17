@@ -44,6 +44,9 @@ export const addCommentReply = (postId, commentId, payload) =>
 //Comment likes
 export const addCommentLikes = (postId, commentId, userId) =>
   API.post(`posts/${postId}/comments/${commentId}/likes`, userId);
+//Comment Dislikes
+export const addCommentDislikes = (postId, commentId, userId) =>
+  API.post(`posts/${postId}/comments/${commentId}/dislikes`, userId);
 
 //Auth
 export const signIn = (formData) => API.post("/users/signin", formData);
