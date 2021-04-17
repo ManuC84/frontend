@@ -26,8 +26,6 @@ export default function Comments({ post }) {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  console.log(user[0]?.data?.token);
-
   const handleChange = (event, value) => {
     setPage(value);
   };

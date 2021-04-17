@@ -12,6 +12,7 @@ import {
   Avatar,
   IconButton,
   Typography,
+  Fade,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -27,9 +28,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Comments from "../../comments/Comments";
 import ReadMore from "../../../utils/readMore/ReadMore";
 import { TwitterTweetEmbed } from "react-twitter-embed";
+import AlertDialog from "../../../utils/AlertDialog";
 
 const Post = ({ post }) => {
   const [expanded, setExpanded] = useState(false);
+  const [showLikeAuthAlert, setShowLikeAuthAlert] = useState(false);
+  const [authError, setAuthError] = useState(false);
   const { error, posts } = useSelector((state) => state.posts);
   const [tag, setTag] = useState("");
   const [addTagError, setAddTagError] = useState({ error: "", bool: false });
@@ -42,6 +46,11 @@ const Post = ({ post }) => {
   const textRef = useRef(null);
   const dispatch = useDispatch();
   const classes = useStyles();
+
+  //Log out if token not authorized
+  if (error.authError) {
+    setAuthError(true);
+  }
 
   //Use ReactPlayer for streaming urls
   var streamingProviders = [
@@ -60,6 +69,14 @@ const Post = ({ post }) => {
   const handleExpandClick = () => {
     // dispatch(getComments(post._id));
     setExpanded(!expanded);
+  };
+
+  const handleLikePost = () => {
+    if (user[0]) dispatch(likePost(post._id, { userId: userId }));
+  };
+
+  const handleDislikePost = () => {
+    if (user[0]) dispatch(dislikePost(post._id, { userId: userId }));
   };
 
   const handleAddTags = (e) => {
@@ -91,6 +108,14 @@ const Post = ({ post }) => {
 
   return (
     <Card className={classes.card}>
+      {/* Throw alert if action attempted without valid token */}
+      {authError && (
+        <AlertDialog
+          textContent={"Please log in again to proceed"}
+          yesButton={"Go to log in page"}
+          noButton={"cancel"}
+        />
+      )}
       <CardHeader
         avatar={
           <Avatar
@@ -184,33 +209,48 @@ const Post = ({ post }) => {
           />
         </CardContent>
       )}
-
+      {/* LIKE AND DISLIKE BUTTONS */}
       <CardActions className={classes.cardActionsSocial} disableSpacing>
-        <div>
-          <IconButton
-            aria-label="Like"
-            disabled={!user[0]}
-            onClick={() => {
-              dispatch(likePost(post._id, { userId: userId }));
-            }}
-            color={post.likes.includes(userId) ? "primary" : "default"}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <div
+            onClick={handleLikePost}
+            onMouseEnter={() => setShowLikeAuthAlert(true)}
+            onMouseLeave={() => setShowLikeAuthAlert(false)}
           >
-            <ThumbUp />
-          </IconButton>
+            <IconButton
+              aria-label="Like"
+              disabled={!user[0]}
+              color={post.likes.includes(userId) ? "primary" : "default"}
+            >
+              <ThumbUp />
+            </IconButton>
+          </div>
+
           {post.likes.length - post.dislikes.length}
-          <IconButton
-            aria-label="dislike"
-            disabled={!user[0]}
-            onClick={() => {
-              dispatch(dislikePost(post._id, { userId: userId }));
-            }}
-            color={post.dislikes.includes(userId) ? "secondary" : "default"}
+          <div
+            onClick={handleDislikePost}
+            onMouseEnter={() => setShowLikeAuthAlert(true)}
+            onMouseLeave={() => setShowLikeAuthAlert(false)}
           >
-            <ThumbDown />
-          </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
+            <IconButton
+              aria-label="dislike"
+              disabled={!user[0]}
+              color={post.dislikes.includes(userId) ? "secondary" : "default"}
+            >
+              <ThumbDown />
+            </IconButton>
+          </div>
+          <div>
+            <IconButton aria-label="share">
+              <ShareIcon />
+            </IconButton>
+          </div>
         </div>
         <div
           style={{
@@ -244,6 +284,18 @@ const Post = ({ post }) => {
           </IconButton>
         </div>
       </CardActions>
+      {/* Like and dislike auth alert */}
+      {!user[0] && (
+        <Collapse in={showLikeAuthAlert}>
+          <CardContent style={{ padding: "0" }}>
+            {showLikeAuthAlert && (
+              <Alert severity="info">
+                Please log in to like and dislike posts
+              </Alert>
+            )}
+          </CardContent>
+        </Collapse>
+      )}
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent style={{ paddingTop: "0" }}>
           <Comments post={post} />
