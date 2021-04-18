@@ -8,7 +8,15 @@ import { useHistory } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
 import "./styles.css";
 
-const TextEditor = ({ post, user, type, comment, setShowEditor, props }) => {
+const TextEditor = ({
+  post,
+  user,
+  type,
+  comment,
+  setShowEditor,
+  props,
+  error,
+}) => {
   const [body, setBody] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const [editorValue, setEditorValue] = useState(null);
@@ -36,7 +44,7 @@ const TextEditor = ({ post, user, type, comment, setShowEditor, props }) => {
       );
     }
     setErrorMessage(null);
-
+    if (error.authError) return;
     editorValue.data.set("");
   };
 

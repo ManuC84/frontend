@@ -46,10 +46,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  console.log(authError);
-  console.log(error.authError);
-
-  //Log out if token not authorized
+  //Listen to authError from backend
   useEffect(() => {
     if (error.authError) {
       return setAuthError(true);
@@ -71,7 +68,6 @@ const Post = ({ post, error, authError, setAuthError }) => {
   var isStreaming = new RegExp(streamingProviders.join("|")).test(post.url);
 
   const handleExpandClick = () => {
-    // dispatch(getComments(post._id));
     setExpanded(!expanded);
   };
 
@@ -303,7 +299,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
         )}
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent style={{ paddingTop: "0" }}>
-            <Comments post={post} />
+            <Comments post={post} error={error} />
           </CardContent>
         </Collapse>
       </Card>

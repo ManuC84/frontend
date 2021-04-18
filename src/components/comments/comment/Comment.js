@@ -26,7 +26,7 @@ import moment from "moment";
 import CommentReplies from "../commentReplies/CommentReplies";
 import { useDispatch } from "react-redux";
 
-const Comment = ({ comment, user, post }) => {
+const Comment = ({ comment, user, post, error }) => {
   const [expanded, setExpanded] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
   const [page, setPage] = React.useState(1);
@@ -174,53 +174,61 @@ const Comment = ({ comment, user, post }) => {
           }}
         >
           {/* LIKE AND DISLIKE BUTTONS */}
-          <div style={{ marginLeft: "2.5rem" }}>
-            <IconButton
-              aria-label="Like"
-              onClick={handleLikeComment}
-              disabled={!user[0]}
-              color={comment.likes.includes(userId) ? "primary" : "default"}
-            >
-              <ThumbUp fontSize="small" />
-            </IconButton>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginLeft: "2.5rem",
+            }}
+          >
+            <div onClick={handleLikeComment}>
+              <IconButton
+                aria-label="Like"
+                disabled={!user[0]}
+                color={comment.likes.includes(userId) ? "primary" : "default"}
+              >
+                <ThumbUp fontSize="small" />
+              </IconButton>
+            </div>
             {comment.likes.length - comment.dislikes.length}
-            <IconButton
-              aria-label="dislike"
-              onClick={handleDislikeComment}
-              disabled={!user[0]}
-              color={
-                comment.dislikes.includes(userId) ? "secondary" : "default"
-              }
-            >
-              <ThumbDown fontSize="small" />
-            </IconButton>
+            <div onClick={handleDislikeComment}>
+              <IconButton
+                aria-label="dislike"
+                disabled={!user[0]}
+                color={
+                  comment.dislikes.includes(userId) ? "secondary" : "default"
+                }
+              >
+                <ThumbDown fontSize="small" />
+              </IconButton>
+            </div>
           </div>
-          <div>
-            <Typography
-              variant="button"
-              color="textSecondary"
-              style={{ height: "20px", marginRight: "5px" }}
-            >
-              {!expanded ? "Show Replies" : "Hide Replies"}
-            </Typography>
-            <Typography
-              style={{ lineHeight: "0" }}
-              color="textSecondary"
-              variant="button"
-            >
-              {comment?.commentReplies?.length}
-            </Typography>
-
-            <IconButton
-              className={clsx(classes.expand, {
-                [classes.expandOpen]: expanded,
-              })}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </IconButton>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <div>
+              <Typography
+                variant="button"
+                color="textSecondary"
+                style={{ height: "20px", marginRight: "5px" }}
+              >
+                {!expanded ? "Show Replies" : "Hide Replies"}
+              </Typography>
+            </div>
+            <div>
+              <Typography color="textSecondary" variant="button">
+                {comment?.commentReplies?.length}
+              </Typography>
+            </div>
+            <div onClick={handleExpandClick}>
+              <IconButton
+                className={clsx(classes.expand, {
+                  [classes.expandOpen]: expanded,
+                })}
+                aria-expanded={expanded}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </IconButton>
+            </div>
           </div>
         </div>
         {/* COMMENT REPLIES */}
@@ -244,6 +252,7 @@ const Comment = ({ comment, user, post }) => {
               user={user}
               type={"commentReplies"}
               setShowEditor={setShowEditor}
+              error={error}
             />
           </Collapse>
           {currentComments.map((commentReply) => (

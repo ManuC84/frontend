@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import decode from "jwt-decode";
 
-export default function Comments({ post }) {
+export default function Comments({ post, error }) {
   const [commentsPerPage] = useState(5);
   const [page, setPage] = React.useState(1);
   const [showEditor, setShowEditor] = useState(false);
@@ -28,23 +28,6 @@ export default function Comments({ post }) {
 
   const handleChange = (event, value) => {
     setPage(value);
-  };
-
-  //verify Token before opening text editor
-  useEffect(() => {
-    const token = user[0]?.data?.token;
-    //TOKEN EXPIRY
-    if (token) {
-      const decodedToken = decode(token);
-      if (decodedToken.exp * 1000 < new Date().getTime()) {
-        signout();
-      }
-    }
-  }, [showEditor]);
-
-  const signout = () => {
-    dispatch(logout());
-    history.push("/auth");
   };
 
   // Get current comments
@@ -77,6 +60,7 @@ export default function Comments({ post }) {
           user={user}
           type={"comments"}
           setShowEditor={setShowEditor}
+          error={error}
         />
       </Collapse>
 
@@ -94,6 +78,7 @@ export default function Comments({ post }) {
             user={user}
             post={post}
             key={comment._id}
+            error={error}
           />
         ))
       )}
