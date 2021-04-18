@@ -15,9 +15,11 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import "./styleOverride.css";
 
 const Posts = () => {
+  const [authError, setAuthError] = useState(false);
   const { posts, isLoading, error, loadMorePosts } = useSelector(
     (state) => state.posts
   );
+
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -60,7 +62,13 @@ const Posts = () => {
         }
       >
         {posts.map((post) => (
-          <Post post={post} key={post._id} />
+          <Post
+            post={post}
+            key={post._id}
+            error={error}
+            authError={authError}
+            setAuthError={setAuthError}
+          />
         ))}
       </InfiniteScroll>
     </section>

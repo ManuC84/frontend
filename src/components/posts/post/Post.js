@@ -29,11 +29,11 @@ import ReadMore from "../../../utils/readMore/ReadMore";
 import { TwitterTweetEmbed } from "react-twitter-embed";
 import AlertDialog from "../../../utils/AlertDialog";
 
-const Post = ({ post }) => {
+const Post = ({ post, error, authError, setAuthError }) => {
   const [expanded, setExpanded] = useState(false);
   const [showLikeAuthAlert, setShowLikeAuthAlert] = useState(false);
-  const [authError, setAuthError] = useState(false);
-  const { error, posts } = useSelector((state) => state.posts);
+
+  const { posts } = useSelector((state) => state.posts);
   const [tag, setTag] = useState("");
   const [addTagError, setAddTagError] = useState({ error: "", bool: false });
   const user = useState(JSON.parse(localStorage.getItem("profile")));
@@ -46,10 +46,15 @@ const Post = ({ post }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
+  console.log(authError);
+  console.log(error.authError);
+
   //Log out if token not authorized
-  if (error.authError) {
-    setAuthError(true);
-  }
+  useEffect(() => {
+    if (error.authError) {
+      return setAuthError(true);
+    }
+  }, [error]);
 
   //Use ReactPlayer for streaming urls
   var streamingProviders = [

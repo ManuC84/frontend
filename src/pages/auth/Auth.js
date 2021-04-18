@@ -289,7 +289,6 @@ export default function Auth() {
                     type="submit"
                     fullWidth
                     onClick={renderProps.onClick}
-                    // disabled={renderProps.disabled}
                     variant="contained"
                     color="secondary"
                     className={classes.submit}
