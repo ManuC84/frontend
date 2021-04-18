@@ -48,6 +48,30 @@ export const addCommentLikes = (postId, commentId, userId) =>
 export const addCommentDislikes = (postId, commentId, userId) =>
   API.post(`posts/${postId}/comments/${commentId}/dislikes`, userId);
 
+//Comment Reply likes
+export const addCommentReplyLikes = (
+  postId,
+  commentId,
+  commentReplyId,
+  userId
+) =>
+  API.post(
+    `posts/${postId}/comments/${commentId}/commentReplies/${commentReplyId}/likes`,
+    userId
+  );
+
+//Comment Reply dislikes
+export const addCommentReplyDislikes = (
+  postId,
+  commentId,
+  commentReplyId,
+  userId
+) =>
+  API.post(
+    `posts/${postId}/comments/${commentId}/commentReplies/${commentReplyId}/dislikes`,
+    userId
+  );
+
 //Auth
 export const signIn = (formData) => API.post("/users/signin", formData);
 export const signUp = (formData) => API.post("/users/signup", formData);

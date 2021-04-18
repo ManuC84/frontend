@@ -6,6 +6,8 @@ import {
   startLoading,
   addCommentLike,
   addCommentDislike,
+  addCommentReplyLike,
+  addCommentReplyDislike,
 } from "../reducers/slice/postsSlice";
 
 export const addComment = (id, payload) => async (dispatch) => {
@@ -38,12 +40,51 @@ export const likeComment = (postId, commentId, userId) => async (dispatch) => {
     dispatch(hasError(error.response.data));
   }
 };
+
 export const dislikeComment = (postId, commentId, userId) => async (
   dispatch
 ) => {
   try {
     const { data } = await API.addCommentDislikes(postId, commentId, userId);
     dispatch(addCommentDislike(data));
+  } catch (error) {
+    dispatch(hasError(error.response.data));
+  }
+};
+
+export const likeCommentReply = (
+  postId,
+  commentId,
+  commentReplyId,
+  userId
+) => async (dispatch) => {
+  try {
+    const { data } = await API.addCommentReplyLikes(
+      postId,
+      commentId,
+      commentReplyId,
+      userId
+    );
+    dispatch(addCommentReplyLike(data));
+  } catch (error) {
+    dispatch(hasError(error.response.data));
+  }
+};
+
+export const dislikeCommentReply = (
+  postId,
+  commentId,
+  commentReplyId,
+  userId
+) => async (dispatch) => {
+  try {
+    const { data } = await API.addCommentReplyDislikes(
+      postId,
+      commentId,
+      commentReplyId,
+      userId
+    );
+    dispatch(addCommentReplyDislike(data));
   } catch (error) {
     dispatch(hasError(error.response.data));
   }

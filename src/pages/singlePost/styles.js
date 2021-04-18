@@ -6,7 +6,9 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "90vh",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: "50px",
+    },
   },
   progressContainer: {
     display: "flex",

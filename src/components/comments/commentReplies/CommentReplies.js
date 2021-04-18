@@ -16,11 +16,36 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { ThumbUp, ThumbDown } from "@material-ui/icons";
 import ReadMore from "../../../utils/readMore/ReadMore";
 import moment from "moment";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  likeCommentReply,
+  dislikeCommentReply,
+} from "../../../actions/comments";
 
 const CommentReplies = ({ post, comment, user, commentReply }) => {
   const { isLoading } = useSelector((state) => state.posts);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const dispatch = useDispatch();
+
+  const userId =
+    user[0] && (user[0]?.data?.result?.googleId || user[0]?.data?.result?._id);
+
+  const handleLikeCommentReply = () => {
+    if (user[0])
+      dispatch(
+        likeCommentReply(post._id, comment._id, commentReply._id, {
+          userId: userId,
+        })
+      );
+  };
+  const handleDislikeCommentReply = () => {
+    if (user[0])
+      dispatch(
+        dislikeCommentReply(post._id, comment._id, commentReply._id, {
+          userId: userId,
+        })
+      );
+  };
 
   // Comment's drop down menu related
   const handleClick = (event) => {
@@ -120,6 +145,7 @@ const CommentReplies = ({ post, comment, user, commentReply }) => {
               </Menu>
             )}
           </Grid>
+          {/* COMMENT REPLIES LIKES AND DISLIKES */}
           <div
             style={{
               display: "flex",
@@ -127,13 +153,38 @@ const CommentReplies = ({ post, comment, user, commentReply }) => {
               justifyContent: "space-between",
             }}
           >
-            <div style={{ marginLeft: "2.5rem" }}>
-              <IconButton aria-label="Like">
-                <ThumbUp fontSize="small" />
-              </IconButton>
-              <IconButton aria-label="dislike">
-                <ThumbDown fontSize="small" />
-              </IconButton>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginLeft: "2.5rem",
+              }}
+            >
+              <div onClick={handleLikeCommentReply}>
+                <IconButton
+                  aria-label="Like"
+                  disabled={!user[0]}
+                  color={
+                    commentReply.likes.includes(userId) ? "primary" : "default"
+                  }
+                >
+                  <ThumbUp fontSize="small" />
+                </IconButton>
+              </div>
+              {commentReply.likes.length - commentReply.dislikes.length}
+              <div onClick={handleDislikeCommentReply}>
+                <IconButton
+                  aria-label="dislike"
+                  disabled={!user[0]}
+                  color={
+                    commentReply.dislikes.includes(userId)
+                      ? "secondary"
+                      : "default"
+                  }
+                >
+                  <ThumbDown fontSize="small" />
+                </IconButton>
+              </div>
             </div>
           </div>
         </CardContent>

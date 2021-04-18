@@ -118,6 +118,22 @@ export const postsSlice = createSlice({
         ),
       };
     },
+    addCommentReplyLike: (state, action) => {
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post._id === action.payload._id ? action.payload : post
+        ),
+      };
+    },
+    addCommentReplyDislike: (state, action) => {
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post._id === action.payload._id ? action.payload : post
+        ),
+      };
+    },
   },
 });
 
@@ -137,5 +153,7 @@ export const {
   addPostDislike,
   addCommentLike,
   addCommentDislike,
+  addCommentReplyLike,
+  addCommentReplyDislike,
 } = postsSlice.actions;
 export default postsSlice.reducer;
