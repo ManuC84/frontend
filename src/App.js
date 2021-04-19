@@ -7,7 +7,7 @@ import Auth from "./pages/auth/Auth";
 import RedirectToMain from "../src/utils/RedirectToMain";
 import SinglePost from "./pages/singlePost/SinglePost";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import ScrollTop from "../../frontend/src/utils/ScrollToTop";
+import ScrollTop from "../src/utils/ScrollToTop";
 
 function App(props) {
   return (
