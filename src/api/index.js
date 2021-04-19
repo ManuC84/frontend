@@ -48,6 +48,10 @@ export const addCommentLikes = (postId, commentId, userId) =>
 export const addCommentDislikes = (postId, commentId, userId) =>
   API.post(`posts/${postId}/comments/${commentId}/dislikes`, userId);
 
+//Comment Edit
+export const editComment = (postId, commentId, commentText) =>
+  API.put(`posts/${postId}/comments/${commentId}/edit`, commentText);
+
 //Comment Reply likes
 export const addCommentReplyLikes = (
   postId,

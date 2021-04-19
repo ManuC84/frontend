@@ -10,6 +10,7 @@ import {
   Button,
   Menu,
   MenuItem,
+  Fade,
 } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
@@ -32,6 +33,7 @@ const Comment = ({ comment, user, post, error }) => {
   const [page, setPage] = React.useState(1);
   const [commentsPerPage] = useState(5);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [isEditing, setIsEditing] = useState(false);
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -41,6 +43,9 @@ const Comment = ({ comment, user, post, error }) => {
   // Comment's drop down menu related
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+  const handleEdit = () => {
+    setIsEditing(true);
   };
 
   const handleClose = () => {
@@ -104,16 +109,35 @@ const Comment = ({ comment, user, post, error }) => {
             >
               {moment(comment.createdAt).fromNow()}
             </Typography>
-            <ReadMore
-              lines={200}
-              content={comment.comment}
-              variant={"body2"}
-              color={"textPrimary"}
-            />
+            {/* COMMENT BODY */}
+            <Fade in={isEditing} timeout={1000}>
+              {!isEditing ? (
+                <ReadMore
+                  lines={200}
+                  content={comment.comment}
+                  variant={"body2"}
+                  color={"textPrimary"}
+                />
+              ) : (
+                <div>
+                  <TextEditor
+                    post={post}
+                    comment={comment}
+                    user={user}
+                    type={"commentEdition"}
+                    setShowEditor={setShowEditor}
+                    error={error}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                    editText={comment.comment}
+                  />
+                </div>
+              )}
+            </Fade>
           </Grid>
           <Grid>
-            <IconButton aria-label="settings">
-              <MoreVertIcon onClick={handleClick} />
+            <IconButton aria-label="settings" onClick={handleClick}>
+              <MoreVertIcon />
             </IconButton>
           </Grid>
 
@@ -128,6 +152,7 @@ const Comment = ({ comment, user, post, error }) => {
               anchorEl={anchorEl}
               keepMounted
               open={Boolean(anchorEl)}
+              onClick={handleClose}
               onClose={handleClose}
               getContentAnchorEl={null}
               disableScrollLock={true}
@@ -140,7 +165,7 @@ const Comment = ({ comment, user, post, error }) => {
                 horizontal: "center",
               }}
             >
-              <MenuItem onClick={handleClose}>Edit</MenuItem>
+              <MenuItem onClick={handleEdit}>Edit</MenuItem>
               <MenuItem onClick={handleClose}>Delete</MenuItem>
               <MenuItem onClick={handleClose}>Report</MenuItem>
             </Menu>

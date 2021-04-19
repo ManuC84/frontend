@@ -1,9 +1,13 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Button } from "@material-ui/core";
-import { addComment, addCommentReply } from "../../actions/comments";
+import {
+  addComment,
+  addCommentReply,
+  updateComment,
+} from "../../actions/comments";
 import { useHistory } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
 import "./styles.css";
@@ -16,6 +20,9 @@ const TextEditor = ({
   setShowEditor,
   props,
   error,
+  isEditing,
+  setIsEditing,
+  editText,
 }) => {
   const [body, setBody] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -23,6 +30,18 @@ const TextEditor = ({
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const history = useHistory();
+
+  const handleShowEditor = () => setShowEditor(false);
+  const handleCloseEdit = () => {
+    setIsEditing(false);
+  };
+
+  //SHOW TEXT TO EDIT
+  useEffect(() => {
+    if (editText && editorValue) {
+      editorValue.data.set(String(editText));
+    }
+  }, [isEditing, editorValue]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,6 +61,10 @@ const TextEditor = ({
           creator: user,
         })
       );
+    }
+    if (type === "commentEdition") {
+      dispatch(updateComment(post._id, comment._id, { commentText: body }));
+      setIsEditing(false);
     }
     setErrorMessage(null);
     if (error.authError) return;
@@ -80,7 +103,7 @@ const TextEditor = ({
           size="small"
           color="secondary"
           style={{ margin: "5px 0 0 5px" }}
-          onClick={() => setShowEditor(false)}
+          onClick={!isEditing ? handleShowEditor : handleCloseEdit}
         >
           Cancel
         </Button>
