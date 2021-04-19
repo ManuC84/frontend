@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL: "http://localhost:8000" });
+const API = axios.create({ baseURL: "https://freelycomment.herokuapp.com/" });
 
 //Passing headers to backend for authorization
 API.interceptors.request.use((req) => {

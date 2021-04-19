@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Nav from "./components/navbar/Nav";
 import Home from "./pages/home/Home";
 import Auth from "./pages/auth/Auth";
-import RedirectToMain from "../../frontend/src/utils/RedirectToMain";
+import RedirectToMain from "../src/utils/RedirectToMain";
 import SinglePost from "./pages/singlePost/SinglePost";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import ScrollTop from "../../frontend/src/utils/ScrollToTop";
