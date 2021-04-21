@@ -33,8 +33,6 @@ const TextEditor = ({
   const inputRef = useRef(null);
   const history = useHistory();
 
-  console.log(commentReply?._id);
-
   const handleShowEditor = () => setShowEditor(false);
 
   const handleCloseEdit = () => {

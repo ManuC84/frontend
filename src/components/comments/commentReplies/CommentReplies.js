@@ -138,6 +138,7 @@ const CommentReplies = ({ post, comment, user, commentReply, error }) => {
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
+                onClick={handleClose}
                 onClose={handleClose}
                 getContentAnchorEl={null}
                 disableScrollLock={true}

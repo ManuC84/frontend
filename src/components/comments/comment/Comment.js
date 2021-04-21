@@ -22,7 +22,11 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ReadMore from "../../../utils/readMore/ReadMore";
 import clsx from "clsx";
 import TextEditor from "../../textEditor/TextEditor";
-import { likeComment, dislikeComment } from "../../../actions/comments";
+import {
+  likeComment,
+  dislikeComment,
+  removeComment,
+} from "../../../actions/comments";
 import moment from "moment";
 import CommentReplies from "../commentReplies/CommentReplies";
 import { useDispatch } from "react-redux";
@@ -46,6 +50,14 @@ const Comment = ({ comment, user, post, error }) => {
   };
   const handleEdit = () => {
     setIsEditing(true);
+  };
+
+  const handleDelete = () => {
+    let deleteAlert = window.confirm(
+      "Are you sure you want to delete this comment?"
+    );
+    if (!deleteAlert) return;
+    dispatch(removeComment(post._id, comment._id));
   };
 
   const handleClose = () => {
@@ -166,7 +178,7 @@ const Comment = ({ comment, user, post, error }) => {
               }}
             >
               <MenuItem onClick={handleEdit}>Edit</MenuItem>
-              <MenuItem onClick={handleClose}>Delete</MenuItem>
+              <MenuItem onClick={handleDelete}>Delete</MenuItem>
               <MenuItem onClick={handleClose}>Report</MenuItem>
             </Menu>
           ) : (

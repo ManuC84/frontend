@@ -150,6 +150,14 @@ export const postsSlice = createSlice({
         ),
       };
     },
+    deleteComment: (state, action) => {
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post._id === action.payload._id ? action.payload : post
+        ),
+      };
+    },
   },
 });
 
@@ -173,5 +181,6 @@ export const {
   addCommentReplyDislike,
   editComment,
   editCommentReply,
+  deleteComment,
 } = postsSlice.actions;
 export default postsSlice.reducer;

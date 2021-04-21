@@ -52,6 +52,10 @@ export const addCommentDislikes = (postId, commentId, userId) =>
 export const editComment = (postId, commentId, commentText) =>
   API.put(`posts/${postId}/comments/${commentId}/edit`, commentText);
 
+//Comment Delete
+export const deleteComment = (postId, commentId) =>
+  API.delete(`posts/${postId}/comments/${commentId}/delete`);
+
 //Comment Reply likes
 export const addCommentReplyLikes = (
   postId,
