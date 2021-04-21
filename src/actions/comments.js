@@ -9,6 +9,7 @@ import {
   addCommentReplyLike,
   addCommentReplyDislike,
   editComment,
+  editCommentReply,
 } from "../reducers/slice/postsSlice";
 
 export const addComment = (id, payload) => async (dispatch) => {
@@ -97,6 +98,24 @@ export const updateComment = (postId, commentId, commentText) => async (
   try {
     const { data } = await API.editComment(postId, commentId, commentText);
     dispatch(editComment(data));
+  } catch (error) {
+    dispatch(hasError(error.response.data));
+  }
+};
+export const updateCommentReply = (
+  postId,
+  commentId,
+  commentReplyId,
+  commentReplyText
+) => async (dispatch) => {
+  try {
+    const { data } = await API.editCommentReply(
+      postId,
+      commentId,
+      commentReplyId,
+      commentReplyText
+    );
+    dispatch(editCommentReply(data));
   } catch (error) {
     dispatch(hasError(error.response.data));
   }

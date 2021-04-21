@@ -2,8 +2,9 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
   root: {
-    // background: "rgba(255,255,255,0.4)",
-    // borderBottom: "1px solid rgba(225,225,225,0.5)",
+    [theme.breakpoints.down("xs")]: {
+      background: "#311996",
+    },
   },
 
   nav: {

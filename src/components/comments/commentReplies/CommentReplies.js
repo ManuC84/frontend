@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Avatar,
   Grid,
@@ -10,7 +10,9 @@ import {
   CircularProgress,
   Menu,
   MenuItem,
+  Fade,
 } from "@material-ui/core";
+import makeStyles from "./styles";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 import { ThumbUp, ThumbDown } from "@material-ui/icons";
@@ -21,11 +23,15 @@ import {
   likeCommentReply,
   dislikeCommentReply,
 } from "../../../actions/comments";
+import TextEditor from "../../textEditor/TextEditor";
 
-const CommentReplies = ({ post, comment, user, commentReply }) => {
+const CommentReplies = ({ post, comment, user, commentReply, error }) => {
   const { isLoading } = useSelector((state) => state.posts);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [showEditor, setShowEditor] = useState(false);
   const dispatch = useDispatch();
+  const classes = makeStyles();
 
   const userId =
     user[0] && (user[0]?.data?.result?.googleId || user[0]?.data?.result?._id);
@@ -55,13 +61,18 @@ const CommentReplies = ({ post, comment, user, commentReply }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
   return isLoading ? (
     <CircularProgress />
   ) : (
     <Grow in={true}>
       <div>
         <Divider variant="middle" />
-        <CardContent style={{ marginLeft: "2.5rem" }}>
+        <CardContent className={classes.commentReply}>
           <Grid container wrap="nowrap" spacing={2}>
             <Grid item>
               <Avatar
@@ -86,16 +97,36 @@ const CommentReplies = ({ post, comment, user, commentReply }) => {
               >
                 {moment(commentReply.createdAt).fromNow()}
               </Typography>
-              <ReadMore
-                lines={200}
-                content={commentReply.commentReply}
-                variant={"body2"}
-                color={"textPrimary"}
-              />
+              {/* COMMENT REPLY BODY */}
+              <Fade in={isEditing} timeout={1000}>
+                {!isEditing ? (
+                  <ReadMore
+                    lines={200}
+                    content={commentReply.commentReply}
+                    variant={"body2"}
+                    color={"textPrimary"}
+                  />
+                ) : (
+                  <div>
+                    <TextEditor
+                      post={post}
+                      comment={comment}
+                      commentReply={commentReply}
+                      user={user}
+                      type={"commentReplyEdition"}
+                      setShowEditor={setShowEditor}
+                      error={error}
+                      isEditing={isEditing}
+                      setIsEditing={setIsEditing}
+                      editText={commentReply.commentReply}
+                    />
+                  </div>
+                )}
+              </Fade>
             </Grid>
             <Grid>
-              <IconButton aria-label="settings">
-                <MoreVertIcon onClick={handleClick} />
+              <IconButton aria-label="settings" onClick={handleClick}>
+                <MoreVertIcon />
               </IconButton>
             </Grid>
             {user[0]?.data?.result?.googleId ===
@@ -119,7 +150,7 @@ const CommentReplies = ({ post, comment, user, commentReply }) => {
                   horizontal: "center",
                 }}
               >
-                <MenuItem onClick={handleClose}>Edit</MenuItem>
+                <MenuItem onClick={handleEdit}>Edit</MenuItem>
                 <MenuItem onClick={handleClose}>Delete</MenuItem>
                 <MenuItem onClick={handleClose}>Report</MenuItem>
               </Menu>

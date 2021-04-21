@@ -11,4 +11,16 @@ export const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: "rotate(180deg)",
   },
+  showReplies: {
+    height: "20px",
+    marginRight: "5px",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 10,
+    },
+  },
+  replyNumber: {
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 10,
+    },
+  },
 }));

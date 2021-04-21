@@ -7,6 +7,7 @@ import {
   addComment,
   addCommentReply,
   updateComment,
+  updateCommentReply,
 } from "../../actions/comments";
 import { useHistory } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
@@ -17,6 +18,7 @@ const TextEditor = ({
   user,
   type,
   comment,
+  commentReply,
   setShowEditor,
   props,
   error,
@@ -31,8 +33,20 @@ const TextEditor = ({
   const inputRef = useRef(null);
   const history = useHistory();
 
+  console.log(commentReply?._id);
+
   const handleShowEditor = () => setShowEditor(false);
+
   const handleCloseEdit = () => {
+    if (body !== editText) {
+      let editAlert = window.confirm(
+        "Are you sure you want to discard your message?"
+      );
+      if (editAlert) {
+        setIsEditing(false);
+      }
+      return;
+    }
     setIsEditing(false);
   };
 
@@ -62,10 +76,21 @@ const TextEditor = ({
         })
       );
     }
+
     if (type === "commentEdition") {
       dispatch(updateComment(post._id, comment._id, { commentText: body }));
       setIsEditing(false);
     }
+
+    if (type === "commentReplyEdition") {
+      dispatch(
+        updateCommentReply(post._id, comment._id, commentReply._id, {
+          commentReplyText: body,
+        })
+      );
+      setIsEditing(false);
+    }
+
     setErrorMessage(null);
     if (error.authError) return;
     editorValue.data.set("");

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL: "https://freelycomment.herokuapp.com/" });
+const API = axios.create({ baseURL: process.env.REACT_APP_DEPLOYMENT_URL });
 
 //Passing headers to backend for authorization
 API.interceptors.request.use((req) => {
@@ -74,6 +74,18 @@ export const addCommentReplyDislikes = (
   API.post(
     `posts/${postId}/comments/${commentId}/commentReplies/${commentReplyId}/dislikes`,
     userId
+  );
+
+//Comment Reply edit
+export const editCommentReply = (
+  postId,
+  commentId,
+  commentReplyId,
+  commentReplyText
+) =>
+  API.put(
+    `posts/${postId}/comments/${commentId}/commentReplies/${commentReplyId}/edit`,
+    commentReplyText
   );
 
 //Auth

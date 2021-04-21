@@ -233,13 +233,17 @@ const Comment = ({ comment, user, post, error }) => {
               <Typography
                 variant="button"
                 color="textSecondary"
-                style={{ height: "20px", marginRight: "5px" }}
+                className={classes.showReplies}
               >
                 {!expanded ? "Show Replies" : "Hide Replies"}
               </Typography>
             </div>
             <div>
-              <Typography color="textSecondary" variant="button">
+              <Typography
+                color="textSecondary"
+                variant="button"
+                className={classes.replyNumber}
+              >
                 {comment?.commentReplies?.length}
               </Typography>
             </div>
@@ -280,15 +284,24 @@ const Comment = ({ comment, user, post, error }) => {
               error={error}
             />
           </Collapse>
-          {currentComments.map((commentReply) => (
-            <CommentReplies
-              key={commentReply._id}
-              post={post}
-              user={user}
-              comment={comment}
-              commentReply={commentReply}
-            />
-          ))}
+          {comment.commentReplies.length === 0 ? (
+            <Paper>
+              <Typography variant="body2" style={{ padding: "1rem" }}>
+                This comment has no replies yet.
+              </Typography>
+            </Paper>
+          ) : (
+            currentComments.map((commentReply) => (
+              <CommentReplies
+                key={commentReply._id}
+                post={post}
+                user={user}
+                comment={comment}
+                commentReply={commentReply}
+                error={error}
+              />
+            ))
+          )}
           <div
             style={{
               display: "flex",
