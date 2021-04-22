@@ -184,7 +184,13 @@ const Post = ({ post, error, authError, setAuthError }) => {
             />
           </div>
         ) : post?.provider === "Twitter" ? (
-          <CardContent style={{ paddingTop: "0" }}>
+          <CardContent
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              paddingTop: "0",
+            }}
+          >
             <TwitterTweetEmbed tweetId={tweetId} />
           </CardContent>
         ) : (
