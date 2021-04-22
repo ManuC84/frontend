@@ -11,6 +11,7 @@ import {
   editComment,
   editCommentReply,
   deleteComment,
+  deleteCommentReply,
 } from "../reducers/slice/postsSlice";
 
 export const addComment = (id, payload) => async (dispatch) => {
@@ -126,6 +127,21 @@ export const removeComment = (postId, commentId) => async (dispatch) => {
   try {
     const { data } = await API.deleteComment(postId, commentId);
     dispatch(deleteComment(data));
+  } catch (error) {
+    dispatch(hasError(error.response.data));
+  }
+};
+
+export const removeCommentReply = (postId, commentId, commentReplyId) => async (
+  dispatch
+) => {
+  try {
+    const { data } = await API.deleteCommentReply(
+      postId,
+      commentId,
+      commentReplyId
+    );
+    dispatch(deleteCommentReply(data));
   } catch (error) {
     dispatch(hasError(error.response.data));
   }

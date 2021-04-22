@@ -110,7 +110,9 @@ const Nav = ({ appProps }) => {
                 size="medium"
                 style={{ marginRight: 10, textTransform: "none" }}
               >
-                {user?.data?.result?.name}
+                <Typography variant="h6" style={{ fontSize: 16 }}>
+                  {user?.data?.result?.name}
+                </Typography>
               </Button>
               <IconButton
                 style={{ color: "white", padding: "0 12px" }}

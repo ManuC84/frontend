@@ -22,6 +22,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   likeCommentReply,
   dislikeCommentReply,
+  removeCommentReply,
 } from "../../../actions/comments";
 import TextEditor from "../../textEditor/TextEditor";
 
@@ -51,6 +52,14 @@ const CommentReplies = ({ post, comment, user, commentReply, error }) => {
           userId: userId,
         })
       );
+  };
+
+  const handleDelete = () => {
+    let deleteAlert = window.confirm(
+      "Are you sure you want to delete this comment?"
+    );
+    if (!deleteAlert) return;
+    dispatch(removeCommentReply(post._id, comment._id, commentReply._id));
   };
 
   // Comment's drop down menu related
@@ -152,7 +161,7 @@ const CommentReplies = ({ post, comment, user, commentReply, error }) => {
                 }}
               >
                 <MenuItem onClick={handleEdit}>Edit</MenuItem>
-                <MenuItem onClick={handleClose}>Delete</MenuItem>
+                <MenuItem onClick={handleDelete}>Delete</MenuItem>
                 <MenuItem onClick={handleClose}>Report</MenuItem>
               </Menu>
             ) : (

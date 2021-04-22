@@ -92,6 +92,12 @@ export const editCommentReply = (
     commentReplyText
   );
 
+//Comment Reply Delete
+export const deleteCommentReply = (postId, commentId, commentReplyId) =>
+  API.delete(
+    `posts/${postId}/comments/${commentId}/commentReplies/${commentReplyId}/delete`
+  );
+
 //Auth
 export const signIn = (formData) => API.post("/users/signin", formData);
 export const signUp = (formData) => API.post("/users/signup", formData);
