@@ -122,7 +122,7 @@ const Search = () => {
   useEffect(() => {
     if (searchType === "tags") {
       const listener = (e) => {
-        if (e.code === "Comma" || e.code === "Tab" || e.keyCode === 188) {
+        if (e.keyCode === 188 || e.key === "Tab") {
           if (tagButtonContent.length > 9) {
             setErrorMessage("Maximum of 10 tags allowed");
             setSearchError(true);
