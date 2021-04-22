@@ -62,10 +62,16 @@ export default function Auth() {
   const history = useHistory();
   const { error } = useSelector((state) => state.auth);
 
-  console.log(error);
-
   useEffect(() => {
     setErrorMessages(error);
+  }, [error]);
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        dispatch(clearError());
+      }, 5000);
+    }
   }, [error]);
 
   const user = JSON.parse(localStorage.getItem("profile"));
