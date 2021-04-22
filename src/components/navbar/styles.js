@@ -14,8 +14,8 @@ export default makeStyles((theme) => ({
     padding: "5px 15px",
     [theme.breakpoints.down("xs")]: {
       display: "flex",
-      justifyContent: "space-around",
-      padding: "10px 0",
+      justifyContent: "space-between",
+      padding: "10px 15px",
     },
   },
   link: {
