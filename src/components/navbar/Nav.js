@@ -71,7 +71,7 @@ const Nav = ({ appProps }) => {
             <img src={logo} alt="logo" className={classes.logo} />
           </Link>
           {!user ? (
-            <div className={classes.logInButtonContainer}>
+            <div>
               <Button
                 color="secondary"
                 component={Link}
