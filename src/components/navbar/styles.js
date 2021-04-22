@@ -14,7 +14,7 @@ export default makeStyles((theme) => ({
     padding: "5px 15px",
     [theme.breakpoints.down("xs")]: {
       display: "flex",
-      flexDirection: "column",
+      justifyContent: "space-around",
       padding: "10px 0",
     },
   },

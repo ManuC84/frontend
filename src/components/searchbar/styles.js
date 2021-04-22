@@ -6,7 +6,7 @@ export default makeStyles((theme) => ({
     justifyContent: "center",
     width: "100%",
     [theme.breakpoints.down("xs")]: {
-      marginTop: "60px",
+      marginTop: "20px",
     },
   },
 
