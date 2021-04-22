@@ -1,5 +1,5 @@
 import * as API from "../api/index";
-import { auth } from "../reducers/slice/authSlice";
+import { auth, hasAuthError } from "../reducers/slice/authSlice";
 
 export const signin = (formData, history) => async (dispatch) => {
   try {
@@ -7,17 +7,17 @@ export const signin = (formData, history) => async (dispatch) => {
     dispatch(auth({ data: data }));
     history.push("/");
   } catch (error) {
-    console.log(error);
+    dispatch(hasAuthError(error.response.data));
   }
 };
 
 export const signup = (formData, history) => async (dispatch) => {
   try {
     const { data } = await API.signUp(formData);
-    dispatch(auth(data));
+    dispatch(auth({ data: data }));
 
     history.push("/");
   } catch (error) {
-    console.log(error);
+    dispatch(hasAuthError(error.response.data));
   }
 };

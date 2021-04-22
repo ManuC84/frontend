@@ -108,7 +108,7 @@ const Nav = ({ appProps }) => {
                 }
                 color="primary"
                 size="medium"
-                style={{ marginRight: 10 }}
+                style={{ marginRight: 10, textTransform: "none" }}
               >
                 {user?.data?.result?.name}
               </Button>

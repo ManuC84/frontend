@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const authSlice = createSlice({
   name: "authReducer",
-  initialState: { authData: null },
+  initialState: { authData: null, error: false },
+
   reducers: {
     auth: (state, action) => {
       localStorage.setItem("profile", JSON.stringify({ ...action.payload }));
@@ -12,8 +13,14 @@ export const authSlice = createSlice({
       localStorage.clear();
       return { authData: null };
     },
+    hasAuthError: (state, action) => {
+      state.error = action.payload;
+    },
+    clearError: (state) => {
+      state.error = false;
+    },
   },
 });
 
-export const { auth, logout } = authSlice.actions;
+export const { auth, logout, hasAuthError, clearError } = authSlice.actions;
 export default authSlice.reducer;

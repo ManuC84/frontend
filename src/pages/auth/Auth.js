@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GoogleLogin } from "react-google-login";
 import { useDispatch } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
@@ -25,7 +25,11 @@ import {
   TextField,
   Button,
   Avatar,
+  Collapse,
 } from "@material-ui/core/";
+import { useSelector } from "react-redux";
+import { Alert } from "@material-ui/lab";
+import { clearError } from "../../reducers/slice/authSlice";
 
 function Copyright() {
   return (
@@ -41,8 +45,7 @@ function Copyright() {
 }
 
 const initialState = {
-  firstName: "",
-  lastName: "",
+  userName: "",
   email: "",
   password: "",
   repeatPassword: "",
@@ -52,14 +55,23 @@ export default function Auth() {
   const [isSignup, setIsSignup] = useState(false);
   const [formData, setFormData] = useState(initialState);
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessages, setErrorMessages] = useState({});
 
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
+  const { error } = useSelector((state) => state.auth);
+
+  console.log(error);
+
+  useEffect(() => {
+    setErrorMessages(error);
+  }, [error]);
 
   const user = JSON.parse(localStorage.getItem("profile"));
 
   const switchMode = () => {
+    dispatch(clearError());
     setIsSignup((prev) => !prev);
     setFormData(initialState);
   };
@@ -117,31 +129,26 @@ export default function Auth() {
             </Typography>
             <form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <TextField
-                    autoComplete="fname"
-                    name="firstName"
+                    autoComplete="uname"
+                    name="userName"
                     variant="outlined"
                     required
                     fullWidth
-                    id="firstName"
-                    label="First Name"
+                    id="userName"
+                    label="User Name"
                     autoFocus
                     onChange={handleChange}
                   />
+
+                  {errorMessages?.userNameError && (
+                    <Alert severity="error">
+                      {errorMessages?.userNameError}
+                    </Alert>
+                  )}
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="lastName"
-                    label="Last Name"
-                    name="lastName"
-                    autoComplete="lname"
-                    onChange={handleChange}
-                  />
-                </Grid>
+
                 <Grid item xs={12}>
                   <TextField
                     variant="outlined"
@@ -153,6 +160,9 @@ export default function Auth() {
                     autoComplete="email"
                     onChange={handleChange}
                   />
+                  {errorMessages?.emailError && (
+                    <Alert severity="error">{errorMessages?.emailError}</Alert>
+                  )}
                 </Grid>
                 <Grid item xs={12}>
                   <FormControl
@@ -198,6 +208,11 @@ export default function Auth() {
                     autoComplete="current-password"
                     onChange={handleChange}
                   />
+                  {errorMessages?.passwordError && (
+                    <Alert severity="error">
+                      {errorMessages?.passwordError}
+                    </Alert>
+                  )}
                 </Grid>
                 <Grid item xs={12}></Grid>
               </Grid>
@@ -225,92 +240,107 @@ export default function Auth() {
               Sign in
             </Typography>
             <form className={classes.form} onSubmit={handleSubmit}>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                onChange={handleChange}
-              />
-              <FormControl
-                required
-                variant="outlined"
-                className={classes.textField}
-              >
-                <InputLabel htmlFor="outlined-adornment-password">
-                  Password
-                </InputLabel>
-                <OutlinedInput
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  autoComplete="current-password"
-                  onChange={handleChange}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Sign In
-              </Button>
-              {/* GOOGLE OAUTH BUTTON */}
-              <GoogleLogin
-                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                render={(renderProps) => (
-                  <Button
-                    type="submit"
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
                     fullWidth
-                    onClick={renderProps.onClick}
-                    variant="contained"
-                    color="secondary"
-                    className={classes.submit}
-                  >
-                    Google Sign In
-                  </Button>
-                )}
-                onSuccess={googleSuccess}
-                onFailure={googleFailure}
-                cookiePolicy="single_host_origin"
-              />
-
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                    onChange={handleChange}
+                    style={{ margin: "0" }}
+                  />
+                  {errorMessages?.emailError && (
+                    <Alert severity="error">{errorMessages?.emailError}</Alert>
+                  )}
                 </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2" onClick={switchMode}>
-                    {"Don't have an account? Sign Up"}
-                  </Link>
+                <Grid item xs={12}>
+                  <FormControl
+                    required
+                    variant="outlined"
+                    className={classes.textField}
+                  >
+                    <InputLabel htmlFor="outlined-adornment-password">
+                      Password
+                    </InputLabel>
+                    <OutlinedInput
+                      variant="outlined"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      autoComplete="current-password"
+                      onChange={handleChange}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                    />
+                    {errorMessages?.passwordError && (
+                      <Alert severity="error">
+                        {errorMessages?.passwordError}
+                      </Alert>
+                    )}
+                  </FormControl>
+                </Grid>
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Sign In
+                </Button>
+                {/* GOOGLE OAUTH BUTTON */}
+                <GoogleLogin
+                  clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                  render={(renderProps) => (
+                    <Button
+                      type="submit"
+                      fullWidth
+                      onClick={renderProps.onClick}
+                      variant="contained"
+                      color="secondary"
+                      className={classes.submit}
+                    >
+                      Google Sign In
+                    </Button>
+                  )}
+                  onSuccess={googleSuccess}
+                  onFailure={googleFailure}
+                  cookiePolicy="single_host_origin"
+                />
+
+                <Grid container>
+                  <Grid item xs>
+                    <Link href="#" variant="body2">
+                      Forgot password?
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link href="#" variant="body2" onClick={switchMode}>
+                      {"Don't have an account? Sign Up"}
+                    </Link>
+                  </Grid>
                 </Grid>
               </Grid>
             </form>
