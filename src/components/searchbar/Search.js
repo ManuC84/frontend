@@ -133,9 +133,9 @@ const Search = () => {
           setSearchTags("");
         }
       };
-      document.addEventListener("keydown", listener);
+      document.addEventListener("keyup", listener);
       return () => {
-        document.removeEventListener("keydown", listener);
+        document.removeEventListener("keyup", listener);
       };
     }
   }, [handleTags]);
