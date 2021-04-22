@@ -122,7 +122,7 @@ const Search = () => {
   useEffect(() => {
     if (searchType === "tags") {
       const listener = (e) => {
-        if (e.keyCode === 188 || e.key === "Tab") {
+        if (e.keyCode === "Comma" || e.key === "Tab") {
           if (tagButtonContent.length > 9) {
             setErrorMessage("Maximum of 10 tags allowed");
             setSearchError(true);
@@ -133,9 +133,9 @@ const Search = () => {
           setSearchTags("");
         }
       };
-      document.addEventListener("keyup", listener);
+      document.addEventListener("keydown", listener);
       return () => {
-        document.removeEventListener("keyup", listener);
+        document.removeEventListener("keydown", listener);
       };
     }
   }, [handleTags]);
