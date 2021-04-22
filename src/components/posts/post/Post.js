@@ -186,8 +186,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
         ) : post?.provider === "Twitter" ? (
           <CardContent
             style={{
-              display: "flex",
-              justifyContent: "center",
+              margin: "0 auto",
               paddingTop: "0",
             }}
           >
