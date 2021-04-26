@@ -32,24 +32,34 @@ const LastPosts = () => {
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-evenly",
+            textAlign:"left",
             width: "40%",
             height: 600,
           }}
         >
-          <Typography variant="h4" style={{ color: "white", fontWeight: 300 }}>
-            Unete ya mismo a la conversación, crea tu cuenta y empieza a
-            compartir con la comunidad de FreelyComment. Aqui puedes ver las
-            últimas publicaciones. También puedes ir a nuestro home page y
-            buscar diferentes tipos de publicaciones con una variedad de
-            filtros.
+            <Typography variant="h3"
+              style={{
+                color: "white",
+                fontWeight: 600,
+                fontFamily: 'MuseoModerno'
+              }}>¡Bienvenidx a la comunidad!</Typography>
+          {/* TEXT */}
+          <Typography variant="h4"
+            style={{
+              color: "white",
+              fontWeight: 500
+            }}>
+            ¡Sé uno más de la comunidad FreelyComment! 
+            Busca tus temas favoritos, escribe y comparte.
           </Typography>
+
+          {/* BUTTON BIENVENIDO */}
           <Button
             variant="contained"
             color="primary"
             size="large"
             style={{ width: "30%" }}
-          >
-            Ir a home
+          >ENTRAR
           </Button>
         </div>
         <Post

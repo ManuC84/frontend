@@ -6,6 +6,7 @@ export default makeStyles((theme) => ({
     flexDirection: "column",
     backgroundColor: "white",
   },
+  
   featuresContainer: {},
   article: {
     display: "flex",
@@ -13,6 +14,7 @@ export default makeStyles((theme) => ({
     height: 300,
     padding: "50px",
   },
+
   textSection: {
     display: "flex",
     flexDirection: "column",

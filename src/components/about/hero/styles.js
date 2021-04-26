@@ -5,23 +5,33 @@ export default makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     height: "80vh",
-    backgroundImage:
-      "linear-gradient(to top, #64b5f6, #3c91e5, #226dd0, #2347b6, #311996);",
+    backgroundImage: "linear-gradient(to top, #64b5f6, #3c91e5, #226dd0, #2347b6, #311996);",
   },
+
   heroContainer: {
     display: "flex",
     justifyContent: "space-evenly",
     alignItems: "center",
   },
+  
   heroTextSection: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-evenly",
-    width: "45%",
-    height: 500,
-    textAlign: "left",
+    width: "60%",
+    height: 600,
+    textAlign: "start",
     padding: "50px",
+    
   },
-  heroImgSection: {},
+
+  heroTitle: {
+    // fontFamily: "MuseoModerno"
+    fontSize: "3.21rem",
+    fontWeight: 500,
+    letterSpacing: "2px",
+    color: "#f8f9fa",
+   
+  },
 }));

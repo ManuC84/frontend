@@ -6,47 +6,47 @@ import phoneblob from "../../../img/phoneblob.png";
 
 const Hero = () => {
   const classes = makeStyles();
+  
   return (
     <section className={classes.mainSection}>
       <Container className={classes.heroContainer}>
+        {/* TITTLE + TEXT */}
         <title className={classes.heroTextSection}>
           <Typography
             style={{
-              fontSize: "3.3rem",
-              fontWeight: 500,
-              letterSpacing: "3px",
+              fontFamily: 'MuseoModerno',
+              fontSize: "2.8rem",
+              fontWeight: 600,
+              letterSpacing: "1.5px",
               color: "#f8f9fa",
-              textTransform: "capitalize",
             }}
-            variant="h1"
-          >
-            Comenta lo que quieras donde sea
+            variant="h1">¿Qué es FreedlyComment?
           </Typography>
 
           <Typography
             style={{
-              fontSize: "1.3rem",
-              letterSpacing: 1,
-              lineHeight: "33px",
+              fontSize: "1.5rem",
+              textAlign: "justify",
+              fontWeight: 400,
+              letterSpacing: "1px",
+              lineHeight: "40px",
               wordSpacing: 2,
               color: "#f8f9fa",
             }}
             variant="h3"
             color="textSecondary"
           >
-            Con FreelyComment eres libre de expresar tus ideas en cualquier
-            sitio web. Comenta sin restricciones en cualquier momento con tan
-            solo un click!
+            Es una APP gratuita donde podrás expresar tus sugerencias, opiniones y recomendaciones de cualquier sitio web, sin límites ni restricciones en un solo click.
           </Typography>
           <Button
             size="large"
-            color="secondary"
-            variant="contained"
+            color="primary" variant="contained"
             style={{ width: 150, alignSelf: "flex-start" }}
           >
-            Unete ya!
+            ¡ÚNETE YA!
           </Button>
         </title>
+        {/* IMAGE */}
         <figure className={classes.heroImgSection}>
           <img src={phoneblob} alt="phone" />
         </figure>
