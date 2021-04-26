@@ -16,6 +16,7 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
+import InfoIcon from "@material-ui/icons/Info";
 import HomeIcon from "@material-ui/icons/Home";
 import clsx from "clsx";
 import logo from "../../img/logo-final.png";
@@ -61,7 +62,7 @@ const Nav = ({ appProps }) => {
   };
   return (
     <HideOnScroll {...appProps}>
-      <AppBar color="transparent" elevation={0} className={classes.root}>
+      <AppBar elevation={0} className={classes.root}>
         <nav className={classes.nav}>
           <Link
             to="/"
@@ -136,6 +137,12 @@ const Nav = ({ appProps }) => {
                   <HomeIcon />
                 </ListItemIcon>
                 <ListItemText>Home</ListItemText>
+              </ListItem>
+              <ListItem component={Link} to="/about" button>
+                <ListItemIcon>
+                  <InfoIcon />
+                </ListItemIcon>
+                <ListItemText>About</ListItemText>
               </ListItem>
 
               {!user ? (

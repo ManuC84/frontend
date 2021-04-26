@@ -2,16 +2,14 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
   root: {
-    [theme.breakpoints.down("xs")]: {
-      background: "#311996",
-    },
+    background: "#311996",
   },
 
   nav: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "5px 15px",
+    padding: "10px 20px",
     [theme.breakpoints.down("xs")]: {
       display: "flex",
       justifyContent: "space-between",
