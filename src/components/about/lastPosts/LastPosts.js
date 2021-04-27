@@ -3,7 +3,7 @@ import makeStyles from "./styles";
 import Post from "../../posts/post/Post";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../../../actions/posts";
-import { CircularProgress, Typography, Button } from "@material-ui/core";
+import { CircularProgress, Typography, Button, List, ListItem } from "@material-ui/core";
 
 const LastPosts = () => {
   const classes = makeStyles();
@@ -19,49 +19,27 @@ const LastPosts = () => {
     <CircularProgress />
   ) : (
     <section className={classes.mainSection}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-evenly",
-          alignItems: "flex-start",
-          padding: "80px",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-evenly",
-            textAlign:"left",
-            width: "40%",
-            height: 600,
-          }}
-        >
-            <Typography variant="h3"
-              style={{
-                color: "white",
-                fontWeight: 600,
-                fontFamily: 'MuseoModerno'
-              }}>¡Bienvenidx a la comunidad!</Typography>
+      <div className={classes.box}>
+        <div className={classes.boxSection}>
+          
+          {/* TITTLE */}
+          <div className={classes.Title}>
+            <ListItem>¡Bienvenidx a la comunidad!</ListItem>
+            {/* <ListItem>a la </ListItem>
+            <ListItem>comunidad</ListItem> */}
+          </div>
+
           {/* TEXT */}
-          <Typography variant="h4"
-            style={{
-              color: "white",
-              fontWeight: 500
-            }}>
-            ¡Sé uno más de la comunidad FreelyComment! 
-            Busca tus temas favoritos, escribe y comparte.
-          </Typography>
+          <List className={classes.Subtitol}>
+            <ListItem>¡Sé uno más de la comunidad FreelyComment!</ListItem>
+            <ListItem>Busca tus temas favoritos, escribe y comparte. </ListItem>
+          </List>
 
           {/* BUTTON BIENVENIDO */}
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            style={{ width: "30%" }}
-          >ENTRAR
-          </Button>
+          <Button className={classes.ColorButton}>BIENVENIDO</Button>
+
         </div>
+        
         <Post
           post={posts[0]}
           error={error}
