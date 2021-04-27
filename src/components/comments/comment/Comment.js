@@ -104,9 +104,9 @@ const Comment = ({ comment, user, post, error }) => {
         <Grid container wrap="nowrap" spacing={2}>
           <Grid item>
             <Avatar
-              title={comment.creator[0]?.data?.result?.name}
+              title={comment.creator[0]?.name}
               alt="avatar"
-              src={comment.creator[0]?.data?.result?.imageUrl}
+              src={comment.creator[0]?.imageUrl}
             />
           </Grid>
           <Grid item xs zeroMinWidth>
@@ -114,7 +114,7 @@ const Comment = ({ comment, user, post, error }) => {
               variant="h6"
               style={{ margin: 0, textAlign: "left", fontSize: "0.9rem" }}
             >
-              {comment.creator[0]?.data?.result?.name}
+              {comment.creator[0]?.name}
             </Typography>
             <Typography
               style={{ textAlign: "left", color: "gray", fontSize: "0.8rem" }}
@@ -155,10 +155,9 @@ const Comment = ({ comment, user, post, error }) => {
 
           {(user[0]?.data?.result?.googleId &&
             user[0]?.data?.result?.googleId ===
-              comment?.creator[0]?.data?.result?.googleId) ||
+              comment?.creator[0]?.googleId) ||
           (user[0]?.data?.result?._id &&
-            user[0]?.data?.result?._id ===
-              comment?.creator[0]?.data?.result?._id) ? (
+            user[0]?.data?.result?._id === comment?.creator[0]?._id) ? (
             <Menu
               id="simple-menu"
               anchorEl={anchorEl}

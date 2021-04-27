@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL: process.env.REACT_APP_DEPLOYMENT_URL });
+const API = axios.create({ baseURL: process.env.REACT_APP_DEVELOPMENT_URL });
 
 //Passing headers to backend for authorization
 API.interceptors.request.use((req) => {
