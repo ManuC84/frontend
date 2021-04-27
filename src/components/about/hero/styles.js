@@ -14,13 +14,18 @@ export default makeStyles((theme) => ({
 
   },
 
+  heroImgSection: {
+    maxWidth:"200%",
+    maxHeight:"200%",
+    alignItems: "start",
+  },
+
   heroContainer: {
     display: "flex",
-    width: "90%",
-    display: "flex",
-    alignItems: "stretch",
-    height: "80vh",
-    paddinTop:"100vh",
+    width: "60%",
+    alignItems: "start",
+    height: "90vh",
+    margingTop:"50vh",
     
   },
 

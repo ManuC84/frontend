@@ -1,6 +1,6 @@
 import React from "react";
 import makeStyles from "./styles";
-import { Button, Container } from "@material-ui/core";
+import { Button, Container, figure } from "@material-ui/core";
 // import phoneblob from "../../../img/phoneblob.png";
 import phoneblob from "../../../img/4.png";
 
@@ -20,8 +20,8 @@ const Hero = () => {
         </title>
         
         {/* IMAGE */}
-        <figure className={classes.heroImgSection}>
-          <img src={phoneblob} alt="phone" />
+        <figure >
+          <img className={classes.heroImgSection} src={phoneblob} alt="phone" />
         </figure>
 
       </Container>
