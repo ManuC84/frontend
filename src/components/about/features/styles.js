@@ -4,8 +4,12 @@ export default makeStyles((theme) => ({
   
   mainSection: {
     display: "flex",
-    flexDirection: "column",
+    // flexDirection: "column",
     backgroundColor: "white",
+    position:"relative",
+    height: "auto",
+    width: "auto",
+
   },
 
   featuresContainer: {},
@@ -40,13 +44,18 @@ export default makeStyles((theme) => ({
     fontFamily: 'MuseoModerno',
     color: "#5E44BA",
     marginBottom: "20px",
+    padding:"1px",
+    boxShadow: "6px -9px #7F8CE7",
     backgroundColor: "#0DDDC9",
     "&:hover": {
       backgroundColor: "#7F8CE7",
+      color:"#0DDDC9",
+      boxShadow: "6px -9px #0DDDC9",
     },
     [theme.breakpoints.down("xs")]: {
       display: "none",
     },
+    
     
     
   },
@@ -60,6 +69,7 @@ export default makeStyles((theme) => ({
     fontSize: "3rem",
     listStyle: "none",
     fontWeight: 500,
+    
 
   },
 
@@ -89,12 +99,9 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       display: "none",
     },
-  },
-
-  heroImgSection:{
-    width:"30%",
-    height:"30%",
+    boxShadow: "6px 1px 21px -5px rgba(127,140,231,0.84)",
 
   },
 
+  
 }));

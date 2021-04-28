@@ -31,7 +31,7 @@ const LastPosts = () => {
 
           {/* TEXT */}
           <List className={classes.Subtitol}>
-            <ListItem>¡Sé uno más de la comunidad FreelyComment!</ListItem>
+            <ListItem>¡Sé uno/a más de la comunidad FreelyComment!</ListItem>
             <ListItem>Busca tus temas favoritos, escribe y comparte. </ListItem>
           </List>
 
