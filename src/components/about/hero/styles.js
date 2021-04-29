@@ -8,18 +8,12 @@ export default makeStyles((theme) => ({
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundColor: "#ffff",
-    // backgroundImage: "linear-gradient(to top, #64b5f6, #3c91e5, #226dd0, #2347b6, #311996);",
+    height: "100vh",
   },
 
-  // heroContainer: {
-  //   display: "flex",
-  //   width: "90%",
-  //   display: "flex",
-  //   alignItems: "stretch",
-  //   height: "80vh",
-  //   paddinTop:"100vh",
-
-  // },
+  heroContainer: {
+    padding: 20,
+  },
 
   heroTextSection: {
     display: "flex",
@@ -28,10 +22,10 @@ export default makeStyles((theme) => ({
     alignItems: "center",
   },
 
-  heroImgSection: {
+  heroImg: {
+    height: 400,
     [theme.breakpoints.down("sm")]: {
-      width: "70%",
-      height: "70%",
+      display: "none",
     },
   },
 
@@ -44,6 +38,9 @@ export default makeStyles((theme) => ({
     paddingBottom: "20px",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.8rem",
+    },
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "1.5rem",
     },
   },
 

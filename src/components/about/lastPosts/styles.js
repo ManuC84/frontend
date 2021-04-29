@@ -1,16 +1,16 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-
 export default makeStyles((theme) => ({
   mainSection: {
-    backgroundColor:"#5E44BA",
-    
+    backgroundColor: "#5E44BA",
   },
 
-  box:{
+  box: {
     display: "flex",
     padding: "40px",
-
+    [theme.breakpoints.down("xs")]: {
+      flexDirection: "column",
+    },
   },
 
   boxSection: {
@@ -18,10 +18,14 @@ export default makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     width: "70%",
+    [theme.breakpoints.down("xs")]: {
+      marginBottom: 20,
+      width: "100%",
+    },
   },
 
   Title: {
-    fontFamily: 'MuseoModerno',
+    fontFamily: "MuseoModerno",
     fontSize: "2.5rem",
     fontWeight: 900,
     letterSpacing: "1px",
@@ -32,13 +36,13 @@ export default makeStyles((theme) => ({
 
   Subtitol: {
     fontSize: "1.5rem",
-    textAlign:"center",
+    textAlign: "center",
     fontWeight: 500,
     lineHeight: "40px",
     wordSpacing: 2,
     color: "#f8f9fa",
     // paddingBottom: "25px",
-    listStyle:"none",
+    listStyle: "none",
   },
 
   ColorButton: {
@@ -52,10 +56,5 @@ export default makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "#7F8CE7",
     },
-    [theme.breakpoints.down("xs")]: {
-      display: "none",
-    },
   },
-
-
 }));

@@ -9,8 +9,15 @@ const Hero = () => {
 
   return (
     <section className={classes.mainSection}>
-      <Grid container style={{ padding: 20 }}>
-        <Grid item lg={6} md={6} sm={12} style={{ padding: 60 }}>
+      <Grid container className={classes.heroContainer}>
+        <Grid
+          alignContent="center"
+          item
+          lg={6}
+          md={6}
+          sm={12}
+          style={{ padding: 60 }}
+        >
           {/* TITTLE + TEXT */}
           <title className={classes.heroTextSection}>
             <div className={classes.TitleSection}>¿Qué es FreelyComment?</div>
@@ -22,14 +29,23 @@ const Hero = () => {
             <Button className={classes.ColorButton}>¡ÚNETE YA!</Button>
           </title>
         </Grid>
-        <Grid item lg={6} md={6} sm={12}>
+        <Grid
+          item
+          lg={6}
+          md={6}
+          sm={12}
+          style={{ display: "flex", justifyContent: "center" }}
+        >
           {/* IMAGE */}
-          <figure>
-            <img
-              src={phoneblob}
-              alt="phone"
-              className={classes.heroImgSection}
-            />
+          <figure
+            style={{
+              height: "100%",
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <img src={phoneblob} alt="phone" className={classes.heroImg} />
           </figure>
         </Grid>
       </Grid>
