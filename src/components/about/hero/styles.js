@@ -48,6 +48,7 @@ export default makeStyles((theme) => ({
   },
 
   Subtitol: {
+    // width:"40%",
     fontSize: "1.3rem",
     textAlign: "justify",
     fontWeight: 500,

@@ -1,13 +1,15 @@
-html {
-  background: url("./img/background-gradient-test4.png") no-repeat center center
-    fixed;
+html,
+body {
+  background-color: blueviolet;
+  /* background: url("./img/background-copied2.png") no-repeat center center
+    fixed; */
+  /* background: url("./img/backgroundHero.png") no-repeat center center fixed;
+     ; */
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-}
-
-body {
+  box-sizing: border-box;
   margin: 0;
 
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
