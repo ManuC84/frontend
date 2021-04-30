@@ -76,7 +76,7 @@ export default makeStyles((theme) => ({
 
   ColorButton: {
     width: 170,
-    alignSelf: "flex-start",
+    alignSelf: "center",
     borderRadius: "50px",
     fontSize: "1rem",
     fontWeight: 800,
