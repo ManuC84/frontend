@@ -39,18 +39,18 @@ const LastPosts = () => {
   ) : (
     <section className={classes.mainSection}>
       <div className={classes.boxSection}>
+
         {/* TITTLE */}
         <div className={classes.Title}>
-          <ListItem>¡Bienvenidx a la comunidad!</ListItem>
-          {/* <ListItem>a la </ListItem>
-            <ListItem>comunidad</ListItem> */}
+          <div>Bienvenidx a la comunidad</div>
         </div>
 
         {/* TEXT */}
-        <List className={classes.Subtitol}>
-          <ListItem>¡Sé uno/a más de la comunidad FreelyComment!</ListItem>
-          <ListItem>Busca tus temas favoritos, escribe y comparte. </ListItem>
-        </List>
+        <div className={classes.Subtitol}>
+            <div>¡Sé uno/a más de la comunidad FreelyComment! </div>
+            <div>Busca tus temas favoritos, escribe y comparte.</div>
+          
+        </div>
 
         {/* BUTTON BIENVENIDO */}
         <Button className={classes.ColorButton}>BIENVENIDO</Button>

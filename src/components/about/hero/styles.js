@@ -1,18 +1,20 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { Autocomplete } from "@material-ui/lab";
-import background from "../../../img/backgroundHero.png";
+import background from "../../../img/backgroundWave.svg";
 
 export default makeStyles((theme) => ({
   mainSection: {
     backgroundImage: `url(${background})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    backgroundColor: "#ffff",
-    height: "100vh",
+    paddingBottom:"30px",
+    background: "#2BC8D1",
+  
   },
 
   heroContainer: {
     padding: 20,
+  
   },
 
   heroTextSection: {
@@ -20,6 +22,9 @@ export default makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      paddingBottom: 30,
+    },
   },
 
   heroImg: {
@@ -35,39 +40,52 @@ export default makeStyles((theme) => ({
     fontWeight: 900,
     letterSpacing: "5px",
     color: "#0DDDC9",
-    paddingBottom: "20px",
+    paddingBottom: "15px",
     [theme.breakpoints.down("sm")]: {
-      fontSize: "1.8rem",
+      fontSize: "2.3rem",
+      textAlign: "left",
     },
     [theme.breakpoints.down("xs")]: {
-      fontSize: "1.5rem",
+      fontSize: "2.2rem",
+      textAlign:"center",
     },
   },
 
   Subtitol: {
     // width:"40%",
-    fontSize: "1.3rem",
-    textAlign: "justify",
-    fontWeight: 500,
+    fontFamily: 'Montserrat',
+    fontSize: "1.4rem",
+    textAlign: "left",
+    fontWeight: 600,
     lineHeight: "40px",
     wordSpacing: 2,
     color: "#f8f9fa",
     paddingBottom: "30px",
     [theme.breakpoints.down("sm")]: {
-      fontSize: "1rem",
+      fontSize: "1.2rem",
+      textAlign:"center",
     },
   },
 
   ColorButton: {
     width: 170,
-    alignSelf: "center",
-    borderRadius: "50px",
+    fontFamily: 'Montserrat',
+    alignSelf: "start",
+    borderRadius: "15px",
     fontSize: "1rem",
     fontWeight: 800,
+    marginTop: 10,
     color: theme.palette.getContrastText("#7324A3"),
     backgroundColor: "#0DDDC9",
     "&:hover": {
-      backgroundColor: "#7F8CE7",
+      backgroundColor: "#B963F7",
+    },
+    boxShadow: "6px 1px 21px -5px rgba(127,140,231,0.9)",
+    [theme.breakpoints.down("sm")]: {
+      alignSelf:"center",
+    },
+    [theme.breakpoints.down("xs")]: {
+      alignSelf: "center",
     },
   },
 }));
