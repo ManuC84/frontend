@@ -7,13 +7,13 @@ export default makeStyles((theme) => ({
     backgroundImage: `url(${background})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-   height:"130vh",
+   height:"100vh",
     background: "#2BC8D1",
     [theme.breakpoints.down("sm")]: {
-      height: "100vh",
+      height: "80",
     },
     [theme.breakpoints.down("xs")]: {
-      height: "120vh",
+      height: "90vh",
     },
   },
 
@@ -49,7 +49,7 @@ export default makeStyles((theme) => ({
     paddingBottom: "15px",
     [theme.breakpoints.down("sm")]: {
       fontSize: "2.3rem",
-      textAlign: "left",
+      textAlign: "center",
     },
     [theme.breakpoints.down("xs")]: {
       fontSize: "2.2rem",
