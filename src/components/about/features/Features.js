@@ -31,7 +31,6 @@ const Features = () => {
               <div><span>Interactúa con los <b>comercios de tu barrio</b> a través de tu móvil de forma sencilla, escanea el codigo QR y entra directo a comentar con la comunidad.</span> </div>
               <div className={classes.Tittle1} >¿Eres comerciante?</div>
               <div><span>Aquí tendrás tu espacio para darte a conocer y publicitarte.</span></div>
-
             </div>
             <Button className={classes.ColorButton}>¿TE ANIMAS? </Button>
           </div>
@@ -58,7 +57,7 @@ const Features = () => {
             <img src={imgPlugin} alt="plugin" className={classes.img} />
             <div className={classes.Box3}>
               <div className={classes.Tittle1}>Descárgate el plugin</div>
-              <div className={classes.ListText}>
+              <div className={classes.ListText2}>
                 <div><span>Házlo aún más fácil con el <b>plugin</b> para Chrome.</span> </div>
                 <div><span>Podrás añadir la url y los comentarios en un click.</span></div>
               </div>

@@ -3,17 +3,18 @@ import { Autocomplete } from "@material-ui/lab";
 import background from "../../../img/backgroundWave.svg";
 
 export default makeStyles((theme) => ({
+
   mainSection: {
     backgroundImage: `url(${background})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-   height:"100vh",
+    height: "100vh",
     background: "#2BC8D1",
     [theme.breakpoints.down("sm")]: {
-      height: "80",
+      height: "80vh",
     },
     [theme.breakpoints.down("xs")]: {
-      height: "90vh",
+      height: "80vh",
     },
   },
 
@@ -28,12 +29,12 @@ export default makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     [theme.breakpoints.down("sm")]: {
-      paddingBottom: 30,
+      paddingBottom: 20,
     },
   },
 
   heroImg: {
-    height: 600,
+    height: 550,
     alignItems: "center",
     [theme.breakpoints.down("sm")]: {
       display: "none",
@@ -42,14 +43,14 @@ export default makeStyles((theme) => ({
 
   TitleSection: {
     fontFamily: "MuseoModerno",
-    fontSize: "2.5rem",
+    fontSize: "3rem",
     fontWeight: 900,
-    letterSpacing: "5px",
+    letterSpacing: "0.5px",
     color: "#0DDDC9",
-    paddingBottom: "15px",
     [theme.breakpoints.down("sm")]: {
-      fontSize: "2.3rem",
+      fontSize: "2.9rem",
       textAlign: "center",
+      paddingBottom:"6vh",
     },
     [theme.breakpoints.down("xs")]: {
       fontSize: "2.2rem",
@@ -58,9 +59,8 @@ export default makeStyles((theme) => ({
   },
 
   Subtitol: {
-    // width:"40%",
     fontFamily: 'Montserrat',
-    fontSize: "1.4rem",
+    fontSize: "1.8rem",
     textAlign: "left",
     fontWeight: 600,
     lineHeight: "40px",
@@ -68,7 +68,7 @@ export default makeStyles((theme) => ({
     color: "#f8f9fa",
     paddingBottom: "30px",
     [theme.breakpoints.down("sm")]: {
-      fontSize: "1.2rem",
+      fontSize: "1.5rem",
       textAlign: "center",
     },
   },

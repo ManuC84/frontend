@@ -82,11 +82,11 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       width: "100%",
 
-    },
-  },
 
-  [theme.breakpoints.down("xs")]: {
-    width: "100%",
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+  },
 
   },
 
@@ -205,13 +205,12 @@ export default makeStyles((theme) => ({
   ListText2: {
     fontFamily: 'Montserrat',
     color: "#F0F0F0",
-    marginTop: "15px",
-    paddingBottom: 15,
-    fontSize: "1.2rem",
+    margin: "15px",
+    fontSize: "1.3rem",
     textAlign: "left",
     fontWeight: 600,
     letterSpacing: "0.4px",
-    lineHeight: "40px",
+    lineHeight: "35px",
     [theme.breakpoints.down("sm")]: {
       textAlign: "center",
       lineHeight: "30px",
@@ -262,26 +261,26 @@ export default makeStyles((theme) => ({
   },
 
 
-
   img: {
     height: 400,
     alignSelf: "center",
     padding: 50,
     [theme.breakpoints.down("sm")]: {
-      padding: 20,
-      height: 300,
-      width: 300,
+      padding: 10,
+      height: 250,
+      width: 250,
     },
     [theme.breakpoints.down("xs")]: {
       display: "none",
     },
   },
 
-
+// BACKGROUND
   sectionBackground: {
     backgroundImage: `url(${backgroundSection})`,
+    alignSelf:"center",
     backgroundSize: "cover",
-    height: "90vh",
+    height: "80vh",
     backgroundColor: "#2BC8D1",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
@@ -290,7 +289,6 @@ export default makeStyles((theme) => ({
       display: "none",
     },
   },
-
 
   geoBackground: {
     backgroundColor: "#B963F7",

@@ -13,8 +13,9 @@ const Hero = () => {
       <div class='box'>
         <div class='wave -three'></div>
       </div>
-      <Grid alignContent="center" container className={classes.heroContainer}>
-        <Grid item lg={6} md={6} sm={12} style={{ padding: 60 }}>
+
+      <Grid container>
+        <Grid item lg={6} md={6} sm={12} style={{ padding: 60}}>
           {/* TITTLE + TEXT */}
           <title className={classes.heroTextSection}>
             <div className={classes.TitleSection}>Comenta lo que quieras, cuándo y dónde sea.</div>
