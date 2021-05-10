@@ -7,14 +7,19 @@ export default makeStyles((theme) => ({
     backgroundImage: `url(${background})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    paddingBottom:"30px",
+   height:"130vh",
     background: "#2BC8D1",
-  
+    [theme.breakpoints.down("sm")]: {
+      height: "100vh",
+    },
+    [theme.breakpoints.down("xs")]: {
+      height: "120vh",
+    },
   },
 
   heroContainer: {
     padding: 20,
-  
+
   },
 
   heroTextSection: {
@@ -28,7 +33,8 @@ export default makeStyles((theme) => ({
   },
 
   heroImg: {
-    height: 500,
+    height: 600,
+    alignItems: "center",
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
@@ -47,7 +53,7 @@ export default makeStyles((theme) => ({
     },
     [theme.breakpoints.down("xs")]: {
       fontSize: "2.2rem",
-      textAlign:"center",
+      textAlign: "center",
     },
   },
 
@@ -63,7 +69,7 @@ export default makeStyles((theme) => ({
     paddingBottom: "30px",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.2rem",
-      textAlign:"center",
+      textAlign: "center",
     },
   },
 
@@ -82,7 +88,7 @@ export default makeStyles((theme) => ({
     },
     boxShadow: "6px 1px 21px -5px rgba(127,140,231,0.9)",
     [theme.breakpoints.down("sm")]: {
-      alignSelf:"center",
+      alignSelf: "center",
     },
     [theme.breakpoints.down("xs")]: {
       alignSelf: "center",

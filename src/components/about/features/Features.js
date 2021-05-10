@@ -18,17 +18,19 @@ const Features = () => {
 
   return (
     <section className={classes.mainSection}>
-      <Grid>
-              
+
+      <Grid container>
+
+
         {/* COMERCIO LOCAL */}
         <article className={classNames(classes.article)} >
           <img src={imgComercio} alt="comercio" className={classes.img} />
           <div className={classes.Box1}>
             <div className={classes.Tittle1}>Comercio local</div>
             <div className={classes.ListText2}>
-              <ListItem><span>Interactúa con los <b>comercios de tu barrio</b> a través de tu móvil de forma sencilla, escanea el codigo QR y entra directo a comentar con la comunidad.</span> </ListItem>
-              <ListItem className={classes.Tittle1} >¿Eres comerciante?</ListItem>
-              <ListItem><span>Aquí tendrás tu espacio para darte a conocer y publicitarte.</span></ListItem>
+              <div><span>Interactúa con los <b>comercios de tu barrio</b> a través de tu móvil de forma sencilla, escanea el codigo QR y entra directo a comentar con la comunidad.</span> </div>
+              <div className={classes.Tittle1} >¿Eres comerciante?</div>
+              <div><span>Aquí tendrás tu espacio para darte a conocer y publicitarte.</span></div>
 
             </div>
             <Button className={classes.ColorButton}>¿TE ANIMAS? </Button>
@@ -41,7 +43,7 @@ const Features = () => {
             <div className={classes.Box2}>
               <div className={classes.Tittle2}>Encuentra lo que necesitas</div>
               <div className={classes.ListText2}>
-                <ListItem><span>Gracias a la <b>geolocalización</b> podrás encontrar aquel comercio que necesitas estés dónde estés e interactuar para saber qué opinan los demás.</span> </ListItem>
+                <div><span>Gracias a la <b>geolocalización</b> podrás encontrar aquel comercio que necesitas estés dónde estés e interactuar para saber qué opinan los demás.</span> </div>
               </div>
               <Button className={classes.ColorButton}>BUSCAR </Button>
             </div>
@@ -49,60 +51,63 @@ const Features = () => {
           </article>
         </div>
 
-        <div className={classes.pluginBackground}>
+        <Grid item lg={12} sm={12} xs={12} style={{ display: "flex", justifyContent: "center" }}>
 
           {/* DESCÁRGATE EL PLUGIN */}
           <article className={classNames(classes.article)} >
             <img src={imgPlugin} alt="plugin" className={classes.img} />
-            <List className={classes.Box3}>
-              <ListItem className={classes.Tittle1}>Descárgate el plugin</ListItem>
+            <div className={classes.Box3}>
+              <div className={classes.Tittle1}>Descárgate el plugin</div>
               <div className={classes.ListText}>
-                <ListItem><span>Házlo aún más fácil con el <b>plugin</b> para Chrome.</span> </ListItem>
-                <ListItem><span>Podrás añadir la url y los comentarios en un click.</span></ListItem>
+                <div><span>Házlo aún más fácil con el <b>plugin</b> para Chrome.</span> </div>
+                <div><span>Podrás añadir la url y los comentarios en un click.</span></div>
               </div>
               <Button className={classes.ColorButton}>DESCARGAR</Button>{" "}
-            </List>
+            </div>
           </article>
-        </div>
-        <Grid item lg={8} sm={12} xs={12}>
-
-          <article className={classNames(classes.article)} >
-       
-          <div className={classes.Box4}>
-            {/* TITTLE */}
-            <div className={classes.Tittle1}>¿Cómo funciona?</div>
-            {/* CARDS */}
-            <List>
-              <List className={classes.cards}>
-                <ListItem><img className={classes.icons} src={login} alt="login" /></ListItem>
-                <ListItem className={classes.ListNum}>1<div className={classes.textCards}> Creas tu cuenta en Freely Comment</div>
-                </ListItem>
-              </List>
-
-              <List className={classes.cards}>
-                <ListItem><img className={classes.icons} src={copy} alt="copy" /></ListItem>
-                <ListItem className={classes.ListNum}>2<div className={classes.textCards}>Copias la url de la web que quieres comentar</div>
-                </ListItem>
-              </List>
-
-              <List className={classes.cards}>
-                <ListItem><img className={classes.icons} src={url} alt="cut" /></ListItem>
-                <ListItem className={classes.ListNum}>3<div className={classes.textCards}>Lo pegas en tu perfil y escribes lo que te apetezca.</div>
-                </ListItem>
-              </List>
-
-              <List className={classes.cards}>
-                <ListItem><img className={classes.icons} src={comment} alt="start"></img></ListItem>
-                <ListItem className={classes.ListNum}>4<div className={classes.textCards}>¡Y listos!</div>
-                  <Button className={classes.Button2}>CREAR CUENTA</Button>
-                </ListItem>
-              </List>
-            </List>
-          </div>
-
-        </article>
-        
         </Grid>
+
+        {/* CÓMO FUNCIONA */}
+        <Grid item lg={12} sm={12} xs={12}>
+          <article className={classNames(classes.article)} >
+            <div className={classes.Box4}>
+              {/* TITTLE */}
+              <div className={classes.Tittle1}>¿Cómo funciona?</div>
+
+              {/* CARDS */}
+              <div>
+                <div className={classes.cards}>
+                  <div><img className={classes.icons} src={login} alt="login" /></div>
+                  <div className={classes.ListNum}>1<div className={classes.textCards}> Creas tu cuenta en Freely Comment</div>
+                  </div>
+                </div>
+
+                <div className={classes.cards}>
+                  <div><img className={classes.icons} src={copy} alt="copy" /></div>
+                  <div className={classes.ListNum}>2<div className={classes.textCards}>Copias la url de la web que quieres comentar</div>
+                  </div>
+                </div>
+
+                <div className={classes.cards}>
+                  <div><img className={classes.icons} src={url} alt="cut" /></div>
+                  <div className={classes.ListNum}>3
+                  <div className={classes.textCards}>Lo pegas en tu perfil y escribes lo que te apetezca.</div>
+                  </div>
+                </div>
+
+                <div className={classes.cards}>
+                  <div><img className={classes.icons} src={comment} alt="startApp"></img></div>
+                  <div className={classes.ListNum}>4
+                  <div><Button className={classes.ColorButton} >CREAR CUENTA</Button></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </article>
+        </Grid>
+
       </Grid>
 
     </section>

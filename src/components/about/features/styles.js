@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import backgroundSection from "../../../img/sectionBackground.svg";
 
 export default makeStyles((theme) => ({
+
   mainSection: {
     display: "flex",
     background: "#2BC8D1",
@@ -16,28 +17,19 @@ export default makeStyles((theme) => ({
 
   article: {
     display: "flex",
-    justifyContent: "space-between",
-    margin: "50px",
-  },
-
-  pasos: {
-    display: "flex",
     justifyContent: "center",
-    // margin: "50px",
+    margin: "50px",
+    height: "auto",
   },
 
 
   Box1: {
-    display: "flex",
-    flexDirection: "column",
+    display: "inline-block",
     width: "40%",
-    padding: 40,
-    listStyle: "none",
+    padding: 50,
     fontSize: "1rem",
-    fontFamily: "Montserrat",
     lineHeight: "30px",
     letterSpacing: "0.2em",
-    textAlign: "center",
 
     // GLASS MORPHIN EFFECT
     background: "rgba(83, 171, 220, 0.05)",
@@ -53,39 +45,10 @@ export default makeStyles((theme) => ({
   },
 
   Box2: {
-    display: "flex",
-    flexDirection: "column",
+    display: "inline-block",
     width: "40%",
-    padding: 40,
-    // justifyContent: "center",
-    listStyle: "none",
+    padding: 50,
     fontSize: "1rem",
-    fontFamily: "Montserrat",
-    lineHeight: "30px",
-    letterSpacing: "0.3em",
-    textAlign: "center",
-    // border:"solid 1px red",
-
-    // GLASS MORPHIN EFFECT
-    background: "rgba(83, 171, 220, 0.05)",
-    boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
-    backdropFilter: "blur(5px)",
-    borderRadius: "8px",
-
-
-    [theme.breakpoints.down("xs")]: {
-      width: "100%",
-    },
-  },
-
-  Box3: {
-    display: "flex",
-    flexDirection: "column",
-    width: "50%",
-    padding: 60,
-    listStyle: "none",
-    fontSize: "1rem",
-    fontFamily: "Montserrat",
     lineHeight: "30px",
     letterSpacing: "0.2em",
 
@@ -101,9 +64,37 @@ export default makeStyles((theme) => ({
     },
   },
 
-  Box4: {
+  Box3: {
     display: "inline-block",
     width: "100%",
+    alignSelf: "center",
+    padding: 50,
+    fontSize: "1rem",
+    lineHeight: "30px",
+    letterSpacing: "0.2em",
+
+    // GLASS MORPHIN EFFECT
+    background: "rgba(83, 171, 220, 0.05)",
+    boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
+    backdropFilter: "blur(5px)",
+    borderRadius: "8px",
+
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+
+    },
+  },
+
+  [theme.breakpoints.down("xs")]: {
+    width: "100%",
+
+  },
+
+
+  Box4: {
+    display: "flex",
+    flexDirection: "column",
+    with: "100%",
     padding: 50,
     marginBottom: 50,
     fontSize: "1rem",
@@ -190,15 +181,13 @@ export default makeStyles((theme) => ({
     listStyle: "none",
     fontWeight: 600,
     margin: 30,
+    paddingBottom:50,
   },
 
   ListText: {
     fontFamily: 'Montserrat',
     color: "#F0F0F0",
     marginTop: "15px",
-    // paddingBottom: 15,
-    // fontSize: "1.2rem",
-    // textAlign: "left",
     fontWeight: 600,
     letterSpacing: "0.4px",
     lineHeight: "40px",
@@ -249,8 +238,9 @@ export default makeStyles((theme) => ({
     boxShadow: "6px 1px 21px -5px rgba(127,140,231,0.9)",
   },
 
-  Button2: {
+  Button: {
     width: 170,
+    
     fontFamily: 'Montserrat',
     borderRadius: "15px",
     fontSize: "1rem",
@@ -275,8 +265,10 @@ export default makeStyles((theme) => ({
 
   img: {
     height: 400,
-    position: "center",
+    alignSelf: "center",
+    padding: 50,
     [theme.breakpoints.down("sm")]: {
+      padding: 20,
       height: 300,
       width: 300,
     },
@@ -289,12 +281,16 @@ export default makeStyles((theme) => ({
   sectionBackground: {
     backgroundImage: `url(${backgroundSection})`,
     backgroundSize: "cover",
+    height: "90vh",
     backgroundColor: "#2BC8D1",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
-    padding: 4,
 
+    [theme.breakpoints.down("xs")]: {
+      display: "none",
+    },
   },
+
 
   geoBackground: {
     backgroundColor: "#B963F7",
@@ -302,30 +298,37 @@ export default makeStyles((theme) => ({
 
   },
 
-
+  // BOX: CÓMO FUNCIONA
   cards: {
-    display: "flex",
-    flexDirection: "row",
-    width: "80%",
-    height: "30vh",
-    margin: 20,
+    display: "inline-block",
+    width: "20%",
+    height: "40vh",
+    margin: 15,
+    padding: 20,
+
     // GLASS MORPHIN EFFECT
     background: "yellow",
     boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
     backdropFilter: "blur(20px)",
     borderRadius: "8px",
 
-    // [theme.breakpoints.down("sm")]: {
-    //   width: "90%",
-    //   justifyContent: "center",
+    [theme.breakpoints.down("sm")]: {
+      display: "flex",
+      width: "80%",
+      height: "25vh",
+      margin: 10,
+      padding: 5,
 
-    // },
-    // [theme.breakpoints.down("xs")]: {
-    //   width: "90%",
-    //   height:"auto",
-    //   justifyContent: "center",
+    },
+    [theme.breakpoints.down("xs")]: {
+      display: "flex",
+      width: "100%",
+      height:"20vh",
+      marginTop: 5,
+      padding: 3,
+      
 
-    // },
+    },
 
   },
 
@@ -357,22 +360,21 @@ export default makeStyles((theme) => ({
   },
 
   icons: {
-    display: "flex",
-    justifyContent: "center",
     height: 130,
     with: 130,
 
     [theme.breakpoints.down("sm")]: {
       display: "flex",
-      height: "auto",
-      width: "auto",
+      height: "80",
+      width: "80",
       padding: 10,
     },
     [theme.breakpoints.down("xs")]: {
-      display: "flex",
-      height: "auto",
-      width: "auto",
-      padding: 10,
+      display: "none",
+      // justifyContent:"center",
+      // height: "3vh",
+      // width: "3vh",
+    
     },
   },
 
