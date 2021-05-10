@@ -300,9 +300,9 @@ export default makeStyles((theme) => ({
   cards: {
     display: "inline-block",
     width: "20%",
-    height: "40vh",
-    margin: 15,
-    padding: 20,
+    height: "50vh",
+    margin: 10,
+    padding: 10,
 
     // GLASS MORPHIN EFFECT
     background: "yellow",
@@ -358,8 +358,8 @@ export default makeStyles((theme) => ({
   },
 
   icons: {
-    height: 130,
-    with: 130,
+    height: "12vh",
+    with: "12vh",
 
     [theme.breakpoints.down("sm")]: {
       display: "flex",

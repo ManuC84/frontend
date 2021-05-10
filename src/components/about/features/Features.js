@@ -67,7 +67,7 @@ const Features = () => {
         </Grid>
 
         {/* CÓMO FUNCIONA */}
-        <Grid item lg={12} sm={12} xs={12}>
+        
           <article className={classNames(classes.article)} >
             <div className={classes.Box4}>
               {/* TITTLE */}
@@ -105,7 +105,7 @@ const Features = () => {
             </div>
 
           </article>
-        </Grid>
+      
 
       </Grid>
 
