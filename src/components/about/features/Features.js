@@ -19,8 +19,7 @@ const Features = () => {
   return (
     <section className={classes.mainSection}>
 
-      <Grid container>
-
+      <Grid container lg={12} sm={12} xs={12} style={{ display: "flex", justifyContent: "center" }} >
 
         {/* COMERCIO LOCAL */}
         <article className={classNames(classes.article)} >
@@ -28,10 +27,10 @@ const Features = () => {
           <div className={classes.Box1}>
             <div className={classes.Tittle1}>Comercio local</div>
             <div className={classes.ListText2}>
-              <div><span>Interactúa con los <b>comercios de tu barrio</b> a través de tu móvil de forma sencilla, escanea el codigo QR y entra directo a comentar con la comunidad.</span> </div>
-              <div className={classes.Tittle1} >¿Eres comerciante?</div>
-              <div><span>Aquí tendrás tu espacio para darte a conocer y publicitarte.</span></div>
+              <div>Interactúa con los comercios de tu barrio a través de tu móvil de forma sencilla, escanea el codigo QR y entra directo a comentar con la comunidad.</div>
             </div>
+            <div className={classes.Tittle1} >¿Eres comerciante?</div>
+            <div className={classes.ListText2}>Aquí tendrás tu espacio para darte a conocer y publicitarte.</div>
             <Button className={classes.ColorButton}>¿TE ANIMAS? </Button>
           </div>
         </article>
@@ -50,62 +49,56 @@ const Features = () => {
           </article>
         </div>
 
-        <Grid item lg={12} sm={12} xs={12} style={{ display: "flex", justifyContent: "center" }}>
-
-          {/* DESCÁRGATE EL PLUGIN */}
-          <article className={classNames(classes.article)} >
-            <img src={imgPlugin} alt="plugin" className={classes.img} />
-            <div className={classes.Box3}>
-              <div className={classes.Tittle1}>Descárgate el plugin</div>
-              <div className={classes.ListText2}>
-                <div><span>Házlo aún más fácil con el <b>plugin</b> para Chrome.</span> </div>
-                <div><span>Podrás añadir la url y los comentarios en un click.</span></div>
-              </div>
-              <Button className={classes.ColorButton}>DESCARGAR</Button>{" "}
+        {/* DESCÁRGATE EL PLUGIN */}
+        <article className={classNames(classes.article)} >
+          <img src={imgPlugin} alt="plugin" className={classes.img} />
+          <div className={classes.Box3}>
+            <div className={classes.Tittle1}>Descárgate el plugin</div>
+            <div className={classes.ListText2}>
+              <div>Házlo aún más fácil con el plugin para Chrome.</div>
+              <div>Podrás añadir la url y los comentarios en un click.</div>
             </div>
-          </article>
-        </Grid>
+            <Button className={classes.ColorButton}>DESCARGAR</Button>{" "}
+          </div>
+        </article>
 
         {/* CÓMO FUNCIONA */}
-        
-          <article className={classNames(classes.article)} >
-            <div className={classes.Box4}>
-              {/* TITTLE */}
-              <div className={classes.Tittle1}>¿Cómo funciona?</div>
 
-              {/* CARDS */}
-              <div>
-                <div className={classes.cards}>
-                  <div><img className={classes.icons} src={login} alt="login" /></div>
-                  <div className={classes.ListNum}>1<div className={classes.textCards}> Creas tu cuenta en Freely Comment</div>
-                  </div>
-                </div>
+        <article className={classNames(classes.article)} >
+          <div className={classes.Box4}>
+            {/* TITTLE */}
+            <div className={classes.Tittle3}>¿Cómo funciona?</div>
 
-                <div className={classes.cards}>
-                  <div><img className={classes.icons} src={copy} alt="copy" /></div>
-                  <div className={classes.ListNum}>2<div className={classes.textCards}>Copias la url de la web que quieres comentar</div>
-                  </div>
-                </div>
-
-                <div className={classes.cards}>
-                  <div><img className={classes.icons} src={url} alt="cut" /></div>
-                  <div className={classes.ListNum}>3
-                  <div className={classes.textCards}>Lo pegas en tu perfil y escribes lo que te apetezca.</div>
-                  </div>
-                </div>
-
-                <div className={classes.cards}>
-                  <div><img className={classes.icons} src={comment} alt="startApp"></img></div>
-                  <div className={classes.ListNum}>4
-                  <div><Button className={classes.ColorButton} >CREAR CUENTA</Button></div>
-                  </div>
+            {/* CARDS */}
+            <div>
+              <div className={classes.cards}>
+                <div><img src={login} alt="login" /></div>
+                <div className={classes.ListNum}>1<div className={classes.textCards}> Creas tu cuenta en Freely Comment</div>
                 </div>
               </div>
 
+              <div className={classes.cards}>
+                <div><img src={copy} alt="copy" /></div>
+                <div className={classes.ListNum}>2<div className={classes.textCards}>Copias la url de la web que quieres comentar</div>
+                </div>
+              </div>
+
+              <div className={classes.cards}>
+                <div><img src={url} alt="cut" /></div>
+                <div className={classes.ListNum}>3
+                  <div className={classes.textCards}>Lo pegas en tu perfil y escribes lo que te apetezca.</div>
+                </div>
+              </div>
             </div>
 
-          </article>
-      
+            <Grid item lg={10} sm={10} xs={12} style={{ display: "flex", justifyContent: "center" }}>
+              <div>
+                <div><Button className={classes.Button} >¡EMPIEZA YA!</Button></div>
+              </div>
+            </Grid>
+
+          </div>
+        </article>
 
       </Grid>
 

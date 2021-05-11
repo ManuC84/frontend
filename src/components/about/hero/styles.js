@@ -9,12 +9,14 @@ export default makeStyles((theme) => ({
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     height: "100vh",
-    background: "#2BC8D1",
+    background: "#F2F2FF",
+    // background: "#2BC8D1",
     [theme.breakpoints.down("sm")]: {
       height: "80vh",
     },
     [theme.breakpoints.down("xs")]: {
-      height: "80vh",
+      height: "90vh",
+      backgroundSize: "cover",
     },
   },
 
@@ -47,28 +49,35 @@ export default makeStyles((theme) => ({
     fontWeight: 900,
     letterSpacing: "0.5px",
     color: "#0DDDC9",
+    
     [theme.breakpoints.down("sm")]: {
       fontSize: "2.9rem",
       textAlign: "center",
-      paddingBottom:"6vh",
+      paddingBottom:"3vh",
     },
     [theme.breakpoints.down("xs")]: {
-      fontSize: "2.2rem",
+      fontSize: "2rem",
+      paddingBottom: "1vh",
       textAlign: "center",
     },
   },
 
   Subtitol: {
     fontFamily: 'Montserrat',
-    fontSize: "1.8rem",
+    fontSize: "1.7rem",
     textAlign: "left",
-    fontWeight: 600,
+    fontWeight: 500,
     lineHeight: "40px",
     wordSpacing: 2,
     color: "#f8f9fa",
-    paddingBottom: "30px",
+    paddingBottom: "20px",
+
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.5rem",
+      textAlign: "center",
+    },
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "1.3rem",
       textAlign: "center",
     },
   },
