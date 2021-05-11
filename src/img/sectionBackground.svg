@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1920 925.9" style="enable-background:new 0 0 1920 925.9;" xml:space="preserve">
+<style type="text/css">
+	.st0{display:none;}
+	.st1{display:inline;fill:#B963F7;}
+	.st2{display:inline;fill:#B261F2;}
+	.st3{display:inline;fill:#5E44BA;}
+	.st4{fill:url(#SVGID_1_);}
+	.st5{fill:#B261F2;}
+	.st6{fill:url(#SVGID_2_);stroke:#000000;stroke-width:0.25;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g id="Capa_2_1_" class="st0">
+	<path class="st1" d="M3,1084c160.1,0,320.2,0,480.2,0c160.1,0,320.3,0,480.4,0s320,0,480.1,0s320.2,0,400.2,0h80V264l-80,76
+		c-80,75-240.1,228.7-400.2,242.9s-320.2-105.5-480.2-182.3S643.3,295.2,483.2,294.4c-160,0.8-320.1,29.4-400.2,45.6L3,355.1V1084z"
+		/>
+</g>
+<g id="Capa_2_3_" class="st0">
+	<path class="st2" d="M-115.3,925.9c118.1-23.1,273.1-47.4,456-60c123.9-8.5,297.7-20,519.1,0c223.6,20.2,285.4,53.4,582.1,84
+		c119.7,12.4,217.5,18.1,279,21c66-4,132-8,198-12c0.3-317,0.5-634.1,0.8-951.1c-27.9,28.2-81.2,77.7-156.7,119.8
+		C1399.5,329.9,992.4-39.1,393.6,41.7c-147.7,19.9-266.1,60.7-346.4,94.1c-53.2,21.3-106.4,42.6-159.5,64
+		C-113.4,441.8-114.3,683.9-115.3,925.9z"/>
+</g>
+<g id="Capa_2_2_" class="st0">
+	<path class="st3" d="M-106.7,955.8c202.1-49.7,377.4-67.8,510.5-73.7c224.6-10,403,12.1,531.1,28.4c230.4,29.3,240.8,51.9,492,80.1
+		c90.2,10.1,240.4,24.3,432,10.6c27.5-2,50.3-4.1,66-5.7c-1.7-309.6-3.4-619.1-5.1-928.7c-27.8,27.4-80.9,75.3-156.1,116
+		C1386.5,387.1,1036.4,92,400,99.7c-93.7,1.1-240.6,9.4-422.1,49.3l-84.6,16.7V955.8z"/>
+</g>
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="399.7539" y1="370.1457" x2="399.7539" y2="370.1457" gradientTransform="matrix(1 0 0 -1 0 1080)">
+	<stop  offset="0" style="stop-color:#B963F7"/>
+	<stop  offset="3.452799e-02" style="stop-color:#B261F2"/>
+	<stop  offset="0.2823" style="stop-color:#8551D4"/>
+	<stop  offset="0.4736" style="stop-color:#6848C1"/>
+	<stop  offset="0.5842" style="stop-color:#5E44BA"/>
+</linearGradient>
+<path class="st4" d="M399.8,709.9"/>
+<path class="st5" d="M907.8,985.9"/>
+<path class="st5" d="M2248.9,1114.9"/>
+<g id="Capa_2_4_">
+	
+		<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="291.255" y1="917.9609" x2="1659.1924" y2="-449.9765" gradientTransform="matrix(1 0 0 -1 0 755.8192)">
+		<stop  offset="0" style="stop-color:#B963F7"/>
+		<stop  offset="0.1335" style="stop-color:#A95EEC"/>
+		<stop  offset="0.5143" style="stop-color:#8050D1"/>
+		<stop  offset="0.8155" style="stop-color:#6747C0"/>
+		<stop  offset="0.9977" style="stop-color:#5E44BA"/>
+	</linearGradient>
+	<path class="st6" d="M-34.3,928.1h82.1c82.1,0,246.2,0,410.7,0s328.7,0,493,0c164.3,0,328.4,0,492.6,0s328.5,0,410.7,0h82.1V67.8
+		l-82.1,79.7c-82.1,78.7-246.4,239.9-410.7,254.8c-164.3,14.9-328.5-110.7-492.8-191.2S622.8,100.5,458.5,99.6
+		c-164.3,0.9-328.5,30.8-410.7,47.8l-82.1,15.9V928.1z"/>
+</g>
+</svg>

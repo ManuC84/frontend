@@ -1,12 +1,17 @@
 import React from "react";
-import { Container, Typography, Button, Divider, List, ListItem } from "@material-ui/core";
-// import features1 from "../../../img/features1.png";
-// import features2 from "../../../img/features2.png";
-// import features3 from "../../../img/features3.png";
-import features11 from "../../../img/1.png";
-import features22 from "../../../img/2.png";
-import features33 from "../../../img/3.png";
 import makeStyles from "./styles";
+import classNames from 'classnames';
+import { Button, List, ListItem, Card, Grid } from "@material-ui/core";
+// ILLUSTRATION
+import imgPlugin from "../../../img/imgPlugin.png";
+import imgComercio from "../../../img/imgComercio.png";
+import imgGeolocalizacion from "../../../img/imgGeolocalizacion.png";
+// ICONS
+import login from "../../../img/login.svg";
+import copy from "../../../img/copy.svg";
+import url from "../../../img/url.svg";
+import comment from "../../../img/comment.svg";
+
 
 const Features = () => {
   const classes = makeStyles();
@@ -14,62 +19,97 @@ const Features = () => {
   return (
     <section className={classes.mainSection}>
 
-      <Container className={classes.featuresContainer}>
-        
-        {/* ¿CÓMO FUNCIONA? */}
-        <article className={classes.article}>
-          <img src={features11} alt="features1" />
+      <Grid container>
 
-          <List className={classes.textBox}>
-            <div className={classes.TittleSection}>¿Cómo funciona?</div>
-            <ListItem>
-              <div className={classes.ListNum}>1</div>
-              <div className={classes.ListText}>Creas tu cuenta en FreelyComment</div>
-            </ListItem>
-            <ListItem>
-              <div className={classes.ListNum}>2</div>
-              <div className={classes.ListText}>Copias la url de la web que quieres comentar</div>
-            </ListItem>
-            <ListItem>
-              <div className={classes.ListNum}>3</div>
-              <div className={classes.ListText}>Pegas la url en tu perfil</div>
-            </ListItem>
-            <ListItem>
-              <div className={classes.ListNum}>4</div>
-              <div className={classes.ListText}>¡Y listos!</div>
-            </ListItem>
-            <ListItem><Button className={classes.ColorButton}>CREAR CUENTA</Button> </ListItem>
-          </List>
-        </article>
 
-        {/* DESCÁRGATE EL PLUGIN */}
-        <Divider />
-        <article className={classes.article}>
-          <List className={classes.textBox}>
-            <div className={classes.TittleSection}>Descárgate el plugin</div>
-            <List className={classes.ListText}>
-              <ListItem>Accede a los comentarios con un solo click desde el mismo navegador.</ListItem>
-              <ListItem>La extensión de navegador también te permite conocer cuantos comentarios y me gusta tiene la página que estás visitando sin necesidad de abrir una nueva pestaña.</ListItem>
-            </List>
-            <ListItem><Button className={classes.ColorButton}>DESCARGAR</Button> </ListItem>
-          </List>
-          <img src={features22} alt="features2" />
-        </article>
-        <Divider />
-
-        {/* NO TE PONGAS LIMITES */}
-        <article className={classes.article}>
-          <img src={features33} alt="features3" />
-          <div className={classes.textBox}>
-            <div className={classes.TittleSection}>No te pongas límites</div>
-            <div className={classes.ListText}>Comenta acerca de cualquier negocio local de tu ciudad, busca tus temas favoritos y las últimas noticias, incluso si no tienen una página web propia.</div>
+        {/* COMERCIO LOCAL */}
+        <article className={classNames(classes.article)} >
+          <img src={imgComercio} alt="comercio" className={classes.img} />
+          <div className={classes.Box1}>
+            <div className={classes.Tittle1}>Comercio local</div>
+            <div className={classes.ListText2}>
+              <div><span>Interactúa con los <b>comercios de tu barrio</b> a través de tu móvil de forma sencilla, escanea el codigo QR y entra directo a comentar con la comunidad.</span> </div>
+              <div className={classes.Tittle1} >¿Eres comerciante?</div>
+              <div><span>Aquí tendrás tu espacio para darte a conocer y publicitarte.</span></div>
+            </div>
             <Button className={classes.ColorButton}>¿TE ANIMAS? </Button>
           </div>
         </article>
+
+        {/* GEOLOCALIZACIÓN */}
+        <div className={classes.sectionBackground}>
+          <article className={classNames(classes.article)} >
+            <div className={classes.Box2}>
+              <div className={classes.Tittle2}>Encuentra lo que necesitas</div>
+              <div className={classes.ListText2}>
+                <div><span>Gracias a la <b>geolocalización</b> podrás encontrar aquel comercio que necesitas estés dónde estés e interactuar para saber qué opinan los demás.</span> </div>
+              </div>
+              <Button className={classes.ColorButton}>BUSCAR </Button>
+            </div>
+            <img src={imgGeolocalizacion} alt="geolocalizacion" className={classes.img} />
+          </article>
+        </div>
+
+        <Grid item lg={12} sm={12} xs={12} style={{ display: "flex", justifyContent: "center" }}>
+
+          {/* DESCÁRGATE EL PLUGIN */}
+          <article className={classNames(classes.article)} >
+            <img src={imgPlugin} alt="plugin" className={classes.img} />
+            <div className={classes.Box3}>
+              <div className={classes.Tittle1}>Descárgate el plugin</div>
+              <div className={classes.ListText2}>
+                <div><span>Házlo aún más fácil con el <b>plugin</b> para Chrome.</span> </div>
+                <div><span>Podrás añadir la url y los comentarios en un click.</span></div>
+              </div>
+              <Button className={classes.ColorButton}>DESCARGAR</Button>{" "}
+            </div>
+          </article>
+        </Grid>
+
+        {/* CÓMO FUNCIONA */}
+        
+          <article className={classNames(classes.article)} >
+            <div className={classes.Box4}>
+              {/* TITTLE */}
+              <div className={classes.Tittle1}>¿Cómo funciona?</div>
+
+              {/* CARDS */}
+              <div>
+                <div className={classes.cards}>
+                  <div><img className={classes.icons} src={login} alt="login" /></div>
+                  <div className={classes.ListNum}>1<div className={classes.textCards}> Creas tu cuenta en Freely Comment</div>
+                  </div>
+                </div>
+
+                <div className={classes.cards}>
+                  <div><img className={classes.icons} src={copy} alt="copy" /></div>
+                  <div className={classes.ListNum}>2<div className={classes.textCards}>Copias la url de la web que quieres comentar</div>
+                  </div>
+                </div>
+
+                <div className={classes.cards}>
+                  <div><img className={classes.icons} src={url} alt="cut" /></div>
+                  <div className={classes.ListNum}>3
+                  <div className={classes.textCards}>Lo pegas en tu perfil y escribes lo que te apetezca.</div>
+                  </div>
+                </div>
+
+                <div className={classes.cards}>
+                  <div><img className={classes.icons} src={comment} alt="startApp"></img></div>
+                  <div className={classes.ListNum}>4
+                  <div><Button className={classes.ColorButton} >CREAR CUENTA</Button></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </article>
       
-      </Container>
-    
-    </section >
+
+      </Grid>
+
+    </section>
   );
 };
 

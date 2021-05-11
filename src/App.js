@@ -10,6 +10,7 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import ScrollTop from "../src/utils/ScrollToTop";
 import About from "./pages/about/About";
 
+
 function App(props) {
   return (
     <BrowserRouter>
@@ -24,7 +25,7 @@ function App(props) {
       </Switch>
 
       <ScrollTop {...props}>
-        <Fab color="secondary" size="small" aria-label="scroll back to top">
+        <Fab color="primary" size="small" aria-label="scroll back to top">
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>

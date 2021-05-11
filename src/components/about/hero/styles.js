@@ -1,100 +1,97 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { Autocomplete } from "@material-ui/lab";
-import background from "../../../img/backgroundHero.png";
-
+import background from "../../../img/backgroundWave.svg";
 
 export default makeStyles((theme) => ({
 
-
   mainSection: {
     backgroundImage: `url(${background})`,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundColor: "#ffff",
-
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    height: "100vh",
+    background: "#2BC8D1",
+    [theme.breakpoints.down("sm")]: {
+      height: "80vh",
+    },
+    [theme.breakpoints.down("xs")]: {
+      height: "80vh",
+    },
   },
 
   heroContainer: {
-  display: "flex",
-  justifyContent: "space-around",
- 
-  //   // [theme.breakpoints.down("xs", "sm")]: {
-  //   //   display: "flex",
-  //   //   flexDirection: "column",
-  //   // },
-  },
-
-  heroImgSection: {
-    maxHeight:"75vh",
-    maxWidth: "75vh",
-    justifyContent: "flex-end",
-    
-    [theme.breakpoints.down("xs")]: {
-      maxHeight: "auto",
-      maxWidth: "auto",
-      
-    },
+    padding: 20,
 
   },
 
   heroTextSection: {
     display: "flex",
-    flexDirection:"column",
-    width:"50%", 
-  
-
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      paddingBottom: 20,
+    },
   },
 
-
-  Title: {
-    fontFamily: 'MuseoModerno',
-    fontSize: "2.5rem",
-    fontWeight: 900,
-    letterSpacing: "5px",
-    color: "#0DDDC9",
-    paddingBottom:"20px",
-    [theme.breakpoints.down("xs", "sm")]: {
-      fontSize: "1rem",
-
+  heroImg: {
+    height: 550,
+    alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
     },
-    
-  
+  },
+
+  TitleSection: {
+    fontFamily: "MuseoModerno",
+    fontSize: "3rem",
+    fontWeight: 900,
+    letterSpacing: "0.5px",
+    color: "#0DDDC9",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "2.9rem",
+      textAlign: "center",
+      paddingBottom:"6vh",
+    },
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "2.2rem",
+      textAlign: "center",
+    },
   },
 
   Subtitol: {
-    // width:"40%",
-    fontSize: "1.3rem",
-    textAlign: "justify",
-    fontWeight: 500,
+    fontFamily: 'Montserrat',
+    fontSize: "1.8rem",
+    textAlign: "left",
+    fontWeight: 600,
     lineHeight: "40px",
     wordSpacing: 2,
     color: "#f8f9fa",
     paddingBottom: "30px",
-    [theme.breakpoints.down("xs")]: {
-      fontSize: "0.4rem",
-      lineHeight: "15px",
-      wordSpacing: 1,
-      
-
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.5rem",
+      textAlign: "center",
     },
   },
 
   ColorButton: {
     width: 170,
-    alignSelf: "flex-start",
-    borderRadius: "50px",
+    fontFamily: 'Montserrat',
+    alignSelf: "start",
+    borderRadius: "15px",
     fontSize: "1rem",
     fontWeight: 800,
+    marginTop: 10,
     color: theme.palette.getContrastText("#7324A3"),
     backgroundColor: "#0DDDC9",
     "&:hover": {
-      backgroundColor: "#7F8CE7",
+      backgroundColor: "#B963F7",
+    },
+    boxShadow: "6px 1px 21px -5px rgba(127,140,231,0.9)",
+    [theme.breakpoints.down("sm")]: {
+      alignSelf: "center",
     },
     [theme.breakpoints.down("xs")]: {
-      display: "none",
+      alignSelf: "center",
     },
   },
-  
-
-
 }));

@@ -1,0 +1,11 @@
+.slick-slide > div {
+  display: grid;
+  place-items: center;
+}
+
+/* .slick-prev {
+  left: 70px;
+}
+.slick-next {
+  right: 70px;
+} */
