@@ -12,10 +12,10 @@ export default makeStyles((theme) => ({
     background: "#F2F2FF",
     // background: "#2BC8D1",
     [theme.breakpoints.down("sm")]: {
-      height: "80vh",
+      height: "auto",
     },
     [theme.breakpoints.down("xs")]: {
-      height: "90vh",
+      height: "auto",
       backgroundSize: "cover",
     },
   },
@@ -28,6 +28,7 @@ export default makeStyles((theme) => ({
   heroTextSection: {
     display: "flex",
     flexDirection: "column",
+    
     justifyContent: "center",
     alignItems: "center",
     [theme.breakpoints.down("sm")]: {
@@ -63,6 +64,7 @@ export default makeStyles((theme) => ({
   },
 
   Subtitol: {
+    
     fontFamily: 'Montserrat',
     fontSize: "1.7rem",
     textAlign: "left",
