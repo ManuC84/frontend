@@ -363,16 +363,16 @@ export default makeStyles((theme) => ({
     borderRadius: "8px",
 
     [theme.breakpoints.down("sm")]: {
-      display: "flex",
+      
       width: "80%",
-      height: "25vh",
+      height: "auto",
       margin: 10,
       padding: 5,
     },
     [theme.breakpoints.down("xs")]: {
       display: "flex",
       width: "100%",
-      height: "20vh",
+      height: "auto",
       marginTop: 5,
       padding: 3,
     },
@@ -403,25 +403,10 @@ export default makeStyles((theme) => ({
     },
   },
 
-  // icons: {
-  //   display: "block",
-  //   height: "15vh",
-  //   with: "15vh",
-  //   // justifyContent: "center",
-  //   // alignItems: "center",
 
-  //   [theme.breakpoints.down("sm")]: {
-  //     display: "flex",
-  //     height: "80",
-  //     width: "80",
-  //     padding: 10,
-  //   },
-  //   [theme.breakpoints.down("xs")]: {
-  //     display: "none",
-  //     // justifyContent:"center",
-  //     // height: "3vh",
-  //     // width: "3vh",
 
-  //   },
-  // },
+
+
+
+
 }));
