@@ -16,11 +16,7 @@ const Features = () => {
 
   return (
     <section className={classes.mainSection}>
-
-      <Grid 
-
-
-
+      <Grid
         container
         lg={12}
         sm={12}
@@ -87,8 +83,6 @@ const Features = () => {
         {/* CÓMO FUNCIONA */}
 
         <article className={classNames(classes.article)}>
-
-
           <div className={classes.Box4}>
             {/* TITTLE */}
             <div className={classes.Tittle3}>¿Cómo funciona?</div>
@@ -97,10 +91,7 @@ const Features = () => {
             <div style={{ display: "flex", justifyContent: "center" }}>
               <div className={classes.cards}>
                 <div>
-
-                  <img className={classes.icons}src={login} alt="login" />
-               
-
+                  <img className={classes.icons} src={login} alt="login" />
                 </div>
                 <div className={classes.ListNum}>
                   1
@@ -113,7 +104,7 @@ const Features = () => {
 
               <div className={classes.cards}>
                 <div>
-                  <img src={copy} alt="copy" />
+                  <img className={classes.icons} src={copy} alt="copy" />
                 </div>
                 <div className={classes.ListNum}>
                   2
@@ -125,7 +116,7 @@ const Features = () => {
 
               <div className={classes.cards}>
                 <div>
-                  <img src={url} alt="cut" />
+                  <img className={classes.icons} src={url} alt="cut" />
                 </div>
                 <div className={classes.ListNum}>
                   3

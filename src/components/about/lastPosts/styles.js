@@ -31,12 +31,11 @@ export default makeStyles((theme) => ({
     fontWeight: 900,
     letterSpacing: "10px",
     color: "#0DDDC9",
-    padding:20,
-    
+    padding: 20,
+
     [theme.breakpoints.down("sm")]: {
       fontSize: "2.3rem",
       textAlign: "center",
-      
     },
     [theme.breakpoints.down("xs")]: {
       fontSize: "2.2rem",
@@ -46,15 +45,15 @@ export default makeStyles((theme) => ({
   },
 
   Subtitol: {
-    fontFamily: 'Montserrat',
+    fontFamily: "Montserrat",
     fontSize: "1.6rem",
     textAlign: "center",
     fontWeight: 600,
     lineHeight: "40px",
-    wordSpacing:4,
+    wordSpacing: 4,
     color: "#f8f9fa",
     listStyle: "none",
-    paddingLeft:20,
+    paddingLeft: 20,
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.2rem",
       textAlign: "center",
@@ -78,7 +77,7 @@ export default makeStyles((theme) => ({
     },
   },
   sliderContainer: {
-    width: "50%",
+    width: "40%",
     padding: 20,
     margin: "20px 20px",
     [theme.breakpoints.down("sm")]: {

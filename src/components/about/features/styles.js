@@ -346,7 +346,9 @@ export default makeStyles((theme) => ({
 
   // BOX: CÓMO FUNCIONA
   cards: {
-    display: "inline-block",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
     width: "25%",
     margin: "20px",
     padding: "10px",
@@ -363,7 +365,6 @@ export default makeStyles((theme) => ({
     borderRadius: "8px",
 
     [theme.breakpoints.down("sm")]: {
-      
       width: "80%",
       height: "auto",
       margin: 10,
@@ -392,21 +393,19 @@ export default makeStyles((theme) => ({
 
     [theme.breakpoints.down("sm")]: {
       textAlign: "center",
-      lineHeight: "30px",
-      fontSize: "0.999rem",
+      lineHeight: "20px",
+      fontSize: "0.8rem",
       textAlign: "start",
     },
     [theme.breakpoints.down("xs")]: {
-      fontSize: "0.999rem",
+      fontSize: "0.7rem",
       textAlign: "start",
-      lineHeight: "33px",
+      lineHeight: "15px",
     },
   },
 
-
-
-
-
-
-
+  icons: {
+    height: 300,
+    width: 300,
+  },
 }));
