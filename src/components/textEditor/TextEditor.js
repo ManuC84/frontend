@@ -63,14 +63,16 @@ const TextEditor = ({
     }
 
     if (type === "comments") {
-      dispatch(addComment(post._id, { comment: body, creator: user }));
+      dispatch(
+        addComment(post._id, { comment: body, creator: user[0]?.data?.result })
+      );
     }
 
     if (type === "commentReplies") {
       dispatch(
         addCommentReply(post._id, comment._id, {
           commentReply: body,
-          creator: user,
+          creator: user[0]?.data?.result,
         })
       );
     }

@@ -11,13 +11,16 @@ import login from "../../../img/login.svg";
 import copy from "../../../img/2.svg";
 import url from "../../../img/3.svg";
 
-
 const Features = () => {
   const classes = makeStyles();
 
   return (
     <section className={classes.mainSection}>
+
       <Grid 
+
+
+
         container
         lg={12}
         sm={12}
@@ -82,8 +85,10 @@ const Features = () => {
         </article>
 
         {/* CÓMO FUNCIONA */}
+
         <article className={classNames(classes.article)}>
-          
+
+
           <div className={classes.Box4}>
             {/* TITTLE */}
             <div className={classes.Tittle3}>¿Cómo funciona?</div>
@@ -92,7 +97,10 @@ const Features = () => {
             <div style={{ display: "flex", justifyContent: "center" }}>
               <div className={classes.cards}>
                 <div>
+
                   <img className={classes.icons}src={login} alt="login" />
+               
+
                 </div>
                 <div className={classes.ListNum}>
                   1

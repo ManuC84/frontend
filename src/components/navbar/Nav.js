@@ -30,6 +30,7 @@ import { fetchPosts } from "../../actions/posts";
 import { logout } from "../../reducers/slice/authSlice";
 import decode from "jwt-decode";
 import HideOnScroll from "../../utils/HideNav";
+import Search from "../searchbar/Search";
 
 const Nav = ({ appProps }) => {
   const classes = makeStyles();
@@ -71,6 +72,7 @@ const Nav = ({ appProps }) => {
           >
             <img src={logo} alt="logo" className={classes.logo} />
           </Link>
+
           {!user ? (
             <div>
               <Button

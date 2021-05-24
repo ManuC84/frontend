@@ -5,7 +5,6 @@ import { Height } from "@material-ui/icons";
 import backgroundSection from "../../../img/sectionBackground.svg";
 
 export default makeStyles((theme) => ({
-
   mainSection: {
     display: "flex",
     // backgroundColor: "#B3C0F5",
@@ -20,7 +19,6 @@ export default makeStyles((theme) => ({
     margin: "50px",
     // height: "auto",
   },
-
 
   Box1: {
     display: "inline-block",
@@ -73,7 +71,6 @@ export default makeStyles((theme) => ({
     webkitBackdropFilter: "blur(9.0px)",
     borderRadius: "20px",
 
-
     [theme.breakpoints.down("xs")]: {
       width: "100%",
     },
@@ -81,7 +78,7 @@ export default makeStyles((theme) => ({
 
   Box3: {
     display: "inline-block",
-    
+
     alignSelf: "center",
     padding: 50,
     fontSize: "1rem",
@@ -104,15 +101,11 @@ export default makeStyles((theme) => ({
 
     [theme.breakpoints.down("sm")]: {
       width: "100%",
-
-
     },
     [theme.breakpoints.down("xs")]: {
       width: "100%",
     },
-
   },
-
 
   Box4: {
     display: "flex",
@@ -121,7 +114,7 @@ export default makeStyles((theme) => ({
     fontSize: "1rem",
     lineHeight: "30px",
     letterSpacing: "0.2em",
-    
+
     // GLASS MORPHIN EFFECT
     // background: "rgba(83, 171, 220, 0.05)",
     // background: "#2BC8D1",
@@ -145,7 +138,6 @@ export default makeStyles((theme) => ({
       display: "flex",
       flexDirection: "column",
       width: "70%",
-
     },
   },
 
@@ -241,7 +233,7 @@ export default makeStyles((theme) => ({
   },
 
   ListText: {
-    fontFamily: 'Montserrat',
+    fontFamily: "Montserrat",
     color: "#ffff",
     marginTop: "15px",
     fontSize: "1.2rem",
@@ -256,11 +248,10 @@ export default makeStyles((theme) => ({
       textAlign: "center",
       lineHeight: "33px",
     },
-
   },
 
   ListText2: {
-    fontFamily: 'Montserrat',
+    fontFamily: "Montserrat",
     color: "#ffff",
     margin: "25px",
     fontSize: "1.2rem",
@@ -280,7 +271,7 @@ export default makeStyles((theme) => ({
 
   ColorButton: {
     width: 170,
-    fontFamily: 'Montserrat',
+    fontFamily: "Montserrat",
     alignSelf: "start",
     borderRadius: "15px",
     fontSize: "1rem",
@@ -296,8 +287,8 @@ export default makeStyles((theme) => ({
 
   Button: {
     width: 370,
-    margin:20,
-    fontFamily: 'Montserrat',
+    margin: 20,
+    fontFamily: "Montserrat",
     borderRadius: "15px",
     fontSize: "1rem",
     fontWeight: 800,
@@ -316,7 +307,6 @@ export default makeStyles((theme) => ({
       justifyContent: "center",
     },
   },
-
 
   img: {
     height: 400,
@@ -352,15 +342,18 @@ export default makeStyles((theme) => ({
     // backgroundColor: "#B963F7",
     background: "#F2F2FF",
     marginBottom: 20,
-
   },
 
   // BOX: CÓMO FUNCIONA
   cards: {
     display: "inline-block",
     width: "25%",
-    margin: "10px",
+    margin: "20px",
     padding: "10px",
+    transition: "all .2s ease-in-out",
+    "&:hover": {
+      transform: "scale(1.1)",
+    },
     // minHeight: "20vh",
 
     // GLASS MORPHIN EFFECT
@@ -369,14 +362,12 @@ export default makeStyles((theme) => ({
     backdropFilter: "blur(20px)",
     borderRadius: "8px",
 
-
     [theme.breakpoints.down("sm")]: {
       
       width: "80%",
       height: "auto",
       margin: 10,
       padding: 5,
-
     },
     [theme.breakpoints.down("xs")]: {
       display: "flex",
@@ -384,18 +375,14 @@ export default makeStyles((theme) => ({
       height: "auto",
       marginTop: 5,
       padding: 3,
-
-
     },
-
   },
-
 
   textCards: {
     display: "flex",
     marginTop: "15px",
     height: "7rem",
-    fontFamily: 'Montserrat',
+    fontFamily: "Montserrat",
     color: "white",
     fontSize: "1rem",
     textAlign: "center",
@@ -413,10 +400,12 @@ export default makeStyles((theme) => ({
       fontSize: "0.999rem",
       textAlign: "start",
       lineHeight: "33px",
-
     },
-
   },
+
+
+
+
 
 
 
