@@ -77,7 +77,7 @@ export default makeStyles((theme) => ({
     },
   },
   sliderContainer: {
-    width: "40%",
+    width: "50%",
     padding: 20,
     margin: "20px 20px",
     [theme.breakpoints.down("sm")]: {
