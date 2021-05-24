@@ -15,7 +15,6 @@ export default makeStyles((theme) => ({
 
   article: {
     display: "flex",
-    justifyContent: "center",
     margin: "50px",
     // height: "auto",
   },
@@ -272,7 +271,6 @@ export default makeStyles((theme) => ({
   ColorButton: {
     width: 170,
     fontFamily: "Montserrat",
-    alignSelf: "start",
     borderRadius: "15px",
     fontSize: "1rem",
     fontWeight: 800,
@@ -283,6 +281,9 @@ export default makeStyles((theme) => ({
       backgroundColor: "#B963F7",
     },
     boxShadow: "6px 1px 21px -5px rgba(127,140,231,0.9)",
+    [theme.breakpoints.down("xs")]: {
+      alignSelf: "center",
+    },
   },
 
   Button: {
@@ -405,7 +406,7 @@ export default makeStyles((theme) => ({
   },
 
   icons: {
-    height: 300,
-    width: 300,
+    height: "100%",
+    width: "100%",
   },
 }));
