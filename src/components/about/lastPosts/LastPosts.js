@@ -39,7 +39,6 @@ const LastPosts = () => {
   ) : (
     <section className={classes.mainSection}>
       <div className={classes.boxSection}>
-
         {/* TITTLE */}
         <div className={classes.Title}>
           <div>Bienvenidx a la comunidad</div>
@@ -47,9 +46,8 @@ const LastPosts = () => {
 
         {/* TEXT */}
         <div className={classes.Subtitol}>
-            <div>¡Sé uno/a más de la comunidad FreelyComment! </div>
-            <div>Busca tus temas favoritos, escribe y comparte.</div>
-          
+          <div>¡Sé uno/a más de la comunidad FreelyComment! </div>
+          <div>Busca tus temas favoritos, escribe y comparte.</div>
         </div>
 
         {/* BUTTON BIENVENIDO */}

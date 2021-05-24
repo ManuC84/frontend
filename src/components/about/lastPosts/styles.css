@@ -1,6 +1,6 @@
 .slick-slide > div {
-  display: grid;
-  place-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 /* .slick-prev {
