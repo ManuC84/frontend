@@ -88,7 +88,7 @@ const Features = () => {
             <div className={classes.Tittle3}>¿Cómo funciona?</div>
 
             {/* CARDS */}
-            <div style={{ display: "flex", justifyContent: "center" }}>
+            <div className={classes.cardsContainer}>
               <div className={classes.cards}>
                 <div>
                   <img className={classes.icons} src={login} alt="login" />

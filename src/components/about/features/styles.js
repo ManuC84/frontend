@@ -15,7 +15,9 @@ export default makeStyles((theme) => ({
 
   article: {
     display: "flex",
-    margin: "50px",
+    justifyContent: "center",
+    margin: "50px 0",
+    width: "100%",
     // height: "auto",
   },
 
@@ -43,7 +45,7 @@ export default makeStyles((theme) => ({
     borderRadius: "20px",
 
     [theme.breakpoints.down("xs")]: {
-      width: "100%",
+      width: "50%",
     },
   },
 
@@ -71,7 +73,7 @@ export default makeStyles((theme) => ({
     borderRadius: "20px",
 
     [theme.breakpoints.down("xs")]: {
-      width: "100%",
+      width: "75%",
     },
   },
 
@@ -102,7 +104,7 @@ export default makeStyles((theme) => ({
       width: "100%",
     },
     [theme.breakpoints.down("xs")]: {
-      width: "100%",
+      width: "50%",
     },
   },
 
@@ -131,12 +133,11 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       display: "flex",
       flexDirection: "column",
-      width: "100%",
     },
     [theme.breakpoints.down("xs")]: {
       display: "flex",
       flexDirection: "column",
-      width: "70%",
+      width: "50%",
     },
   },
 
@@ -161,6 +162,7 @@ export default makeStyles((theme) => ({
       lineHeight: "30px",
     },
     [theme.breakpoints.down("xs")]: {
+      fontSize: "1.2rem",
       textAlign: "center",
       lineHeight: "33px",
     },
@@ -216,6 +218,7 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       textAlign: "center",
       lineHeight: "33px",
+      fontSize: "1rem",
     },
   },
 
@@ -265,6 +268,7 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       textAlign: "center",
       lineHeight: "33px",
+      fontSize: "0.9rem",
     },
   },
 
@@ -346,6 +350,15 @@ export default makeStyles((theme) => ({
   },
 
   // BOX: CÓMO FUNCIONA
+  cardsContainer: {
+    display: "flex",
+    justifyContent: "center",
+    [theme.breakpoints.down("xs")]: {
+      flexDirection: "column",
+      alignItems: "center",
+    },
+  },
+
   cards: {
     display: "flex",
     flexDirection: "column",

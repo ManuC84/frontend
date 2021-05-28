@@ -14,7 +14,7 @@ const Hero = () => {
       </div>
 
       <Grid container>
-        <Grid item lg={6} md={6} sm={12} style={{ padding: 60 }}>
+        <Grid item lg={6} md={6} sm={12} xs={12} style={{ padding: 60 }}>
           {/* TITTLE + TEXT */}
           <title className={classes.heroTextSection}>
             <div className={classes.TitleSection}>

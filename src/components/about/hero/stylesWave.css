@@ -1,42 +1,41 @@
 /*waves*/
 
 .box {
-    position: fixed;
-    top: 0;
-    transform: rotate(-80deg);
-    left: 1;
-   
+  position: fixed;
+  top: 0;
+  transform: rotate(-80deg);
+  left: 1;
 }
 
 .wave {
-    position: fixed;
-    top: 0;
-    left: 0;
-    opacity: 0.05;
-    position: absolute;
-    top: 3%;
-    left: 0%;
-    /* background: white; */
-    width: 1400px;
-    height: 1600px;
-    margin-left: -150px;
-    margin-top: -250px;
-    transform-origin: 50% 30%;
-    border-radius: 50%;
-    animation: drift 2500ms infinite;
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0.05;
+  position: absolute;
+  top: 3%;
+  left: 0%;
+  /* background: white; */
+  width: 1400px;
+  height: 1600px;
+  margin-left: -150px;
+  margin-top: -250px;
+  transform-origin: 50% 30%;
+  border-radius: 50%;
+  animation: drift 2500ms infinite;
 }
 
 .wave.-three {
-    animation: drift 25500ms infinite linear;
-    position: fixed;
-    background-color: #ffffff;
+  animation: drift 25500ms infinite linear;
+  position: fixed;
+  background-color: #ffffff;
 }
 
 .wave.-two {
-    animation: drift 25500ms infinite linear;
-    opacity: .1;
-    background: #7F8CE7;
-    position: absolute;
+  animation: drift 25500ms infinite linear;
+  opacity: 0.1;
+  background: #7f8ce7;
+  position: absolute;
 }
 
 /* .box:after {
@@ -51,32 +50,36 @@
 } */
 
 @keyframes drift {
-    from {
-        transform: rotate(0deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
 
-    from {
-        transform: rotate(360deg);
-    }
+  from {
+    transform: rotate(360deg);
+  }
 }
 
 /*LOADING SPACE*/
 
-@-webkit-keyframes anim{
+@keyframes anim {
   0% {
-    -webkit-transform: scale(0,0) rotateZ(-90deg);
-    transform: scale(0,0) rotateZ(-90deg);opacity:0
+    -webkit-transform: scale(0, 0) rotateZ(-90deg);
+    transform: scale(0, 0) rotateZ(-90deg);
+    opacity: 0;
   }
- 10% {
-    -webkit-transform: scale(1,1) rotateZ(20deg);
-    transform: scale(1,1) rotateZ(0deg);opacity:1
-  } 
- 30% {
-    -webkit-transform: scale(1,1) rotateZ(20deg);
-    transform: scale(1,1) rotateZ(0deg);opacity:1
+  10% {
+    -webkit-transform: scale(1, 1) rotateZ(20deg);
+    transform: scale(1, 1) rotateZ(0deg);
+    opacity: 1;
+  }
+  30% {
+    -webkit-transform: scale(1, 1) rotateZ(20deg);
+    transform: scale(1, 1) rotateZ(0deg);
+    opacity: 1;
   }
   50% {
-    -webkit-transform: scale(0,0) rotateZ(20deg);
-    transform: scale(0,0) rotateZ(90deg);opacity:0
+    -webkit-transform: scale(0, 0) rotateZ(20deg);
+    transform: scale(0, 0) rotateZ(90deg);
+    opacity: 0;
   }
-};
+} ;
