@@ -45,7 +45,7 @@ export default makeStyles((theme) => ({
     borderRadius: "20px",
 
     [theme.breakpoints.down("xs")]: {
-      width: "50%",
+      width: "60%",
     },
   },
 
@@ -73,7 +73,7 @@ export default makeStyles((theme) => ({
     borderRadius: "20px",
 
     [theme.breakpoints.down("xs")]: {
-      width: "75%",
+      width: "60%",
     },
   },
 
@@ -104,7 +104,7 @@ export default makeStyles((theme) => ({
       width: "100%",
     },
     [theme.breakpoints.down("xs")]: {
-      width: "50%",
+      width: "60%",
     },
   },
 
@@ -137,7 +137,7 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       display: "flex",
       flexDirection: "column",
-      width: "50%",
+      width: "60%",
     },
   },
 
