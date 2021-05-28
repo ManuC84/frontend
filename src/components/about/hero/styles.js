@@ -3,7 +3,6 @@ import { Autocomplete } from "@material-ui/lab";
 import background from "../../../img/backgroundWave.svg";
 
 export default makeStyles((theme) => ({
-
   mainSection: {
     backgroundImage: `url(${background})`,
     backgroundSize: "cover",
@@ -22,13 +21,12 @@ export default makeStyles((theme) => ({
 
   heroContainer: {
     padding: 20,
-
   },
 
   heroTextSection: {
     display: "flex",
     flexDirection: "column",
-    
+
     justifyContent: "center",
     alignItems: "center",
     [theme.breakpoints.down("sm")]: {
@@ -42,6 +40,9 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
+    [theme.breakpoints.down("xs")]: {
+      display: "none",
+    },
   },
 
   TitleSection: {
@@ -50,11 +51,11 @@ export default makeStyles((theme) => ({
     fontWeight: 900,
     letterSpacing: "0.5px",
     color: "#0DDDC9",
-    
+
     [theme.breakpoints.down("sm")]: {
       fontSize: "2.9rem",
       textAlign: "center",
-      paddingBottom:"3vh",
+      paddingBottom: "3vh",
     },
     [theme.breakpoints.down("xs")]: {
       fontSize: "2rem",
@@ -64,8 +65,7 @@ export default makeStyles((theme) => ({
   },
 
   Subtitol: {
-    
-    fontFamily: 'Montserrat',
+    fontFamily: "Montserrat",
     fontSize: "1.7rem",
     textAlign: "left",
     fontWeight: 500,
@@ -86,7 +86,7 @@ export default makeStyles((theme) => ({
 
   ColorButton: {
     width: 170,
-    fontFamily: 'Montserrat',
+    fontFamily: "Montserrat",
     alignSelf: "start",
     borderRadius: "15px",
     fontSize: "1rem",

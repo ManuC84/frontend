@@ -73,7 +73,7 @@ export default makeStyles((theme) => ({
     borderRadius: "20px",
 
     [theme.breakpoints.down("xs")]: {
-      width: "60%",
+      width: "75%",
     },
   },
 
@@ -338,8 +338,6 @@ export default makeStyles((theme) => ({
     // backgroundColor: "#2BC8D1",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
-
-    [theme.breakpoints.down("xs")]: {},
   },
 
   geoBackground: {
@@ -394,12 +392,13 @@ export default makeStyles((theme) => ({
 
   textCards: {
     display: "flex",
+    justifyContent: "center",
     marginTop: "15px",
     height: "7rem",
     fontFamily: "Montserrat",
     color: "white",
     fontSize: "1rem",
-    textAlign: "center",
+
     fontWeight: 600,
     letterSpacing: "1px",
     lineHeight: "2.1rem",

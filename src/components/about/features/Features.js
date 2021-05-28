@@ -121,7 +121,9 @@ const Features = () => {
                   1
                   <div className={classes.textCards}>
                     {" "}
-                    Creas tu cuenta en Freely Comment
+                    <p style={{ textAlign: "center" }}>
+                      Creas tu cuenta en Freely Comment
+                    </p>
                   </div>
                 </div>
               </div>
@@ -133,7 +135,9 @@ const Features = () => {
                 <div className={classes.ListNum}>
                   2
                   <div className={classes.textCards}>
-                    Copias la url de la web que quieres comentar
+                    <p style={{ textAlign: "center" }}>
+                      Copias la url de la web que quieres comentar
+                    </p>
                   </div>
                 </div>
               </div>
@@ -145,7 +149,9 @@ const Features = () => {
                 <div className={classes.ListNum}>
                   3
                   <div className={classes.textCards}>
-                    Lo pegas en tu perfil y escribes lo que te apetezca.
+                    <p style={{ textAlign: "center" }}>
+                      Lo pegas en tu perfil y escribes lo que te apetezca.
+                    </p>
                   </div>
                 </div>
               </div>
