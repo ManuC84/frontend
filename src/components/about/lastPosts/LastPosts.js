@@ -46,8 +46,11 @@ const LastPosts = () => {
 
         {/* TEXT */}
         <div className={classes.Subtitol}>
-          <div>¡Sé uno/a más de la comunidad FreelyComment! </div>
-          <div>Busca tus temas favoritos, escribe y comparte.</div>
+          <h5 style={{ padding: 10 }}>
+            ¡Sé uno/a más de la comunidad FreelyComment! Busca tus temas
+            favoritos, escribe y comparte.{" "}
+          </h5>
+          {/* <h5>Busca tus temas favoritos, escribe y comparte.</h5> */}
         </div>
 
         {/* BUTTON BIENVENIDO */}

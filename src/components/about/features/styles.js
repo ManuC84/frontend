@@ -192,6 +192,7 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       textAlign: "center",
       lineHeight: "33px",
+      fontSize: "1.2rem",
     },
   },
 
@@ -338,9 +339,7 @@ export default makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
 
-    [theme.breakpoints.down("xs")]: {
-      display: "none",
-    },
+    [theme.breakpoints.down("xs")]: {},
   },
 
   geoBackground: {

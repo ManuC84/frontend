@@ -39,7 +39,15 @@ const Features = () => {
             <div className={classes.ListText2}>
               Aquí tendrás tu espacio para darte a conocer y publicitarte.
             </div>
-            <Button className={classes.ColorButton}>¿TE ANIMAS? </Button>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              <Button className={classes.ColorButton}>¿TE ANIMAS? </Button>
+            </div>
           </div>
         </article>
 
@@ -57,7 +65,15 @@ const Features = () => {
                   </span>{" "}
                 </div>
               </div>
-              <Button className={classes.ColorButton}>BUSCAR </Button>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  width: "100%",
+                }}
+              >
+                <Button className={classes.ColorButton}>BUSCAR </Button>
+              </div>
             </div>
             <img
               src={imgGeolocalizacion}
@@ -76,7 +92,15 @@ const Features = () => {
               <div>Házlo aún más fácil con el plugin para Chrome.</div>
               <div>Podrás añadir la url y los comentarios en un click.</div>
             </div>
-            <Button className={classes.ColorButton}>DESCARGAR</Button>{" "}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              <Button className={classes.ColorButton}>DESCARGAR</Button>{" "}
+            </div>
           </div>
         </article>
 

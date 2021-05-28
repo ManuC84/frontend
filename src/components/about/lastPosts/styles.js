@@ -45,15 +45,18 @@ export default makeStyles((theme) => ({
   },
 
   Subtitol: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
     fontFamily: "Montserrat",
     fontSize: "1.6rem",
-    textAlign: "center",
+
     fontWeight: 600,
     lineHeight: "40px",
-    wordSpacing: 4,
+
     color: "#f8f9fa",
     listStyle: "none",
-    paddingLeft: 20,
+
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.2rem",
       textAlign: "center",
