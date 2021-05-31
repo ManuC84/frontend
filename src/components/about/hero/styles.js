@@ -87,7 +87,6 @@ export default makeStyles((theme) => ({
   ColorButton: {
     width: 170,
     fontFamily: "Montserrat",
-    alignSelf: "start",
     borderRadius: "15px",
     fontSize: "1rem",
     fontWeight: 800,
