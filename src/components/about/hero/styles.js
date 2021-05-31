@@ -9,7 +9,6 @@ export default makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     height: "100vh",
     background: "#F2F2FF",
-    // background: "#2BC8D1",
     [theme.breakpoints.down("sm")]: {
       height: "auto",
     },
