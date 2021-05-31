@@ -18,10 +18,11 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     width: "50%",
     marginTop: 100,
-    padding: 30,
+    padding: 20,
     [theme.breakpoints.down("xs")]: {
       marginBottom: 20,
       width: "100%",
+      padding: 0,
     },
   },
 
