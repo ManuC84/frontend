@@ -24,7 +24,16 @@ const Hero = () => {
               Comparte tus recomendaciones de cualquier sitio web, comercio
               local o aficiones en un solo click.
             </div>
-            <Button className={classes.ColorButton}>¡ÚNETE YA!</Button>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                marginTop: 20,
+              }}
+            >
+              <Button className={classes.ColorButton}>¡ÚNETE YA!</Button>
+            </div>
           </title>
         </Grid>
         <Grid

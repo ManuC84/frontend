@@ -46,7 +46,7 @@ const LastPosts = () => {
 
         {/* TEXT */}
         <div className={classes.Subtitol}>
-          <h5 style={{ padding: 10 }}>
+          <h5 style={{ padding: 10, textAlign: "center" }}>
             ¡Sé uno/a más de la comunidad FreelyComment! Busca tus temas
             favoritos, escribe y comparte.{" "}
           </h5>

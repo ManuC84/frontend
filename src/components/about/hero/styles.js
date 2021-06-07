@@ -9,7 +9,6 @@ export default makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     height: "100vh",
     background: "#F2F2FF",
-    // background: "#2BC8D1",
     [theme.breakpoints.down("sm")]: {
       height: "auto",
     },
@@ -87,7 +86,6 @@ export default makeStyles((theme) => ({
   ColorButton: {
     width: 170,
     fontFamily: "Montserrat",
-    alignSelf: "start",
     borderRadius: "15px",
     fontSize: "1rem",
     fontWeight: 800,

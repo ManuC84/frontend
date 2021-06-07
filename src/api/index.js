@@ -1,6 +1,7 @@
 import axios from "axios";
+import environment from "../../src/environment";
 
-const API = axios.create({ baseURL: process.env.REACT_APP_DEPLOYMENT_URL });
+const API = axios.create({ baseURL: environment.baseUrl });
 
 //Passing headers to backend for authorization
 API.interceptors.request.use((req) => {

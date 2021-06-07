@@ -22,7 +22,9 @@ export const postsSlice = createSlice({
     fetchAll: (state, action) => {
       return {
         ...state,
-        posts: action.payload,
+        posts: action.payload.filter(
+          (post) => post.image !== "/images/no-image.png"
+        ),
         isLoading: false,
       };
     },
@@ -37,7 +39,9 @@ export const postsSlice = createSlice({
     fetchInfinite: (state, action) => {
       return {
         ...state,
-        posts: state.posts.concat(action.payload),
+        posts: state.posts.concat(
+          action.payload.filter((post) => post.image !== "/images/no-image.png")
+        ),
       };
     },
     create: (state, action) => {
