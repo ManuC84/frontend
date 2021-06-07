@@ -7,5 +7,7 @@ export default configureStore({
     posts: postsReducer,
     auth: authReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ immutableCheck: false, serializableCheck: false }),
   devTools: true,
 });
