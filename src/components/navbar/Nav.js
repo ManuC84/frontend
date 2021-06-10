@@ -13,7 +13,10 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  Snackbar,
+  Fade,
 } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/Alert";
 import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
 import InfoIcon from "@material-ui/icons/Info";
@@ -33,6 +36,12 @@ import HideOnScroll from "../../utils/HideNav";
 import Search from "../searchbar/Search";
 import io from "socket.io-client";
 import environment from "../../environment";
+import NotificationPanel from "../notificationPanel/NotificationPanel";
+import OutsideClickHandler from "react-outside-click-handler";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 let socket;
 
@@ -41,6 +50,8 @@ const Nav = ({ appProps }) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const [drawer, setDrawer] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [openNotifications, setOpenNotifications] = useState(false);
   const history = useHistory();
   const location = useLocation();
   const ENDPOINT = environment.baseUrl;
@@ -67,6 +78,7 @@ const Nav = ({ appProps }) => {
         // Save back to localStorage
         localStorage.setItem("profile", JSON.stringify(existing));
         setUser(JSON.parse(localStorage.getItem("profile")));
+        setSnackbarOpen(true);
       }
     });
     return () => {
@@ -95,6 +107,16 @@ const Nav = ({ appProps }) => {
   const handleDrawerOpen = () => {
     setDrawer(true);
   };
+
+  //Close notification info snackbar
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setSnackbarOpen(false);
+  };
+
   return (
     <HideOnScroll {...appProps}>
       <AppBar elevation={0} className={classes.root}>
@@ -149,6 +171,7 @@ const Nav = ({ appProps }) => {
                 color="primary"
                 size="medium"
                 style={{ marginRight: 10, textTransform: "none" }}
+                onClick={() => setOpenNotifications(!openNotifications)}
               >
                 <Typography variant="h6" style={{ fontSize: 16 }}>
                   {user?.data?.result?.name}
@@ -202,6 +225,27 @@ const Nav = ({ appProps }) => {
             </List>
           </div>
         </Drawer>
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity="info">
+            You have a new notification
+          </Alert>
+        </Snackbar>
+
+        {user && openNotifications ? (
+          // <OutsideClickHandler
+          //   onOutsideClick={() => setOpenNotifications(false)}
+          // >
+          <NotificationPanel
+            user={user}
+            openNotifications={openNotifications}
+            setOpenNotifications={setOpenNotifications}
+          />
+        ) : // </OutsideClickHandler>
+        null}
       </AppBar>
     </HideOnScroll>
   );

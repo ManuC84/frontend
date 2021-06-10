@@ -18,6 +18,8 @@ export default function AlertDialog({
     setAuthError(false);
   };
 
+  console.log(authError);
+
   return (
     <div>
       <Dialog
