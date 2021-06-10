@@ -31,6 +31,10 @@ import { logout } from "../../reducers/slice/authSlice";
 import decode from "jwt-decode";
 import HideOnScroll from "../../utils/HideNav";
 import Search from "../searchbar/Search";
+import io from "socket.io-client";
+import environment from "../../environment";
+
+let socket;
 
 const Nav = ({ appProps }) => {
   const classes = makeStyles();
@@ -39,6 +43,36 @@ const Nav = ({ appProps }) => {
   const [drawer, setDrawer] = useState(false);
   const history = useHistory();
   const location = useLocation();
+  const ENDPOINT = environment.baseUrl;
+
+  useEffect(() => {
+    socket = io(ENDPOINT, {
+      transports: ["websocket", "polling", "flashsocket"],
+    });
+
+    socket.on("user", (res) => {
+      const response = JSON.parse(res);
+
+      if (response._id === user.data.result._id) {
+        // Get the existing data
+        var existing = localStorage.getItem("profile");
+
+        // If no existing data, create an array
+        // Otherwise, convert the localStorage string to an array
+        existing = existing ? JSON.parse(existing) : {};
+
+        // Add new data to localStorage Array
+        existing.data.result["notifications"] = response.notifications;
+
+        // Save back to localStorage
+        localStorage.setItem("profile", JSON.stringify(existing));
+        setUser(JSON.parse(localStorage.getItem("profile")));
+      }
+    });
+    return () => {
+      socket.disconnect();
+    };
+  }, [user]);
 
   useEffect(() => {
     const token = user?.data?.token;
@@ -101,7 +135,10 @@ const Nav = ({ appProps }) => {
                 className={classes.logInButton}
                 variant="contained"
                 endIcon={
-                  <Badge badgeContent={1} color="secondary">
+                  <Badge
+                    badgeContent={user?.data?.result?.notifications?.length}
+                    color="secondary"
+                  >
                     <Avatar
                       alt="User"
                       className={classes.mediumAvatar}
