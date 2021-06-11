@@ -69,10 +69,10 @@ const Comment = ({ comment, user, post, error }) => {
     setPage(value);
   };
 
-  // Get current comments
+  // Get current comments replies
   const indexOfLastComment = page * commentsPerPage;
   const indexOfFirstComment = indexOfLastComment - commentsPerPage;
-  const currentComments = comment.commentReplies.slice(
+  const currentCommentReplies = comment.commentReplies.slice(
     indexOfFirstComment,
     indexOfLastComment
   );
@@ -302,7 +302,7 @@ const Comment = ({ comment, user, post, error }) => {
               </Typography>
             </Paper>
           ) : (
-            currentComments.map((commentReply) => (
+            currentCommentReplies.map((commentReply) => (
               <CommentReplies
                 key={commentReply._id}
                 post={post}

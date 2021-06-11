@@ -6,6 +6,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Link } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { hasError } from "../reducers/slice/postsSlice";
 
 export default function AlertDialog({
   textContent,
@@ -14,8 +16,10 @@ export default function AlertDialog({
   authError,
   setAuthError,
 }) {
+  const dispatch = useDispatch();
   const handleClose = () => {
     setAuthError(false);
+    dispatch(hasError(false));
   };
 
   console.log(authError);

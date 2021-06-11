@@ -195,5 +195,7 @@ export const {
   editCommentReply,
   deleteComment,
   deleteCommentReply,
+  removeError,
 } = postsSlice.actions;
+
 export default postsSlice.reducer;

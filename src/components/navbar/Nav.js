@@ -236,16 +236,20 @@ const Nav = ({ appProps }) => {
         </Snackbar>
 
         {user && openNotifications ? (
-          // <OutsideClickHandler
-          //   onOutsideClick={() => setOpenNotifications(false)}
-          // >
-          <NotificationPanel
-            user={user}
-            openNotifications={openNotifications}
-            setOpenNotifications={setOpenNotifications}
-          />
-        ) : // </OutsideClickHandler>
-        null}
+          <OutsideClickHandler
+            onOutsideClick={() =>
+              setTimeout(() => {
+                setOpenNotifications(false);
+              }, 10)
+            }
+          >
+            <NotificationPanel
+              user={user}
+              openNotifications={openNotifications}
+              setOpenNotifications={setOpenNotifications}
+            />
+          </OutsideClickHandler>
+        ) : null}
       </AppBar>
     </HideOnScroll>
   );

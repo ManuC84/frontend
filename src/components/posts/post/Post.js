@@ -146,7 +146,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
           }
           subheader={
             <Link
-              href={`http://localhost:3000/posts/${post._id}`}
+              href={`posts/${post._id}`}
               style={{ textDecorations: "none", color: "inherit" }}
               title="Go to post"
             >
