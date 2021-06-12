@@ -28,9 +28,11 @@ import Comments from "../../comments/Comments";
 import ReadMore from "../../../utils/readMore/ReadMore";
 import { TwitterTweetEmbed } from "react-twitter-embed";
 import AlertDialog from "../../../utils/AlertDialog";
+import { useGlobalContext } from "../../../context";
 
 const Post = ({ post, error, authError, setAuthError }) => {
-  const [expanded, setExpanded] = useState(false);
+  // const [expanded, setExpanded] = useState(false);
+  const { expanded, setExpanded } = useGlobalContext();
   const [showLikeAuthAlert, setShowLikeAuthAlert] = useState(false);
 
   const { posts } = useSelector((state) => state.posts);

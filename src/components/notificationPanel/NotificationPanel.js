@@ -15,6 +15,9 @@ import ReadMore from "../../utils/readMore/ReadMore";
 import moment from "moment";
 import {} from "../../reducers/slice/postsSlice";
 import { useDispatch } from "react-redux";
+import { useGlobalContext } from "../../context";
+import {} from "../../reducers/slice/postsSlice";
+import { fetchPosts } from "../../actions/posts";
 
 const NotificationPanel = ({
   user,
@@ -23,36 +26,38 @@ const NotificationPanel = ({
 }) => {
   const classes = makeStyles();
   const dispatch = useDispatch();
+  const { setExpanded } = useGlobalContext();
 
   return (
     <Fade in={openNotifications} timeout={500}>
       <Paper elevation={3} className={classes.notificationDropdown}>
-        {user?.data?.result?.notifications?.map((notification) => (
-          <List style={{ padding: 0 }}>
-            <Link
+        {user?.data?.result?.notifications?.map((notification, idx) => (
+          <List key={idx} style={{ padding: 0 }}>
+            {/* <Link
               href={`posts/${notification.parentPostId}`}
               style={{ textDecoration: "none", color: "inherit" }}
               title="Go to post"
+              
+            > */}
+            <ListItem
+              style={{ display: "flex", flexDirection: "column" }}
+              button
+              divider
             >
-              <ListItem
-                style={{ display: "flex", flexDirection: "column" }}
-                button
-                divider
-              >
-                <Typography variant="caption">
-                  {moment(notification.createdAt).fromNow() + " "}
-                </Typography>
-                <h5 style={{ margin: 0 }}>{notification.name} replied:</h5>
+              <Typography variant="caption">
+                {moment(notification.createdAt).fromNow() + " "}
+              </Typography>
+              <h5 style={{ margin: 0 }}>{notification.name} replied:</h5>
 
-                <div style={{ margin: "5px 0" }}>
-                  <ReadMore
-                    variant={"body2"}
-                    lines={50}
-                    content={notification.commentReply}
-                  />
-                </div>
-              </ListItem>
-            </Link>
+              <div style={{ margin: "5px 0" }}>
+                <ReadMore
+                  variant={"body2"}
+                  lines={50}
+                  content={notification.commentReply}
+                />
+              </div>
+            </ListItem>
+            {/* </Link> */}
           </List>
         ))}
         <div style={{ display: "flex", justifyContent: "center" }}>

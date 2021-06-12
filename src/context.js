@@ -3,7 +3,14 @@ import React, { useState, useContext, useEffect } from "react";
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
-  return <AppContext.Provider value={{}}>{children}</AppContext.Provider>;
+  //expand comment section
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <AppContext.Provider value={{ expanded, setExpanded }}>
+      {children}
+    </AppContext.Provider>
+  );
 };
 // make sure use
 export const useGlobalContext = () => {

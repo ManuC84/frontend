@@ -13,7 +13,7 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-//Posts
+//-----------------------------------Posts-------------------------------------------------
 export const getPosts = () => API.get("/posts");
 
 export const getSinglePost = (id) => API.get(`/posts/${id}`);
@@ -29,12 +29,12 @@ export const addPostLikes = (postId, userId) =>
 export const addPostDislikes = (postId, userId) =>
   API.post(`posts/${postId}/dislikes`, userId);
 
-//Tags
+//-------------------------------------Tags---------------------------------------------
 export const getPostsByTags = (tags) => API.post("posts/tags", tags);
 
 export const addTags = (id, tag) => API.post(`posts/tags/addTags/${id}`, tag);
 
-//Comments
+//----------------------------------Comments--------------------------------------------------------
 
 export const addComments = (id, payload) =>
   API.post(`posts/${id}/comments`, payload);
@@ -99,6 +99,8 @@ export const deleteCommentReply = (postId, commentId, commentReplyId) =>
     `posts/${postId}/comments/${commentId}/commentReplies/${commentReplyId}/delete`
   );
 
-//Auth
+//------------------------------------Notifications---------------------------------------
+
+//---------------------------------Auth----------------------------------------------
 export const signIn = (formData) => API.post("/users/signin", formData);
 export const signUp = (formData) => API.post("/users/signup", formData);
