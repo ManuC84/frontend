@@ -33,12 +33,6 @@ const NotificationPanel = ({
       <Paper elevation={3} className={classes.notificationDropdown}>
         {user?.data?.result?.notifications?.map((notification, idx) => (
           <List key={idx} style={{ padding: 0 }}>
-            {/* <Link
-              href={`posts/${notification.parentPostId}`}
-              style={{ textDecoration: "none", color: "inherit" }}
-              title="Go to post"
-              
-            > */}
             <ListItem
               style={{ display: "flex", flexDirection: "column" }}
               button
@@ -57,7 +51,6 @@ const NotificationPanel = ({
                 />
               </div>
             </ListItem>
-            {/* </Link> */}
           </List>
         ))}
         <div style={{ display: "flex", justifyContent: "center" }}>
