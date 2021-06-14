@@ -44,16 +44,7 @@ const Comment = ({ comment, user, post, error }) => {
   const dispatch = useDispatch();
   const { isNotification } = useSelector((state) => state.posts);
 
-  // const scrollRef = useRef(null);
-
-  // useEffect(() => {
-  //   if (scrollRef.current) {
-  //     window.scrollTo({
-  //       behavior: "smooth",
-  //       top: scrollRef.current.offsetTop,
-  //     });
-  //   }
-  // }, [comment]);
+  const scrollRef = useRef(null);
 
   useEffect(() => {
     if (isNotification) setExpanded(true);
@@ -94,6 +85,15 @@ const Comment = ({ comment, user, post, error }) => {
     indexOfFirstComment,
     indexOfLastComment
   );
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      window.scrollTo({
+        behavior: "smooth",
+        top: scrollRef.current.offsetTop,
+      });
+    }
+  }, [currentCommentReplies]);
 
   //Get comment replies when expanding comments(not needed any more)
   const handleExpandClick = () => {
@@ -311,6 +311,8 @@ const Comment = ({ comment, user, post, error }) => {
               type={"commentReplies"}
               setShowEditor={setShowEditor}
               error={error}
+              setPage={setPage}
+              lastPage={Math.ceil(comment.commentReplies.length / 5)}
             />
           </Collapse>
           {comment.commentReplies.length === 0 ? (
@@ -320,15 +322,21 @@ const Comment = ({ comment, user, post, error }) => {
               </Typography>
             </Paper>
           ) : (
-            currentCommentReplies.map((commentReply) => (
-              <CommentReplies
-                key={commentReply._id}
-                post={post}
-                user={user}
-                comment={comment}
-                commentReply={commentReply}
-                error={error}
-              />
+            currentCommentReplies.map((commentReply, idx, arr) => (
+              <>
+                <CommentReplies
+                  key={commentReply._id}
+                  post={post}
+                  user={user}
+                  comment={comment}
+                  commentReply={commentReply}
+                  error={error}
+                  setPage={setPage}
+                  lastPage={Math.ceil(comment.commentReplies.length / 5)}
+                />
+
+                {idx === arr.length - 1 && <div ref={scrollRef}></div>}
+              </>
             ))
           )}
           <div

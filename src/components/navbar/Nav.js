@@ -56,8 +56,6 @@ const Nav = ({ appProps }) => {
   const location = useLocation();
   const ENDPOINT = environment.baseUrl;
 
-  console.log(user);
-
   useEffect(() => {
     socket = io(ENDPOINT, {
       transports: ["websocket", "polling", "flashsocket"],
@@ -247,6 +245,7 @@ const Nav = ({ appProps }) => {
           >
             <NotificationPanel
               user={user}
+              setUser={setUser}
               openNotifications={openNotifications}
               setOpenNotifications={setOpenNotifications}
             />

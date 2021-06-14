@@ -26,21 +26,21 @@ import {
 } from "../../../actions/comments";
 import TextEditor from "../../textEditor/TextEditor";
 
-const CommentReplies = ({ post, comment, user, commentReply, error }) => {
+const CommentReplies = ({
+  post,
+  comment,
+  user,
+  commentReply,
+  error,
+  setPage,
+  lastPage,
+}) => {
   const { isLoading } = useSelector((state) => state.posts);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
   const dispatch = useDispatch();
   const classes = makeStyles();
-
-  // const scrollRef = useRef(null);
-
-  // useEffect(() => {
-  //   if (scrollRef.current) {
-  //     scrollRef.current.scrollIntoView({ behaviour: "smooth" });
-  //   }
-  // }, [commentReply]);
 
   const userId =
     user[0] && (user[0]?.data?.result?.googleId || user[0]?.data?.result?._id);

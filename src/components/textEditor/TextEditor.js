@@ -25,6 +25,8 @@ const TextEditor = ({
   isEditing,
   setIsEditing,
   editText,
+  setPage,
+  lastPage,
 }) => {
   const [body, setBody] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -34,6 +36,8 @@ const TextEditor = ({
   const history = useHistory();
 
   const handleShowEditor = () => setShowEditor(false);
+
+  console.log(lastPage);
 
   const handleCloseEdit = () => {
     if (body !== editText) {
@@ -55,7 +59,7 @@ const TextEditor = ({
     }
   }, [isEditing, editorValue]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!body) {
       setErrorMessage("Please enter a value");
@@ -69,12 +73,17 @@ const TextEditor = ({
     }
 
     if (type === "commentReplies") {
-      dispatch(
+      await dispatch(
         addCommentReply(post._id, comment._id, {
           commentReply: body,
           creator: user[0]?.data?.result,
         })
       );
+      setPage(lastPage);
+      window.scrollTo({
+        behavior: "smooth",
+        top: 300,
+      });
     }
 
     if (type === "commentEdition") {

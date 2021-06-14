@@ -96,17 +96,3 @@ export const dislikePost = (postId, userId) => async (dispatch) => {
     dispatch(hasError(error.response.data));
   }
 };
-
-export const getNotificationContent =
-  (postId, commentId, commentReplyId) => async (dispatch) => {
-    try {
-      const { data } = await API.fetchNotification(
-        postId,
-        commentId,
-        commentReplyId
-      );
-      dispatch(showNotificationContent([data]));
-    } catch (error) {
-      dispatch(hasError(error.response.data));
-    }
-  };
