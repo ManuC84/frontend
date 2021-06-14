@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Avatar,
   Grid,
@@ -30,6 +30,8 @@ import {
 import moment from "moment";
 import CommentReplies from "../commentReplies/CommentReplies";
 import { useDispatch } from "react-redux";
+import { useGlobalContext } from "../../../context";
+import { useSelector } from "react-redux";
 
 const Comment = ({ comment, user, post, error }) => {
   const [expanded, setExpanded] = useState(false);
@@ -40,6 +42,22 @@ const Comment = ({ comment, user, post, error }) => {
   const [isEditing, setIsEditing] = useState(false);
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { isNotification } = useSelector((state) => state.posts);
+
+  // const scrollRef = useRef(null);
+
+  // useEffect(() => {
+  //   if (scrollRef.current) {
+  //     window.scrollTo({
+  //       behavior: "smooth",
+  //       top: scrollRef.current.offsetTop,
+  //     });
+  //   }
+  // }, [comment]);
+
+  useEffect(() => {
+    if (isNotification) setExpanded(true);
+  }, [isNotification]);
 
   const userId =
     user[0] && (user[0]?.data?.result?.googleId || user[0]?.data?.result?._id);
@@ -181,7 +199,7 @@ const Comment = ({ comment, user, post, error }) => {
               <MenuItem onClick={handleClose}>Report</MenuItem>
             </Menu>
           ) : (
-            <Menu
+            <MenuItem
               id="simple-menu"
               anchorEl={anchorEl}
               keepMounted
@@ -199,7 +217,7 @@ const Comment = ({ comment, user, post, error }) => {
               }}
             >
               <MenuItem onClick={handleClose}>Report</MenuItem>
-            </Menu>
+            </MenuItem>
           )}
         </Grid>
         <div

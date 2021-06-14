@@ -31,11 +31,10 @@ import AlertDialog from "../../../utils/AlertDialog";
 import { useGlobalContext } from "../../../context";
 
 const Post = ({ post, error, authError, setAuthError }) => {
-  // const [expanded, setExpanded] = useState(false);
-  const { expanded, setExpanded } = useGlobalContext();
+  const [expanded, setExpanded] = useState(false);
   const [showLikeAuthAlert, setShowLikeAuthAlert] = useState(false);
 
-  const { posts } = useSelector((state) => state.posts);
+  const { posts, isNotification } = useSelector((state) => state.posts);
   const [tag, setTag] = useState("");
   const [addTagError, setAddTagError] = useState({ error: "", bool: false });
   const user = useState(JSON.parse(localStorage.getItem("profile")));
@@ -47,6 +46,10 @@ const Post = ({ post, error, authError, setAuthError }) => {
   const textRef = useRef(null);
   const dispatch = useDispatch();
   const classes = useStyles();
+
+  useEffect(() => {
+    if (isNotification) setExpanded(true);
+  }, [isNotification]);
 
   //Listen to authError from backend
   useEffect(() => {

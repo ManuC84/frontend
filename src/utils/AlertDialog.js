@@ -22,8 +22,6 @@ export default function AlertDialog({
     dispatch(hasError(false));
   };
 
-  console.log(authError);
-
   return (
     <div>
       <Dialog

@@ -101,6 +101,11 @@ export const deleteCommentReply = (postId, commentId, commentReplyId) =>
 
 //------------------------------------Notifications---------------------------------------
 
+export const fetchNotification = (postId, commentId, commentReplyId) =>
+  API.post(
+    `posts/${postId}/comments/${commentId}/commentReplies/${commentReplyId}/notifications`
+  );
+
 //---------------------------------Auth----------------------------------------------
 export const signIn = (formData) => API.post("/users/signin", formData);
 export const signUp = (formData) => API.post("/users/signup", formData);

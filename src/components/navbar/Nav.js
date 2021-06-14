@@ -56,6 +56,8 @@ const Nav = ({ appProps }) => {
   const location = useLocation();
   const ENDPOINT = environment.baseUrl;
 
+  console.log(user);
+
   useEffect(() => {
     socket = io(ENDPOINT, {
       transports: ["websocket", "polling", "flashsocket"],
@@ -230,7 +232,7 @@ const Nav = ({ appProps }) => {
           autoHideDuration={6000}
           onClose={handleClose}
         >
-          <Alert onClose={handleClose} severity="info">
+          <Alert onClose={handleClose} severity="error">
             You have a new notification
           </Alert>
         </Snackbar>

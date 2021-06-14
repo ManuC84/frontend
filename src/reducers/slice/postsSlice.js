@@ -7,6 +7,7 @@ export const postsSlice = createSlice({
     isLoading: false,
     error: false,
     loadMorePosts: true,
+    isNotification: false,
   },
   reducers: {
     startLoading: (state) => {
@@ -26,6 +27,7 @@ export const postsSlice = createSlice({
           (post) => post.image !== "/images/no-image.png"
         ),
         isLoading: false,
+        isNotification: false,
       };
     },
     fetchSinglePost: (state, action) => {
@@ -170,6 +172,14 @@ export const postsSlice = createSlice({
         ),
       };
     },
+    showNotificationContent: (state, action) => {
+      return {
+        ...state,
+        posts: action.payload,
+        loadMorePosts: false,
+        isNotification: true,
+      };
+    },
   },
 });
 
@@ -196,6 +206,7 @@ export const {
   deleteComment,
   deleteCommentReply,
   removeError,
+  showNotificationContent,
 } = postsSlice.actions;
 
 export default postsSlice.reducer;

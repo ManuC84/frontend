@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Avatar,
   Grid,
@@ -33,6 +33,14 @@ const CommentReplies = ({ post, comment, user, commentReply, error }) => {
   const [showEditor, setShowEditor] = useState(false);
   const dispatch = useDispatch();
   const classes = makeStyles();
+
+  // const scrollRef = useRef(null);
+
+  // useEffect(() => {
+  //   if (scrollRef.current) {
+  //     scrollRef.current.scrollIntoView({ behaviour: "smooth" });
+  //   }
+  // }, [commentReply]);
 
   const userId =
     user[0] && (user[0]?.data?.result?.googleId || user[0]?.data?.result?._id);
