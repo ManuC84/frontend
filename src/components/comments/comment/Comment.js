@@ -32,6 +32,7 @@ import CommentReplies from "../commentReplies/CommentReplies";
 import { useDispatch } from "react-redux";
 import { useGlobalContext } from "../../../context";
 import { useSelector } from "react-redux";
+import { current } from "@reduxjs/toolkit";
 
 const Comment = ({ comment, user, post, error }) => {
   const [expanded, setExpanded] = useState(false);
@@ -49,6 +50,18 @@ const Comment = ({ comment, user, post, error }) => {
   useEffect(() => {
     if (isNotification) setExpanded(true);
   }, [isNotification]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (isNotification) {
+        window.scroll({
+          top: document.body.scrollHeight,
+          left: 0,
+          behavior: "smooth",
+        });
+      }
+    }, 500);
+  }, [comment]);
 
   const userId =
     user[0] && (user[0]?.data?.result?.googleId || user[0]?.data?.result?._id);
@@ -87,17 +100,28 @@ const Comment = ({ comment, user, post, error }) => {
   );
 
   useEffect(() => {
-    if (scrollRef.current) {
-      window.scrollTo({
-        behavior: "smooth",
-        top: scrollRef.current.offsetTop,
+    if (scrollRef.current && expanded) {
+      scrollRef.current.scrollIntoView({
+        behaviour: "smooth",
+        block: "center",
+        inline: "center",
       });
     }
-  }, [currentCommentReplies]);
+  }, [expanded]);
+
+  // useEffect(() => {
+  //   if (scrollRef.current && expanded) {
+  //     window.scrollTo({
+  //       behavior: "smooth",
+  //       top: scrollRef.current.offsetTop,
+  //     });
+  //   }
+  // }, [expanded]);
 
   //Get comment replies when expanding comments(not needed any more)
   const handleExpandClick = () => {
     setExpanded(!expanded);
+    if (!expanded) setShowEditor(false);
   };
 
   const handleLikeComment = () => {
@@ -199,7 +223,7 @@ const Comment = ({ comment, user, post, error }) => {
               <MenuItem onClick={handleClose}>Report</MenuItem>
             </Menu>
           ) : (
-            <MenuItem
+            <Menu
               id="simple-menu"
               anchorEl={anchorEl}
               keepMounted
@@ -217,7 +241,7 @@ const Comment = ({ comment, user, post, error }) => {
               }}
             >
               <MenuItem onClick={handleClose}>Report</MenuItem>
-            </MenuItem>
+            </Menu>
           )}
         </Grid>
         <div
@@ -313,6 +337,7 @@ const Comment = ({ comment, user, post, error }) => {
               error={error}
               setPage={setPage}
               lastPage={Math.ceil(comment.commentReplies.length / 5)}
+              scrollRef={scrollRef}
             />
           </Collapse>
           {comment.commentReplies.length === 0 ? (

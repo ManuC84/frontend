@@ -26,15 +26,7 @@ import {
 } from "../../../actions/comments";
 import TextEditor from "../../textEditor/TextEditor";
 
-const CommentReplies = ({
-  post,
-  comment,
-  user,
-  commentReply,
-  error,
-  setPage,
-  lastPage,
-}) => {
+const CommentReplies = ({ post, comment, user, commentReply, error }) => {
   const { isLoading } = useSelector((state) => state.posts);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -146,9 +138,11 @@ const CommentReplies = ({
                 <MoreVertIcon />
               </IconButton>
             </Grid>
-            {user[0]?.data?.result?.googleId ===
-              commentReply?.creator[0]?.googleId ||
-            user[0]?.data?.result?._id === commentReply?.creator[0]?._id ? (
+            {(user[0]?.data?.result?.googleId &&
+              user[0]?.data?.result?.googleId ===
+                commentReply?.creator[0]?.googleId) ||
+            (user[0]?.data?.result?._id &&
+              user[0]?.data?.result?._id === commentReply?.creator[0]?._id) ? (
               <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}

@@ -1,7 +1,22 @@
 html,
 body {
-background-image: linear-gradient(to bottom, #5e44ba, #6352c3, #6860cc, #6e6ed5, #757bdd, #757bdd, #757bdd, #757bdd, #6e6ed5, #6860cc, #6352c3, #5e44ba);
-margin: 0;
+  background-image: linear-gradient(
+    to bottom,
+    #5e44ba,
+    #6352c3,
+    #6860cc,
+    #6e6ed5,
+    #757bdd,
+    #757bdd
+  );
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  box-sizing: border-box;
+  margin: 0;
 
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",

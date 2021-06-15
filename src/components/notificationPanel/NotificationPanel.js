@@ -31,6 +31,19 @@ const NotificationPanel = ({
 
   const fetchNotification = (postId, commentId, commentReplyId) => {
     dispatch(getNotificationContent(postId, commentId, commentReplyId));
+    var existing = localStorage.getItem("profile");
+
+    existing = existing ? JSON.parse(existing) : {};
+    let notifications = existing.data.result["notifications"];
+    let updatedNotifications = notifications.map((notification) =>
+      notification.commentReplyId === commentReplyId
+        ? (notification.read = true)
+        : notification
+    );
+    notifications = updatedNotifications;
+
+    localStorage.setItem("profile", JSON.stringify(existing));
+    setUser(existing);
   };
 
   const clearAllNotifications = () => {
@@ -80,7 +93,11 @@ const NotificationPanel = ({
           user?.data?.result?.notifications?.map((notification, idx) => (
             <List key={idx} style={{ padding: 0 }}>
               <ListItem
-                style={{ display: "flex", flexDirection: "column" }}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+                className={!notification.read && classes.listItemsBg}
                 button
                 divider
                 onClick={() =>

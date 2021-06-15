@@ -9,4 +9,10 @@ export default makeStyles((theme) => ({
     top: 60,
     overflowY: "scroll",
   },
+  listItemsBg: {
+    backgroundColor: "lightCyan",
+    "&:hover": {
+      backgroundColor: "cyan",
+    },
+  },
 }));

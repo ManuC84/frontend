@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { Button } from "@material-ui/core";
+import { Button, CircularProgress } from "@material-ui/core";
 import {
   addComment,
   addCommentReply,
@@ -27,17 +27,17 @@ const TextEditor = ({
   editText,
   setPage,
   lastPage,
+  scrollRef,
 }) => {
   const [body, setBody] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const [editorValue, setEditorValue] = useState(null);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const history = useHistory();
 
   const handleShowEditor = () => setShowEditor(false);
-
-  console.log(lastPage);
 
   const handleCloseEdit = () => {
     if (body !== editText) {
@@ -67,22 +67,27 @@ const TextEditor = ({
     }
 
     if (type === "comments") {
-      dispatch(
+      setLoading(true);
+      await dispatch(
         addComment(post._id, { comment: body, creator: user[0]?.data?.result })
       );
+      setLoading(false);
     }
 
     if (type === "commentReplies") {
+      setLoading(true);
       await dispatch(
         addCommentReply(post._id, comment._id, {
           commentReply: body,
           creator: user[0]?.data?.result,
         })
       );
+      setLoading(false);
       setPage(lastPage);
-      window.scrollTo({
-        behavior: "smooth",
-        top: 300,
+      scrollRef.current.scrollIntoView({
+        behaviour: "smooth",
+        block: "center",
+        inline: "center",
       });
     }
 
@@ -129,7 +134,11 @@ const TextEditor = ({
           type="submit"
           style={{ marginTop: "5px" }}
         >
-          Submit
+          {loading ? (
+            <CircularProgress color="secondary" size={22} />
+          ) : (
+            <span>Submit</span>
+          )}
         </Button>
 
         <Button
