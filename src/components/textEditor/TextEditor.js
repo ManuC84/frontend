@@ -25,8 +25,6 @@ const TextEditor = ({
   isEditing,
   setIsEditing,
   editText,
-  setPage,
-  lastPage,
   scrollRef,
 }) => {
   const [body, setBody] = useState("");

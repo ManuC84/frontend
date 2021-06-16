@@ -139,10 +139,18 @@ const NotificationPanel = ({
                 </Typography>
                 <h5 style={{ margin: 0 }}>{notification.name} replied:</h5>
 
-                <div style={{ margin: "5px 0" }}>
+                <div
+                  style={{
+                    margin: "5px 0",
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
                   <ReadMore
                     variant={"body2"}
-                    lines={50}
+                    lines={100}
                     content={notification.commentReply}
                   />
                 </div>

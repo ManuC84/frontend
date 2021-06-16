@@ -27,6 +27,7 @@ import {
   dislikeComment,
   removeComment,
 } from "../../../actions/comments";
+import { getSinglePost } from "../../../actions/posts";
 import moment from "moment";
 import CommentReplies from "../commentReplies/CommentReplies";
 import { useDispatch } from "react-redux";
@@ -48,10 +49,12 @@ const Comment = ({ comment, user, post, error }) => {
 
   const scrollRef = useRef(null);
 
+  //Expand commentReplies when showing notification content
   useEffect(() => {
     if (isNotification) setExpanded(true);
   }, [isNotification]);
 
+  //Scroll to bottom when notification shows
   useEffect(() => {
     setTimeout(() => {
       if (isNotification) {
@@ -361,7 +364,8 @@ const Comment = ({ comment, user, post, error }) => {
           <div
             style={{
               display: "flex",
-              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
               marginBottom: "16px",
             }}
           >
@@ -374,6 +378,17 @@ const Comment = ({ comment, user, post, error }) => {
               variant="outlined"
               shape="rounded"
             />
+            {isNotification && (
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                style={{ marginTop: 15 }}
+                onClick={() => dispatch(getSinglePost(post._id))}
+              >
+                Show all replies
+              </Button>
+            )}
           </div>
         </Collapse>
       </Paper>

@@ -36,6 +36,7 @@ export const postsSlice = createSlice({
         posts: action.payload,
         loadMorePosts: false,
         isLoading: false,
+        isNotification: false,
       };
     },
     fetchInfinite: (state, action) => {
@@ -79,6 +80,7 @@ export const postsSlice = createSlice({
           post._id === action.payload._id ? action.payload : post
         ),
         isLoading: false,
+        isNotification: false,
       };
     },
 
@@ -89,6 +91,7 @@ export const postsSlice = createSlice({
           post._id === action.payload._id ? action.payload : post
         ),
         isLoading: false,
+        isNotification: false,
       };
     },
 
@@ -98,6 +101,7 @@ export const postsSlice = createSlice({
         posts: state.posts.map((post) =>
           post._id === action.payload._id ? action.payload : post
         ),
+        isNotification: false,
       };
     },
     addPostDislike: (state, action) => {
@@ -106,6 +110,7 @@ export const postsSlice = createSlice({
         posts: state.posts.map((post) =>
           post._id === action.payload._id ? action.payload : post
         ),
+        isNotification: false,
       };
     },
     addCommentLike: (state, action) => {
@@ -114,6 +119,7 @@ export const postsSlice = createSlice({
         posts: state.posts.map((post) =>
           post._id === action.payload._id ? action.payload : post
         ),
+        isNotification: false,
       };
     },
     addCommentDislike: (state, action) => {
@@ -122,6 +128,7 @@ export const postsSlice = createSlice({
         posts: state.posts.map((post) =>
           post._id === action.payload._id ? action.payload : post
         ),
+        isNotification: false,
       };
     },
     addCommentReplyLike: (state, action) => {
@@ -130,6 +137,7 @@ export const postsSlice = createSlice({
         posts: state.posts.map((post) =>
           post._id === action.payload._id ? action.payload : post
         ),
+        isNotification: false,
       };
     },
     addCommentReplyDislike: (state, action) => {
@@ -138,6 +146,7 @@ export const postsSlice = createSlice({
         posts: state.posts.map((post) =>
           post._id === action.payload._id ? action.payload : post
         ),
+        isNotification: false,
       };
     },
     editComment: (state, action) => {
@@ -146,6 +155,7 @@ export const postsSlice = createSlice({
         posts: state.posts.map((post) =>
           post._id === action.payload._id ? action.payload : post
         ),
+        isNotification: false,
       };
     },
     editCommentReply: (state, action) => {
@@ -154,6 +164,7 @@ export const postsSlice = createSlice({
         posts: state.posts.map((post) =>
           post._id === action.payload._id ? action.payload : post
         ),
+        isNotification: false,
       };
     },
     deleteComment: (state, action) => {
@@ -162,6 +173,7 @@ export const postsSlice = createSlice({
         posts: state.posts.map((post) =>
           post._id === action.payload._id ? action.payload : post
         ),
+        isNotification: false,
       };
     },
     deleteCommentReply: (state, action) => {
@@ -170,6 +182,7 @@ export const postsSlice = createSlice({
         posts: state.posts.map((post) =>
           post._id === action.payload._id ? action.payload : post
         ),
+        isNotification: false,
       };
     },
     showNotificationContent: (state, action) => {

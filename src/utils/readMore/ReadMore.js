@@ -5,16 +5,16 @@ const ReadMore = ({ content, lines, variant, color }) => {
   const [readMore, setReadMore] = useState(false);
   return content.length <= lines ? (
     <Typography
-      style={{ display: "inline" }}
+      style={{ display: "inline", wordWrap: "break-word" }}
       variant={variant}
       color={color}
       dangerouslySetInnerHTML={{ __html: content }}
     ></Typography>
   ) : readMore ? (
-    <>
+    <React.Fragment>
       <Typography
         dangerouslySetInnerHTML={{ __html: content }}
-        style={{ display: "inline" }}
+        style={{ display: "inline", wordWrap: "break-word" }}
         variant={variant}
         color={color}
       ></Typography>
@@ -25,11 +25,11 @@ const ReadMore = ({ content, lines, variant, color }) => {
       >
         See less
       </Button>
-    </>
+    </React.Fragment>
   ) : (
     <>
       <Typography
-        style={{ display: "inline" }}
+        style={{ display: "inline", wordWrap: "break-word" }}
         variant={variant}
         color={color}
         dangerouslySetInnerHTML={{
