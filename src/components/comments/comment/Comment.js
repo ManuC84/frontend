@@ -38,6 +38,7 @@ const Comment = ({ comment, user, post, error }) => {
   const [expanded, setExpanded] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
   const [page, setPage] = React.useState(1);
+  const [lastPage, setLastPage] = useState(null);
   const [commentsPerPage] = useState(5);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -98,7 +99,11 @@ const Comment = ({ comment, user, post, error }) => {
     indexOfFirstComment,
     indexOfLastComment
   );
-  console.log(currentCommentReplies);
+
+  useEffect(() => {
+    setPage(Math.ceil(comment.commentReplies.length / 5));
+  }, [comment.commentReplies.length]);
+
   useEffect(() => {
     if (scrollRef.current && expanded) {
       scrollRef.current.scrollIntoView({
@@ -109,16 +114,6 @@ const Comment = ({ comment, user, post, error }) => {
     }
   }, [expanded]);
 
-  // useEffect(() => {
-  //   if (scrollRef.current && expanded) {
-  //     window.scrollTo({
-  //       behavior: "smooth",
-  //       top: scrollRef.current.offsetTop,
-  //     });
-  //   }
-  // }, [expanded]);
-
-  //Get comment replies when expanding comments(not needed any more)
   const handleExpandClick = () => {
     setExpanded(!expanded);
     if (!expanded) setShowEditor(false);
@@ -357,7 +352,6 @@ const Comment = ({ comment, user, post, error }) => {
                   commentReply={commentReply}
                   error={error}
                   setPage={setPage}
-                  lastPage={Math.ceil(comment.commentReplies.length / 5)}
                 />
 
                 {idx === arr.length - 1 && <div ref={scrollRef}></div>}

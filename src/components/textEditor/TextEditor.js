@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Button, CircularProgress } from "@material-ui/core";
@@ -36,6 +36,7 @@ const TextEditor = ({
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const history = useHistory();
+  const { isLoading } = useSelector((state) => state.posts);
 
   const handleShowEditor = () => setShowEditor(false);
 
@@ -83,7 +84,7 @@ const TextEditor = ({
         })
       );
       setLoading(false);
-      setPage(lastPage);
+
       if (scrollRef.current) {
         scrollRef.current.scrollIntoView({
           behaviour: "smooth",
