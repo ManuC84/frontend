@@ -158,7 +158,11 @@ const Nav = ({ appProps }) => {
                 variant="contained"
                 endIcon={
                   <Badge
-                    badgeContent={user?.data?.result?.notifications?.length}
+                    badgeContent={
+                      user?.data?.result?.notifications?.filter(
+                        (notification) => notification.read === false
+                      ).length
+                    }
                     color="secondary"
                   >
                     <Avatar

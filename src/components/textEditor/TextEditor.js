@@ -84,11 +84,13 @@ const TextEditor = ({
       );
       setLoading(false);
       setPage(lastPage);
-      scrollRef.current.scrollIntoView({
-        behaviour: "smooth",
-        block: "center",
-        inline: "center",
-      });
+      if (scrollRef.current) {
+        scrollRef.current.scrollIntoView({
+          behaviour: "smooth",
+          block: "center",
+          inline: "center",
+        });
+      }
     }
 
     if (type === "commentEdition") {

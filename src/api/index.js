@@ -101,9 +101,9 @@ export const deleteCommentReply = (postId, commentId, commentReplyId) =>
 
 //------------------------------------Notifications---------------------------------------
 
-export const fetchNotification = (postId, commentId, commentReplyId) =>
+export const fetchNotification = (postId, commentId, commentReplyId, userId) =>
   API.post(
-    `posts/${postId}/comments/${commentId}/commentReplies/${commentReplyId}/notifications`
+    `posts/${postId}/comments/${commentId}/commentReplies/${commentReplyId}/user/${userId}/notifications`
   );
 
 export const clearAllNotifications = (userId) =>

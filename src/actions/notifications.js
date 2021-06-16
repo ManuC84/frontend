@@ -5,12 +5,13 @@ import {
 } from "../reducers/slice/postsSlice";
 
 export const getNotificationContent =
-  (postId, commentId, commentReplyId) => async (dispatch) => {
+  (postId, commentId, commentReplyId, userId) => async (dispatch) => {
     try {
       const { data } = await API.fetchNotification(
         postId,
         commentId,
-        commentReplyId
+        commentReplyId,
+        userId
       );
       dispatch(showNotificationContent([data]));
     } catch (error) {

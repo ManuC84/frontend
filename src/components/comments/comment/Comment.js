@@ -98,7 +98,7 @@ const Comment = ({ comment, user, post, error }) => {
     indexOfFirstComment,
     indexOfLastComment
   );
-
+  console.log(currentCommentReplies);
   useEffect(() => {
     if (scrollRef.current && expanded) {
       scrollRef.current.scrollIntoView({

@@ -1,5 +1,4 @@
 import React from "react";
-import { Paper } from "@material-ui/core";
 import makeStyles from "./styles";
 import {
   List,
@@ -10,7 +9,10 @@ import {
   Button,
   Typography,
   Link,
+  Avatar,
+  Paper,
 } from "@material-ui/core";
+import InboxIcon from "@material-ui/icons/Inbox";
 import ReadMore from "../../utils/readMore/ReadMore";
 import moment from "moment";
 import {} from "../../reducers/slice/postsSlice";
@@ -29,8 +31,8 @@ const NotificationPanel = ({
   const dispatch = useDispatch();
   // const { setExpanded } = useGlobalContext();
 
-  const fetchNotification = (postId, commentId, commentReplyId) => {
-    dispatch(getNotificationContent(postId, commentId, commentReplyId));
+  const fetchNotification = (postId, commentId, commentReplyId, userId) => {
+    dispatch(getNotificationContent(postId, commentId, commentReplyId, userId));
     var existing = localStorage.getItem("profile");
 
     existing = existing ? JSON.parse(existing) : {};
@@ -104,10 +106,14 @@ const NotificationPanel = ({
                   fetchNotification(
                     notification.parentPostId,
                     notification.parentCommentId,
-                    notification.commentReplyId
+                    notification.commentReplyId,
+                    user?.data?.result?._id
                   )
                 }
               >
+                <ListItemIcon>
+                  <Avatar />
+                </ListItemIcon>
                 <Typography variant="caption">
                   {moment(notification.createdAt).fromNow() + " "}
                 </Typography>
