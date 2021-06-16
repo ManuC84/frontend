@@ -106,8 +106,8 @@ export const fetchNotification = (postId, commentId, commentReplyId, userId) =>
     `posts/${postId}/comments/${commentId}/commentReplies/${commentReplyId}/user/${userId}/notifications`
   );
 
-export const clearAllNotifications = (userId) =>
-  API.post(`posts/${userId}/clearAllNotifications`);
+export const clearAllNotifications = (userId, type) =>
+  API.post(`posts/${userId}/clearAllNotifications`, type);
 
 //---------------------------------Auth----------------------------------------------
 export const signIn = (formData) => API.post("/users/signin", formData);

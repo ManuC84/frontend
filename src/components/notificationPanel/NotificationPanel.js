@@ -48,15 +48,31 @@ const NotificationPanel = ({
     setUser(existing);
   };
 
-  const clearAllNotifications = () => {
-    dispatch(clearAll(user?.data?.result?._id));
-    var existing = localStorage.getItem("profile");
+  const clearAllNotifications = (type) => {
+    if (type == "clear") {
+      dispatch(clearAll(user?.data?.result?._id, { type: type }));
+      var existing = localStorage.getItem("profile");
 
-    existing = existing ? JSON.parse(existing) : {};
-    existing.data.result["notifications"] = [];
+      existing = existing ? JSON.parse(existing) : {};
+      existing.data.result["notifications"] = [];
 
-    localStorage.setItem("profile", JSON.stringify(existing));
-    setUser(existing);
+      localStorage.setItem("profile", JSON.stringify(existing));
+      setUser(existing);
+    }
+    if (type == "read") {
+      dispatch(clearAll(user?.data?.result?._id, { type: type }));
+      var existing = localStorage.getItem("profile");
+
+      existing = existing ? JSON.parse(existing) : {};
+      let notifications = existing.data.result["notifications"];
+      let updatedNotifications = notifications.map(
+        (notification) => (notification.read = true)
+      );
+      notifications = updatedNotifications;
+
+      localStorage.setItem("profile", JSON.stringify(existing));
+      setUser(existing);
+    }
   };
 
   return (
@@ -72,11 +88,15 @@ const NotificationPanel = ({
           <Button
             color="primary"
             style={{ width: "100%" }}
-            onClick={() => clearAllNotifications()}
+            onClick={() => clearAllNotifications("clear")}
           >
             Clear all
           </Button>
-          <Button color="primary" style={{ width: "100%" }}>
+          <Button
+            color="primary"
+            style={{ width: "100%" }}
+            onClick={() => clearAllNotifications("read")}
+          >
             Read all
           </Button>
         </div>

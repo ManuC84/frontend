@@ -19,9 +19,9 @@ export const getNotificationContent =
     }
   };
 
-export const clearAll = (userId) => async (dispatch) => {
+export const clearAll = (userId, type) => async (dispatch) => {
   try {
-    await API.clearAllNotifications(userId);
+    await API.clearAllNotifications(userId, type);
   } catch (error) {
     dispatch(hasError(error.response.data));
   }
