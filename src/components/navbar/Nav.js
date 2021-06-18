@@ -54,10 +54,14 @@ function Alert(props) {
 
 const NavButtons = ({ location }) => {
   const classes = makeStyles();
-  const sections = ["Home", "About", "Contact", "Blog"];
+  const dispatch = useDispatch();
   return (
     <div className={classes.navButtons}>
-      <Link to="/" style={{ textDecoration: "none" }}>
+      <Link
+        to="/"
+        style={{ textDecoration: "none" }}
+        onClick={() => dispatch(fetchPosts())}
+      >
         <Button
           className={classes.navButton}
           style={{
