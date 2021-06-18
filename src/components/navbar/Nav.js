@@ -46,6 +46,7 @@ import environment from "../../environment";
 import NotificationPanel from "../notificationPanel/NotificationPanel";
 import OutsideClickHandler from "react-outside-click-handler";
 import { Copyright } from "../../pages/auth/Auth";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;

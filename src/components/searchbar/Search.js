@@ -182,7 +182,9 @@ const Search = () => {
             onCancelSearch={() => dispatch(fetchPosts())}
             className={classes.searchBar}
             placeholder={
-              searchType === "url" ? "Search url..." : "Search tags..."
+              searchType === "url"
+                ? "Search url..."
+                : "Search comma separated tags..."
             }
           />
 
