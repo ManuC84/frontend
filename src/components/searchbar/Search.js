@@ -29,6 +29,8 @@ import {
 } from "../../actions/posts";
 import { invalid } from "moment";
 import { useSelector } from "react-redux";
+import AddIcon from "@material-ui/icons/Add";
+import ClearIcon from "@material-ui/icons/Clear";
 
 const Search = () => {
   const [searchUrl, setSearchUrl] = useState("");
@@ -179,7 +181,16 @@ const Search = () => {
                 ? (newValue) => setSearchUrl(newValue)
                 : (newValue) => setSearchTags(newValue)
             }
-            onCancelSearch={() => dispatch(fetchPosts())}
+            onCancelSearch={() =>
+              searchType === "url" ? dispatch(fetchPosts()) : handleTags()
+            }
+            closeIcon={
+              searchType === "tags" ? (
+                <AddIcon style={{ color: "grey" }} />
+              ) : (
+                <ClearIcon style={{ color: "grey" }} />
+              )
+            }
             className={classes.searchBar}
             placeholder={
               searchType === "url"
