@@ -320,7 +320,12 @@ const Nav = ({ appProps }) => {
 
               <div>
                 {!user ? (
-                  <ListItem component={Link} to="/auth" button>
+                  <ListItem
+                    component={Link}
+                    to="/auth"
+                    button
+                    onClick={() => setDrawer(false)}
+                  >
                     <ListItemText
                       style={{ display: "flex", justifyContent: "center" }}
                     >
