@@ -27,6 +27,7 @@ const NotificationPanel = ({
   openNotifications,
   setOpenNotifications,
   type,
+  setDrawer,
 }) => {
   const classes = makeStyles();
   const dispatch = useDispatch();
@@ -47,6 +48,8 @@ const NotificationPanel = ({
 
     localStorage.setItem("profile", JSON.stringify(existing));
     setUser(existing);
+    if (setDrawer) setDrawer(false);
+    if (setOpenNotifications) setOpenNotifications(false);
   };
 
   const clearAllNotifications = (type) => {

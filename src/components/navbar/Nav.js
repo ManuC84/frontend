@@ -320,6 +320,8 @@ const Nav = ({ appProps }) => {
                         openNotifications={openNotifications}
                         setOpenNotifications={setOpenNotifications}
                         type={"menu"}
+                        setDrawer={setDrawer}
+                        setOpenNotifications={setOpenNotifications}
                       />
                     </div>
                   </Slide>
@@ -417,6 +419,8 @@ const Nav = ({ appProps }) => {
               user={user}
               setUser={setUser}
               openNotifications={openNotifications}
+              setOpenNotifications={setOpenNotifications}
+              setDrawer={setDrawer}
               setOpenNotifications={setOpenNotifications}
             />
           </OutsideClickHandler>
