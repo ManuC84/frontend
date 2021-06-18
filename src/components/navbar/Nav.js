@@ -243,11 +243,21 @@ const Nav = ({ appProps }) => {
             </div>
           )}
         </nav>
-        <Drawer anchor="right" open={drawer} onClose={() => setDrawer(false)}>
+        <Drawer
+          anchor="right"
+          open={drawer}
+          onClose={() => {
+            setDrawer(false);
+            setNotificationMenu(false);
+          }}
+        >
           <List className={classes.list}>
             <Button
               style={{ marginBottom: "1rem" }}
-              onClick={() => setDrawer(false)}
+              onClick={() => {
+                setDrawer(false);
+                setNotificationMenu(false);
+              }}
             >
               <CloseIcon />
             </Button>
@@ -264,7 +274,10 @@ const Nav = ({ appProps }) => {
                   component={Link}
                   to="/"
                   button
-                  onClick={() => setDrawer(false)}
+                  onClick={() => {
+                    setDrawer(false);
+                    setNotificationMenu(false);
+                  }}
                 >
                   <ListItemIcon>
                     <HomeIcon />
@@ -275,7 +288,10 @@ const Nav = ({ appProps }) => {
                   component={Link}
                   to="/about"
                   button
-                  onClick={() => setDrawer(false)}
+                  onClick={() => {
+                    setDrawer(false);
+                    setNotificationMenu(false);
+                  }}
                 >
                   <ListItemIcon>
                     <InfoIcon />
