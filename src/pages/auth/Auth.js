@@ -31,11 +31,15 @@ import { useSelector } from "react-redux";
 import { Alert } from "@material-ui/lab";
 import { clearError } from "../../reducers/slice/authSlice";
 
-function Copyright() {
+export function Copyright({ textColor }) {
   return (
-    <Typography variant="body2" style={{ color: "white" }} align="center">
+    <Typography
+      variant="body2"
+      style={{ color: textColor ? textColor : "white" }}
+      align="center"
+    >
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="/about">
         FreelyComment
       </Link>{" "}
       {new Date().getFullYear()}

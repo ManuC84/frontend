@@ -15,14 +15,21 @@ import {
   ListItemIcon,
   Snackbar,
   Fade,
+  Divider,
+  ListSubheader,
+  Slide,
 } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
 import MenuIcon from "@material-ui/icons/Menu";
+import ContactMailIcon from "@material-ui/icons/ContactMail";
 import CloseIcon from "@material-ui/icons/Close";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import InfoIcon from "@material-ui/icons/Info";
 import HomeIcon from "@material-ui/icons/Home";
+import BookIcon from "@material-ui/icons/Book";
 import clsx from "clsx";
 import logo from "../../img/logo-final.png";
+import logo2 from "../../img/freely_comment_logo.png";
 import makeStyles from "./styles";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import LockIcon from "@material-ui/icons/Lock";
@@ -38,10 +45,50 @@ import io from "socket.io-client";
 import environment from "../../environment";
 import NotificationPanel from "../notificationPanel/NotificationPanel";
 import OutsideClickHandler from "react-outside-click-handler";
+import { Copyright } from "../../pages/auth/Auth";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
+
+const NavButtons = ({ location }) => {
+  const classes = makeStyles();
+  const sections = ["Home", "About", "Contact", "Blog"];
+  return (
+    <div className={classes.navButtons}>
+      <Link to="/" style={{ textDecoration: "none" }}>
+        <Button
+          className={classes.navButton}
+          style={{
+            textDecoration: location.pathname === "/" && "underline",
+          }}
+        >
+          Home
+        </Button>
+      </Link>
+      <Link to="/about" style={{ textDecoration: "none" }}>
+        <Button
+          className={classes.navButton}
+          style={{
+            textDecoration: location.pathname === "/about" && "underline",
+          }}
+        >
+          About
+        </Button>
+      </Link>
+      <Link to="/" style={{ textDecoration: "none" }}>
+        <Button className={classes.navButton} style={{}}>
+          Contact
+        </Button>
+      </Link>
+      <Link to="/" style={{ textDecoration: "none" }}>
+        <Button className={classes.navButton} style={{}}>
+          Blog
+        </Button>
+      </Link>
+    </div>
+  );
+};
 
 let socket;
 
@@ -52,6 +99,7 @@ const Nav = ({ appProps }) => {
   const [drawer, setDrawer] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [openNotifications, setOpenNotifications] = useState(false);
+  const [notificationMenu, setNotificationMenu] = useState(false);
   const history = useHistory();
   const location = useLocation();
   const ENDPOINT = environment.baseUrl;
@@ -129,6 +177,8 @@ const Nav = ({ appProps }) => {
             <img src={logo} alt="logo" className={classes.logo} />
           </Link>
 
+          <NavButtons location={location} />
+
           {!user ? (
             <div>
               <Button
@@ -164,6 +214,7 @@ const Nav = ({ appProps }) => {
                       ).length
                     }
                     color="secondary"
+                    showZero
                   >
                     <Avatar
                       alt="User"
@@ -193,41 +244,156 @@ const Nav = ({ appProps }) => {
           )}
         </nav>
         <Drawer anchor="right" open={drawer} onClose={() => setDrawer(false)}>
-          <div className={classes.list}>
-            <List onClick={() => setDrawer(false)}>
-              <Button style={{ marginBottom: "1rem" }}>
-                <CloseIcon />
-              </Button>
-              <ListItem component={Link} to="/" button>
-                <ListItemIcon>
-                  <HomeIcon />
-                </ListItemIcon>
-                <ListItemText>Home</ListItemText>
-              </ListItem>
-              <ListItem component={Link} to="/about" button>
-                <ListItemIcon>
-                  <InfoIcon />
-                </ListItemIcon>
-                <ListItemText>About</ListItemText>
-              </ListItem>
+          <List className={classes.list}>
+            <Button
+              style={{ marginBottom: "1rem" }}
+              onClick={() => setDrawer(false)}
+            >
+              <CloseIcon />
+            </Button>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                height: "100%",
+              }}
+            >
+              <div>
+                <ListItem
+                  component={Link}
+                  to="/"
+                  button
+                  onClick={() => setDrawer(false)}
+                >
+                  <ListItemIcon>
+                    <HomeIcon />
+                  </ListItemIcon>
+                  <ListItemText>Home</ListItemText>
+                </ListItem>
+                <ListItem
+                  component={Link}
+                  to="/about"
+                  button
+                  onClick={() => setDrawer(false)}
+                >
+                  <ListItemIcon>
+                    <InfoIcon />
+                  </ListItemIcon>
+                  <ListItemText>About</ListItemText>
+                </ListItem>
+                <ListItem button>
+                  <ListItemIcon>
+                    <ContactMailIcon />
+                  </ListItemIcon>
+                  <ListItemText>Contact</ListItemText>
+                </ListItem>
+                <ListItem button>
+                  <ListItemIcon>
+                    <BookIcon />
+                  </ListItemIcon>
+                  <ListItemText>Blog</ListItemText>
+                </ListItem>
+                <Divider style={{ marginTop: 10 }} />
+              </div>
 
-              {!user ? (
-                <ListItem component={Link} to="/auth" button>
-                  <ListItemIcon>
-                    <LockIcon />
-                  </ListItemIcon>
-                  <ListItemText>Log In</ListItemText>
+              <div>
+                {!user ? (
+                  <ListItem component={Link} to="/auth" button>
+                    <ListItemText
+                      style={{ display: "flex", justifyContent: "center" }}
+                    >
+                      Log in
+                    </ListItemText>
+                  </ListItem>
+                ) : notificationMenu ? (
+                  <Slide direction="right" in={notificationMenu}>
+                    <div>
+                      <Button>
+                        <KeyboardBackspaceIcon
+                          onClick={() => setNotificationMenu(false)}
+                        />
+                      </Button>
+                      <NotificationPanel
+                        user={user}
+                        setUser={setUser}
+                        openNotifications={openNotifications}
+                        setOpenNotifications={setOpenNotifications}
+                        type={"menu"}
+                      />
+                    </div>
+                  </Slide>
+                ) : (
+                  <>
+                    <ListItem
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        marginBottom: 20,
+                      }}
+                    >
+                      <ListSubheader>You're logged in as:</ListSubheader>
+                      <ListSubheader
+                        style={{
+                          marginBottom: 5,
+                          wordWrap: "break-word",
+                          fontWeight: "bolder",
+                        }}
+                        color="primary"
+                      >
+                        {user?.data?.result?.name}
+                      </ListSubheader>
+                      <Badge
+                        badgeContent={
+                          user?.data?.result?.notifications?.filter(
+                            (notification) => notification.read === false
+                          ).length
+                        }
+                        color="secondary"
+                        overlap="circle"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => setNotificationMenu(true)}
+                        alt="click for notifications"
+                        showZero
+                      >
+                        <Avatar
+                          alt="User"
+                          className={classes.largeAvatar}
+                          src={user?.data?.result?.imageUrl}
+                        />
+                      </Badge>
+                    </ListItem>
+                    <ListItem
+                      component={Link}
+                      to="/auth"
+                      button
+                      onClick={signout}
+                    >
+                      <ListItemText
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
+                        Log Out
+                      </ListItemText>
+                    </ListItem>
+                  </>
+                )}
+              </div>
+              <div>
+                <Divider />
+                <ListItem
+                  style={{
+                    marginTop: 50,
+                    marginBottom: 10,
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img src={logo2} alt="logo" style={{ height: 50 }} />
                 </ListItem>
-              ) : (
-                <ListItem component={Link} to="/auth" button onClick={signout}>
-                  <ListItemIcon>
-                    <LockOpenIcon />
-                  </ListItemIcon>
-                  <ListItemText>Log Out</ListItemText>
-                </ListItem>
-              )}
-            </List>
-          </div>
+                <Copyright textColor={"black"} />
+              </div>
+            </div>
+          </List>
         </Drawer>
         <Snackbar
           open={snackbarOpen}

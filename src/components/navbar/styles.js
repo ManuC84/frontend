@@ -17,6 +17,17 @@ export default makeStyles((theme) => ({
       padding: "10px 15px",
     },
   },
+  navButtons: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+  navButton: {
+    color: "white",
+    "&:hover": {
+      color: "#0DDDC9",
+    },
+  },
   link: {
     height: "45px",
   },
@@ -34,7 +45,7 @@ export default makeStyles((theme) => ({
       display: "none",
     },
   },
-  
+
   userInfoContainer: {
     display: "flex",
     justifyContent: "space-between",
@@ -82,6 +93,7 @@ export default makeStyles((theme) => ({
 
   list: {
     width: 250,
+    height: "90vh",
   },
   menuIcon: {
     fontSize: 30,
@@ -92,5 +104,9 @@ export default makeStyles((theme) => ({
   mediumAvatar: {
     width: theme.spacing(4),
     height: theme.spacing(4),
+  },
+  largeAvatar: {
+    width: theme.spacing(8),
+    height: theme.spacing(8),
   },
 }));

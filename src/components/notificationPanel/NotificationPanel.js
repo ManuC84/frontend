@@ -26,6 +26,7 @@ const NotificationPanel = ({
   setUser,
   openNotifications,
   setOpenNotifications,
+  type,
 }) => {
   const classes = makeStyles();
   const dispatch = useDispatch();
@@ -77,7 +78,14 @@ const NotificationPanel = ({
 
   return (
     <Fade in={openNotifications} timeout={500}>
-      <Paper elevation={3} className={classes.notificationDropdown}>
+      <Paper
+        elevation={3}
+        className={
+          type === "menu"
+            ? classes.notificationMenu
+            : classes.notificationDropdown
+        }
+      >
         <div
           style={{
             display: "flex",
@@ -100,7 +108,8 @@ const NotificationPanel = ({
             Read all
           </Button>
         </div>
-        {user?.data?.result?.notifications?.length === 0 ? (
+        {user?.data?.result?.notifications?.length === 0 ||
+        user?.data?.result?.notifications?.length === undefined ? (
           <div
             style={{
               display: "flex",
@@ -150,7 +159,7 @@ const NotificationPanel = ({
                 >
                   <ReadMore
                     variant={"body2"}
-                    lines={100}
+                    lines={150}
                     content={notification.commentReply}
                   />
                 </div>

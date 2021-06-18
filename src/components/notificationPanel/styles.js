@@ -9,6 +9,12 @@ export default makeStyles((theme) => ({
     top: 60,
     overflowY: "scroll",
   },
+  notificationMenu: {
+    visibility: "visible !important",
+    height: 500,
+    overflowY: "scroll",
+    opacity: "1 !important",
+  },
   listItemsBg: {
     backgroundColor: "lightCyan",
     "&:hover": {
