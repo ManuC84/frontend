@@ -6,16 +6,13 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    height: "90vh",
   },
   paper: {
-    marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     padding: "30px",
-    [theme.breakpoints.down("xs")]: {
-      marginTop: 100,
-    },
   },
   avatar: {
     margin: theme.spacing(1),

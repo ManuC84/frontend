@@ -38,10 +38,12 @@ export default makeStyles((theme) => ({
     color: theme.palette.getContrastText("#7324A3"),
     backgroundImage:
       "linear-gradient(to right top, #5e44ba, #5e59c6, #626dd0, #697fd8, #7391df, #6ca1e9, #68b0f2, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1)",
-    opacity: "1",
-    transition: "all 1s",
+
+    transition: "all .4s ease-in-out",
+    backgroundSize: "300% 100%",
     "&:hover": {
-      opacity: "0.8",
+      backgroundPosition: " 100% 0",
+      transition: "all .4s ease-in-out",
     },
     [theme.breakpoints.down("xs")]: {
       display: "none",

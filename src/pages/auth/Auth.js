@@ -357,9 +357,6 @@ export default function Auth() {
           </>
         )}
       </Paper>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
     </Container>
   ) : (
     <Redirect to={"/"} />
