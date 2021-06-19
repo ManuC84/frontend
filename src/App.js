@@ -9,7 +9,7 @@ import SinglePost from "./pages/singlePost/SinglePost";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import ScrollTop from "../src/utils/ScrollToTop";
 import About from "./pages/about/About";
-
+import Footer from "./components/footer/Footer";
 
 function App(props) {
   return (
@@ -23,6 +23,7 @@ function App(props) {
         <Route path="/about" exact component={About} />
         <Route component={RedirectToMain} />
       </Switch>
+      <Footer />
 
       <ScrollTop {...props}>
         <Fab color="primary" size="small" aria-label="scroll back to top">
