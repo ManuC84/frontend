@@ -81,12 +81,12 @@ const NavButtons = ({ location }) => {
           About
         </Button>
       </Link>
-      <Link to="/" style={{ textDecoration: "none" }}>
+      <Link style={{ textDecoration: "none" }}>
         <Button className={classes.navButton} style={{}}>
           Contact
         </Button>
       </Link>
-      <Link to="/" style={{ textDecoration: "none" }}>
+      <Link style={{ textDecoration: "none" }}>
         <Button className={classes.navButton} style={{}}>
           Blog
         </Button>
