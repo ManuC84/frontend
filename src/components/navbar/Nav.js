@@ -109,6 +109,17 @@ const Nav = ({ appProps }) => {
   const location = useLocation();
   const ENDPOINT = environment.baseUrl;
 
+  function capitalizeFirstLetter(string) {
+    var words = string.split(" ");
+    var CapitalizedWords = [];
+    words.forEach((element) => {
+      CapitalizedWords.push(
+        element[0].toUpperCase() + element.slice(1, element.length)
+      );
+    });
+    return CapitalizedWords.join(" ");
+  }
+
   useEffect(() => {
     socket = io(ENDPOINT, {
       transports: ["websocket", "polling", "flashsocket"],
@@ -234,7 +245,7 @@ const Nav = ({ appProps }) => {
                 onClick={() => setOpenNotifications(!openNotifications)}
               >
                 <Typography variant="h6" style={{ fontSize: 16 }}>
-                  {user?.data?.result?.name}
+                  {capitalizeFirstLetter(user?.data?.result?.name)}
                 </Typography>
               </Button>
               <IconButton
@@ -369,7 +380,7 @@ const Nav = ({ appProps }) => {
                         }}
                         color="primary"
                       >
-                        {user?.data?.result?.name}
+                        {capitalizeFirstLetter(user?.data?.result?.name)}
                       </ListSubheader>
                       <Badge
                         badgeContent={
