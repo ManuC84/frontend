@@ -58,10 +58,10 @@ const Comment = ({ comment, user, post, error }) => {
   useEffect(() => {
     setTimeout(() => {
       if (isNotification) {
-        window.scroll({
-          top: document.body.scrollHeight,
-          left: 0,
-          behavior: "smooth",
+        scrollRef.current.scrollIntoView({
+          behaviour: "smooth",
+          block: "center",
+          inline: "center",
         });
       }
     }, 500);
@@ -357,7 +357,9 @@ const Comment = ({ comment, user, post, error }) => {
                   setPage={setPage}
                 />
 
-                {idx === arr.length - 1 && <div ref={scrollRef}></div>}
+                {idx === arr.length - 1 && (
+                  <div className="dummyDiv" ref={scrollRef}></div>
+                )}
               </>
             ))
           )}
