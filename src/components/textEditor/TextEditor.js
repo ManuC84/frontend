@@ -35,6 +35,7 @@ const TextEditor = ({
   const inputRef = useRef(null);
   const history = useHistory();
   const { isLoading } = useSelector((state) => state.posts);
+  const userData = user[0]?.data?.result;
 
   const handleShowEditor = () => setShowEditor(false);
 
@@ -68,7 +69,10 @@ const TextEditor = ({
     if (type === "comments") {
       setLoading(true);
       await dispatch(
-        addComment(post._id, { comment: body, creator: user[0]?.data?.result })
+        addComment(post._id, {
+          comment: body,
+          creator: { name: userData.name, id: userData._id },
+        })
       );
       setLoading(false);
     }
@@ -78,7 +82,7 @@ const TextEditor = ({
       await dispatch(
         addCommentReply(post._id, comment._id, {
           commentReply: body,
-          creator: user[0]?.data?.result,
+          creator: { name: userData.name, id: userData._id },
         })
       );
       setLoading(false);

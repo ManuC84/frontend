@@ -42,6 +42,8 @@ const Search = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
   const [selectedValue, setSelectedValue] = useState(1);
 
+  const userData = user?.data?.result;
+
   const uniqueTags = new Set(tagButtonContent);
 
   const dispatch = useDispatch();
@@ -74,7 +76,10 @@ const Search = () => {
 
     if (searchType === "url") {
       dispatch(
-        submitSearchUrl({ url: searchUrl, creator: user?.data?.result })
+        submitSearchUrl({
+          url: searchUrl,
+          creator: { name: userData.name, id: userData._id },
+        })
       );
       setSearchError(false);
       setSearchUrl("");
