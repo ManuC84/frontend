@@ -29,6 +29,7 @@ import ReadMore from "../../../utils/readMore/ReadMore";
 import { TwitterTweetEmbed } from "react-twitter-embed";
 import AlertDialog from "../../../utils/AlertDialog";
 import { useGlobalContext } from "../../../context";
+import { getComments } from "../../../actions/comments";
 
 const Post = ({ post, error, authError, setAuthError }) => {
   const [expanded, setExpanded] = useState(false);
@@ -46,6 +47,11 @@ const Post = ({ post, error, authError, setAuthError }) => {
   const textRef = useRef(null);
   const dispatch = useDispatch();
   const classes = useStyles();
+
+  //Fetch comments length
+  // useEffect(() => {
+  //   dispatch(fetchComments(post._id));
+  // }, []);
 
   useEffect(() => {
     if (isNotification) setExpanded(true);
@@ -74,6 +80,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+    if (!expanded) dispatch(getComments(post._id));
   };
 
   const handleLikePost = () => {

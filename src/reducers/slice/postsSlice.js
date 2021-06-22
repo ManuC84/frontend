@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 export const postsSlice = createSlice({
   name: "posts",
@@ -72,16 +72,34 @@ export const postsSlice = createSlice({
         ),
       };
     },
+    fetchComments: (state, action) => {
+      const posts = state.posts;
+      const post = posts.find(
+        (post) => post._id === action.payload[0].parentPostId
+      );
+      post.comments = action.payload;
+      state.isLoading = false;
+    },
+    fetchCommentReplies: (state, action) => {
+      const posts = state.posts;
+      const post = posts.find(
+        (post) => post._id === action.payload[0].parentPostId
+      );
+      const comments = comments.find(
+        (comment) => comment._id === action.payload[0].parentCommentId
+      );
+      comments.commentReplies = action.payload;
+      state.isLoading = false;
+    },
 
     createComment: (state, action) => {
-      return {
-        ...state,
-        posts: state.posts.map((post) =>
-          post._id === action.payload._id ? action.payload : post
-        ),
-        isLoading: false,
-        isNotification: false,
-      };
+      const post = state.posts.find(
+        (post) => post._id === action.payload.parentPostId
+      );
+      post.comments.push(action.payload);
+
+      state.isLoading = false;
+      state.isNotification = false;
     },
 
     createCommentReply: (state, action) => {
@@ -206,6 +224,7 @@ export const {
   fetchInfinite,
   hasMore,
   fetchSinglePost,
+  fetchComments,
   createComment,
   createCommentReply,
   addPostLike,
@@ -223,3 +242,5 @@ export const {
 } = postsSlice.actions;
 
 export default postsSlice.reducer;
+
+export const selectAllPosts = (state) => state.posts;

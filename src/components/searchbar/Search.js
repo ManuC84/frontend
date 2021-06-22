@@ -78,7 +78,7 @@ const Search = () => {
       dispatch(
         submitSearchUrl({
           url: searchUrl,
-          creator: { name: userData.name, id: userData._id },
+          creator: { name: userData.name, _id: userData._id },
         })
       );
       setSearchError(false);

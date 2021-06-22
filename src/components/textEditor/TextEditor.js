@@ -71,7 +71,7 @@ const TextEditor = ({
       await dispatch(
         addComment(post._id, {
           comment: body,
-          creator: { name: userData.name, id: userData._id },
+          creator: { name: userData.name, _id: userData._id },
         })
       );
       setLoading(false);
@@ -82,7 +82,7 @@ const TextEditor = ({
       await dispatch(
         addCommentReply(post._id, comment._id, {
           commentReply: body,
-          creator: { name: userData.name, id: userData._id },
+          creator: { name: userData.name, _id: userData._id },
         })
       );
       setLoading(false);

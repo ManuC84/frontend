@@ -1,7 +1,7 @@
 import axios from "axios";
 import environment from "../../src/environment";
 
-const API = axios.create({ baseURL: environment.baseUrl });
+export const API = axios.create({ baseURL: environment.baseUrl });
 
 //Passing headers to backend for authorization
 API.interceptors.request.use((req) => {
@@ -36,8 +36,14 @@ export const addTags = (id, tag) => API.post(`posts/tags/addTags/${id}`, tag);
 
 //----------------------------------Comments--------------------------------------------------------
 
+export const fetchComments = (parentPostId) =>
+  API.get(`posts/${parentPostId}/comments`);
+
 export const addComments = (id, payload) =>
   API.post(`posts/${id}/comments`, payload);
+
+export const fetchCommentReplies = (parentPostId, parentCommentId) =>
+  API.get(`posts/${parentPostId}/comments/${parentCommentId}/commentReplies`);
 
 export const addCommentReply = (postId, commentId, payload) =>
   API.post(`posts/${postId}/comments/${commentId}`, payload);

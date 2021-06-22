@@ -1,5 +1,6 @@
 import * as API from "../api/index";
 import {
+  fetchComments,
   createComment,
   createCommentReply,
   hasError,
@@ -13,6 +14,16 @@ import {
   deleteComment,
   deleteCommentReply,
 } from "../reducers/slice/postsSlice";
+
+export const getComments = (parentPostId) => async (dispatch) => {
+  dispatch(startLoading);
+  try {
+    const { data } = await API.fetchComments(parentPostId);
+    dispatch(fetchComments(data));
+  } catch (error) {
+    dispatch(hasError(error.response.data));
+  }
+};
 
 export const addComment = (id, payload) => async (dispatch) => {
   dispatch(startLoading);
