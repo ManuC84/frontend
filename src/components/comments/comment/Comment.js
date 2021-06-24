@@ -26,6 +26,8 @@ import {
   likeComment,
   dislikeComment,
   removeComment,
+  fetchCommentReplies,
+  getCommentReplies,
 } from "../../../actions/comments";
 import { getSinglePost } from "../../../actions/posts";
 import moment from "moment";
@@ -119,7 +121,10 @@ const Comment = ({ comment, user, post, error }) => {
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
-    if (!expanded) setShowEditor(false);
+    if (!expanded) {
+      setShowEditor(false);
+      dispatch(getCommentReplies(post._id, comment._id));
+    }
   };
 
   const handleLikeComment = () => {

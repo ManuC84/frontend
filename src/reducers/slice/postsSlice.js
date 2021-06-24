@@ -80,17 +80,6 @@ export const postsSlice = createSlice({
       post.comments = action.payload;
       state.isLoading = false;
     },
-    fetchCommentReplies: (state, action) => {
-      const posts = state.posts;
-      const post = posts.find(
-        (post) => post._id === action.payload[0].parentPostId
-      );
-      const comments = comments.find(
-        (comment) => comment._id === action.payload[0].parentCommentId
-      );
-      comments.commentReplies = action.payload;
-      state.isLoading = false;
-    },
 
     createComment: (state, action) => {
       const post = state.posts.find(
@@ -100,6 +89,17 @@ export const postsSlice = createSlice({
 
       state.isLoading = false;
       state.isNotification = false;
+    },
+    fetchCommentReplies: (state, action) => {
+      const posts = state.posts;
+      const post = posts.find(
+        (post) => post._id === action.payload[0].parentPostId
+      );
+      const comments = post.comments.find(
+        (comment) => comment._id === action.payload[0].parentCommentId
+      );
+      comments.commentReplies = action.payload;
+      state.isLoading = false;
     },
 
     createCommentReply: (state, action) => {
@@ -225,6 +225,7 @@ export const {
   hasMore,
   fetchSinglePost,
   fetchComments,
+  fetchCommentReplies,
   createComment,
   createCommentReply,
   addPostLike,
