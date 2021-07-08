@@ -1,11 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { API } from "../../api/index";
+
+//FETCH ALL POSTS
+export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
+  const { data } = await API.get("/posts");
+  return data;
+});
+
+//INFINITE SCROLL
+export const fetchInfiniteScroll = createAsyncThunk(
+  "posts/fetchInfiniteScroll",
+  async (skip) => {
+    const { data } = await API.get(`/posts?skip=${skip}`);
+
+    return data;
+  }
+);
 
 export const postsSlice = createSlice({
   name: "posts",
   initialState: {
     posts: [],
+    status: "idle",
     isLoading: false,
-    error: false,
+    error: null,
     loadMorePosts: true,
     isNotification: false,
   },
@@ -20,16 +38,16 @@ export const postsSlice = createSlice({
     hasMore: (state, action) => {
       state.loadMorePosts = action.payload;
     },
-    fetchAll: (state, action) => {
-      return {
-        ...state,
-        posts: action.payload.filter(
-          (post) => post.image !== "/images/no-image.png"
-        ),
-        isLoading: false,
-        isNotification: false,
-      };
-    },
+    // fetchAll: (state, action) => {
+    //   return {
+    //     ...state,
+    //     posts: action.payload.filter(
+    //       (post) => post.image !== "/images/no-image.png"
+    //     ),
+    //     isLoading: false,
+    //     isNotification: false,
+    //   };
+    // },
     fetchSinglePost: (state, action) => {
       return {
         ...state,
@@ -40,12 +58,12 @@ export const postsSlice = createSlice({
       };
     },
     fetchInfinite: (state, action) => {
-      return {
-        ...state,
-        posts: state.posts.concat(
-          action.payload.filter((post) => post.image !== "/images/no-image.png")
-        ),
-      };
+      // return {
+      //   ...state,
+      //   posts: state.posts.concat(
+      //     action.payload.filter((post) => post.image !== "/images/no-image.png")
+      //   ),
+      // };
     },
     create: (state, action) => {
       return {
@@ -210,6 +228,42 @@ export const postsSlice = createSlice({
         loadMorePosts: false,
         isNotification: true,
       };
+    },
+  },
+  extraReducers: {
+    //FETCH ALL POSTS
+    [fetchPosts.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [fetchPosts.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+      const filteredPosts = action.payload.filter(
+        (post) => post.image !== "/images/no-image.png"
+      );
+      state.posts = filteredPosts;
+    },
+    [fetchPosts.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    },
+    //INFINITE SCROLL
+    [fetchInfiniteScroll.pending]: (state, action) => {
+      state.status = "idle";
+    },
+    [fetchInfiniteScroll.fulfilled]: (state, action) => {
+      if (!action.payload.length) {
+        state.error = "You've reached the end";
+        state.loadMorePosts = false;
+      }
+      state.status = "succeeded";
+
+      state.posts = state.posts.concat(
+        action.payload.filter((post) => post.image !== "/images/no-image.png")
+      );
+    },
+    [fetchInfiniteScroll.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
     },
   },
 });

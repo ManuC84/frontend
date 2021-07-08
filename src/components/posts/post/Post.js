@@ -35,7 +35,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
   const [expanded, setExpanded] = useState(false);
   const [showLikeAuthAlert, setShowLikeAuthAlert] = useState(false);
 
-  const { posts, isNotification } = useSelector((state) => state.posts);
+  const { posts, isNotification, status } = useSelector((state) => state.posts);
   const [tag, setTag] = useState("");
   const [addTagError, setAddTagError] = useState({ error: "", bool: false });
   const user = useState(JSON.parse(localStorage.getItem("profile")));
@@ -59,7 +59,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
 
   //Listen to authError from backend
   useEffect(() => {
-    if (error.authError) {
+    if (status === "failed" && error.authError) {
       return setAuthError(true);
     }
   }, [error]);

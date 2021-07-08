@@ -10,28 +10,36 @@ import { Alert } from "@material-ui/lab";
 import { useSelector, useDispatch } from "react-redux";
 import Post from "./post/Post";
 import { useStyles } from "./styles";
-import { infiniteFetch } from "../../actions/posts";
+import {
+  fetchPosts,
+  fetchInfiniteScroll,
+} from "../../reducers/slice/postsSlice";
 import InfiniteScroll from "react-infinite-scroll-component";
 import "./styleOverride.css";
 
 const Posts = () => {
   const [authError, setAuthError] = useState(false);
-  const { posts, isLoading, error, loadMorePosts } = useSelector(
+  const { posts, isLoading, status, error, loadMorePosts } = useSelector(
     (state) => state.posts
   );
 
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(fetchPosts());
+  }, []);
+
   const fetchImages = () => {
-    dispatch(infiniteFetch(posts.length));
+    dispatch(fetchInfiniteScroll(posts.length));
   };
 
-  return isLoading ? (
+  return status === "loading" ? (
     <div className={classes.progress}>
       <CircularProgress />
     </div>
-  ) : error.message === "Your search yielded no results, please try again" ? (
+  ) : status === "failed" &&
+    error.message === "Your search yielded no results, please try again" ? (
     <div className={classes.tagError}>
       <Alert severity="info">
         <Typography>{error.message}</Typography>

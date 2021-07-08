@@ -25,15 +25,15 @@ export const submitSearchUrl = (payload) => async (dispatch) => {
 };
 
 export const fetchPosts = () => async (dispatch) => {
-  dispatch(hasError(false));
-  dispatch(hasMore(true));
-  dispatch(startLoading());
-  try {
-    const { data } = await API.getPosts();
-    dispatch(fetchAll(data));
-  } catch (error) {
-    dispatch(hasError(error.response.data));
-  }
+  // dispatch(hasError(false));
+  // dispatch(hasMore(true));
+  // dispatch(startLoading());
+  // try {
+  //   const { data } = await API.getPosts();
+  //   dispatch(fetchAll(data));
+  // } catch (error) {
+  //   dispatch(hasError(error.response.data));
+  // }
 };
 
 export const getSinglePost = (id) => async (dispatch) => {
@@ -47,16 +47,16 @@ export const getSinglePost = (id) => async (dispatch) => {
 };
 
 export const infiniteFetch = (skip) => async (dispatch) => {
-  try {
-    const { data } = await API.getInfiniteScroll(skip);
-    if (!data.length) {
-      dispatch(hasError("You've reached the end"));
-      dispatch(hasMore(false));
-    }
-    dispatch(fetchInfinite(data));
-  } catch (error) {
-    dispatch(hasError(error.response.data));
-  }
+  // try {
+  //   const { data } = await API.getInfiniteScroll(skip);
+  //   if (!data.length) {
+  //     dispatch(hasError("You've reached the end"));
+  //     dispatch(hasMore(false));
+  //   }
+  //   dispatch(fetchInfinite(data));
+  // } catch (error) {
+  //   dispatch(hasError(error.response.data));
+  // }
 };
 
 export const fetchPostsByTags = (tags) => async (dispatch) => {
