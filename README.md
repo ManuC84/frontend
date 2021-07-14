@@ -14,7 +14,7 @@ Freelycomment is developed with React on the front-end using Redux-toolkit for s
 
 ## How to navigate this project
 * All data is fetched from the backend using redux toolkit async thunks. The data is then dispatched to the components and served. [Redux slice example](https://imgur.com/IWa2ILl)
-* Responsive css styling is achieved with material-ui for the tech demo, however for definitive styling it's likely the project will use styled-components. 
+* Responsive css styling is achieved with material-ui for the tech demo, however for definitive styling the project will use styled-components. 
 * On the backend express fetches data from MongoDb and serves it to the front end. [Express Example](https://imgur.com/U46qf7P)
 
 ## Why I built the project this way
