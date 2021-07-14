@@ -33,4 +33,4 @@ I knew the application would eventually become quite large so I went with redux 
 
 ## Available Scripts
 
-If you plan to clone this project please check the .env example file in order to have the necessary environmental variables. Then in order to download all the dependencies run npm init and then in order to run the app please use npm run sta which will use the deployed backend on Heroku. 
+If you plan to clone this project please check the .env example file located in the src folder in order to have the necessary environmental variables. Then in order to download all the dependencies run npm init and then in order to run the app please use npm run sta which will use the deployed backend on Heroku. 
