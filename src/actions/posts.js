@@ -15,13 +15,12 @@ import {
 } from "../reducers/slice/postsSlice";
 
 export const submitSearchUrl = (payload) => async (dispatch) => {
-  try {
-    const { data } = await API.createPost(payload);
-
-    dispatch(create(data));
-  } catch (error) {
-    dispatch(hasError(error.response.data));
-  }
+  // try {
+  //   const { data } = await API.createPost(payload);
+  //   dispatch(create(data));
+  // } catch (error) {
+  //   dispatch(hasError(error.response.data));
+  // }
 };
 
 export const fetchPosts = () => async (dispatch) => {
@@ -37,13 +36,13 @@ export const fetchPosts = () => async (dispatch) => {
 };
 
 export const getSinglePost = (id) => async (dispatch) => {
-  dispatch(startLoading);
-  try {
-    const { data } = await API.getSinglePost(id);
-    dispatch(fetchSinglePost(data));
-  } catch (error) {
-    dispatch(hasError(error.response.data));
-  }
+  // dispatch(startLoading);
+  // try {
+  //   const { data } = await API.getSinglePost(id);
+  //   dispatch(fetchSinglePost(data));
+  // } catch (error) {
+  //   dispatch(hasError(error.response.data));
+  // }
 };
 
 export const infiniteFetch = (skip) => async (dispatch) => {

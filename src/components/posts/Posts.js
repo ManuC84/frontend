@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from "react-router";
 import Post from "./post/Post";
 import { useStyles } from "./styles";
 import {
@@ -25,12 +26,18 @@ const Posts = () => {
 
   const classes = useStyles();
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  let filteredPosts =
+    posts.length > 1
+      ? posts.filter((post) => post.image !== "/images/no-image.png")
+      : posts;
 
   useEffect(() => {
-    dispatch(fetchPosts());
+    if (location.pathname === "/") dispatch(fetchPosts());
   }, []);
 
-  const fetchImages = () => {
+  const fetchInfinite = () => {
     dispatch(fetchInfiniteScroll(posts.length));
   };
 
@@ -51,7 +58,7 @@ const Posts = () => {
         className={classes.infiniteComponent}
         width="100%"
         dataLength={posts.length}
-        next={fetchImages}
+        next={fetchInfinite}
         hasMore={loadMorePosts}
         loader={
           <div className={classes.infiniteProgress}>
@@ -69,7 +76,7 @@ const Posts = () => {
           )
         }
       >
-        {posts.map((post) => (
+        {filteredPosts.map((post) => (
           <Post
             post={post}
             key={post._id}

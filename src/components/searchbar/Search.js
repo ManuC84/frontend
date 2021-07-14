@@ -27,6 +27,7 @@ import {
   fetchPosts,
   fetchPostsByTags,
 } from "../../actions/posts";
+import { createPost } from "../../reducers/slice/postsSlice";
 import { invalid } from "moment";
 import { useSelector } from "react-redux";
 import AddIcon from "@material-ui/icons/Add";
@@ -76,7 +77,7 @@ const Search = () => {
 
     if (searchType === "url") {
       dispatch(
-        submitSearchUrl({
+        createPost({
           url: searchUrl,
           creator: { name: userData?.name, _id: userData?._id },
         })

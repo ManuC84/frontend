@@ -36,7 +36,7 @@ import LockIcon from "@material-ui/icons/Lock";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { fetchPosts } from "../../actions/posts";
+import { fetchPosts } from "../../reducers/slice/postsSlice";
 import { logout } from "../../reducers/slice/authSlice";
 import decode from "jwt-decode";
 import HideOnScroll from "../../utils/HideNav";

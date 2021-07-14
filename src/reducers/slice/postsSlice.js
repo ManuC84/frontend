@@ -16,6 +16,24 @@ export const fetchInfiniteScroll = createAsyncThunk(
     return data;
   }
 );
+//CREATE POST
+export const createPost = createAsyncThunk(
+  "posts/createPost",
+  async (payload) => {
+    const { data } = await API.post("/posts", payload);
+
+    return data;
+  }
+);
+//FECTH SINGLE POST
+export const fetchSinglePost = createAsyncThunk(
+  "posts/fetchSinglePost",
+  async (id) => {
+    const { data } = await API.get(`/posts/${id}`);
+
+    return data;
+  }
+);
 
 export const postsSlice = createSlice({
   name: "posts",
@@ -49,13 +67,13 @@ export const postsSlice = createSlice({
     //   };
     // },
     fetchSinglePost: (state, action) => {
-      return {
-        ...state,
-        posts: action.payload,
-        loadMorePosts: false,
-        isLoading: false,
-        isNotification: false,
-      };
+      // return {
+      //   ...state,
+      //   posts: action.payload,
+      //   loadMorePosts: false,
+      //   isLoading: false,
+      //   isNotification: false,
+      // };
     },
     fetchInfinite: (state, action) => {
       // return {
@@ -65,14 +83,14 @@ export const postsSlice = createSlice({
       //   ),
       // };
     },
-    create: (state, action) => {
-      return {
-        ...state,
-        posts: action.payload,
-        loadMorePosts: false,
-        error: false,
-      };
-    },
+    // create: (state, action) => {
+    //   return {
+    //   //   ...state,
+    //   //   posts: action.payload,
+    //   //   loadMorePosts: false,
+    //   //   error: false,
+    //   // };
+    // },
     fetchByTag: (state, action) => {
       return {
         ...state,
@@ -232,24 +250,21 @@ export const postsSlice = createSlice({
   },
   extraReducers: {
     //FETCH ALL POSTS
-    [fetchPosts.pending]: (state, action) => {
+    [fetchPosts.pending]: (state) => {
       state.status = "loading";
     },
     [fetchPosts.fulfilled]: (state, action) => {
       state.status = "succeeded";
-      const filteredPosts = action.payload.filter(
-        (post) => post.image !== "/images/no-image.png"
-      );
-      state.posts = filteredPosts;
+
+      state.posts = action.payload;
+      state.loadMorePosts = true;
     },
     [fetchPosts.rejected]: (state, action) => {
       state.status = "failed";
       state.error = action.error.message;
     },
+
     //INFINITE SCROLL
-    [fetchInfiniteScroll.pending]: (state, action) => {
-      state.status = "idle";
-    },
     [fetchInfiniteScroll.fulfilled]: (state, action) => {
       if (!action.payload.length) {
         state.error = "You've reached the end";
@@ -265,6 +280,38 @@ export const postsSlice = createSlice({
       state.status = "failed";
       state.error = action.error.message;
     },
+
+    //CREATE POST
+    [createPost.pending]: (state) => {
+      state.status = "loading";
+    },
+    [createPost.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+
+      state.posts = action.payload;
+      state.loadMorePosts = false;
+    },
+    [createPost.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    },
+
+    //FETCH SINGLE POST
+    [fetchSinglePost.pending]: (state) => {
+      state.status = "loading";
+    },
+    [fetchSinglePost.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+
+      state.posts = action.payload;
+      state.loadMorePosts = false;
+
+      state.isNotification = false;
+    },
+    [fetchSinglePost.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    },
   },
 });
 
@@ -277,7 +324,7 @@ export const {
   hasError,
   fetchInfinite,
   hasMore,
-  fetchSinglePost,
+
   fetchComments,
   fetchCommentReplies,
   createComment,

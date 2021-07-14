@@ -29,13 +29,13 @@ import {
   fetchCommentReplies,
   getCommentReplies,
 } from "../../../actions/comments";
-import { getSinglePost } from "../../../actions/posts";
 import moment from "moment";
 import CommentReplies from "../commentReplies/CommentReplies";
 import { useDispatch } from "react-redux";
 import { useGlobalContext } from "../../../context";
 import { useSelector } from "react-redux";
 import { current } from "@reduxjs/toolkit";
+import { fetchSinglePost } from "../../../reducers/slice/postsSlice";
 
 const Comment = ({ comment, user, post, error }) => {
   const [expanded, setExpanded] = useState(false);
@@ -391,7 +391,7 @@ const Comment = ({ comment, user, post, error }) => {
                 color="primary"
                 size="small"
                 style={{ marginTop: 15 }}
-                onClick={() => dispatch(getSinglePost(post._id))}
+                onClick={() => dispatch(fetchSinglePost(post._id))}
               >
                 Show all replies
               </Button>
