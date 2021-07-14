@@ -8,14 +8,14 @@ Freelycomment is a social network meant to enable users to comment on any websit
 Freelycomment is developed with React on the front-end using Redux-toolkit for state management and material-ui for styling. For the backend it uses express.js and the database is handled by MongoDb atlas. You can check the server-side code here https://github.com/ManuC84/server
 
 ## How I worked on this project
-* Freelycomment was first designed in Figma in a basic form, it has since then taken a bit of a different direction. [Initial figma design](https://imgur.com/LMh9XOz)
-* The tasks were organized using Trello. [Trello workflow](https://imgur.com/xFHgFA1)
+* Freelycomment was first designed in Figma in a basic form, it has since then taken a bit of a different direction. [Initial figma design](https://imgur.com/LMh9XOz.png)
+* The tasks were organized using Trello. [Trello workflow](https://imgur.com/xFHgFA1.png)
 * I used githbub Branches and pull requests for better workflow and collaboration.
 
 ## How to navigate this project
-* All data is fetched from the backend using redux toolkit async thunks. The data is then dispatched to the components and served. [Redux slice example](https://imgur.com/IWa2ILl)
+* All data is fetched from the backend using redux toolkit async thunks. The data is then dispatched to the components and served. [Redux slice example](https://imgur.com/IWa2ILl.png)
 * Responsive css styling is achieved with material-ui for the tech demo, however for definitive styling the project will use styled-components. 
-* On the backend express fetches data from MongoDb and serves it to the front end. [Express Example](https://imgur.com/U46qf7P)
+* On the backend express fetches data from MongoDb and serves it to the front end. [Express Example](https://imgur.com/U46qf7P.png)
 
 ## Why I built the project this way
 
