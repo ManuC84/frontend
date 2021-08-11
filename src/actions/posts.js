@@ -79,12 +79,12 @@ export const addTag = (id, tag) => async (dispatch) => {
 };
 
 export const likePost = (postId, userId) => async (dispatch) => {
-  try {
-    const { data } = await API.addPostLikes(postId, userId);
-    dispatch(addPostLike(data));
-  } catch (error) {
-    dispatch(hasError(error.response.data));
-  }
+  // try {
+  //   const { data } = await API.addPostLikes(postId, userId);
+  //   dispatch(addPostLike(data));
+  // } catch (error) {
+  //   dispatch(hasError(error.response.data));
+  // }
 };
 
 export const dislikePost = (postId, userId) => async (dispatch) => {

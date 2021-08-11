@@ -20,7 +20,6 @@ export const getComments = (parentPostId) => async (dispatch) => {
   dispatch(startLoading);
   try {
     const response = await API.fetchComments(parentPostId);
-    console.log(response);
     if (response.data.length > 0) dispatch(fetchComments(response.data));
   } catch (error) {
     dispatch(hasError(error.response.data));

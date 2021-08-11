@@ -12,7 +12,6 @@ export const fetchInfiniteScroll = createAsyncThunk(
   "posts/fetchInfiniteScroll",
   async (skip) => {
     const { data } = await API.get(`/posts?skip=${skip}`);
-
     return data;
   }
 );
@@ -21,7 +20,6 @@ export const createPost = createAsyncThunk(
   "posts/createPost",
   async (payload) => {
     const { data } = await API.post("/posts", payload);
-
     return data;
   }
 );
@@ -30,10 +28,15 @@ export const fetchSinglePost = createAsyncThunk(
   "posts/fetchSinglePost",
   async (id) => {
     const { data } = await API.get(`/posts/${id}`);
-
     return data;
   }
 );
+//LIKE POST
+export const likePost = createAsyncThunk("posts/likePost", async (obj) => {
+  const { postId, userId } = obj;
+  const { data } = await API.post(`/posts/${postId}/likes`, { userId: userId });
+  return data;
+});
 
 export const postsSlice = createSlice({
   name: "posts",
@@ -150,13 +153,13 @@ export const postsSlice = createSlice({
     },
 
     addPostLike: (state, action) => {
-      return {
-        ...state,
-        posts: state.posts.map((post) =>
-          post._id === action.payload._id ? action.payload : post
-        ),
-        isNotification: false,
-      };
+      // return {
+      //   ...state,
+      //   posts: state.posts.map((post) =>
+      //     post._id === action.payload._id ? action.payload : post
+      //   ),
+      //   isNotification: false,
+      // };
     },
     addPostDislike: (state, action) => {
       return {
@@ -312,6 +315,17 @@ export const postsSlice = createSlice({
       state.status = "failed";
       state.error = action.error.message;
     },
+    //LIKE POST
+    [likePost.fulfilled]: (state, action) => {
+      state.posts = state.posts.map((post) =>
+        post._id === action.payload._id ? action.payload : post
+      );
+      state.isNotification = false;
+    },
+    [likePost.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    },
   },
 });
 
@@ -324,7 +338,6 @@ export const {
   hasError,
   fetchInfinite,
   hasMore,
-
   fetchComments,
   fetchCommentReplies,
   createComment,

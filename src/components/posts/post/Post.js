@@ -22,7 +22,7 @@ import { ThumbUp, ThumbDown } from "@material-ui/icons";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import moment from "moment";
 import { useStyles } from "./styles";
-import { addTag, likePost, dislikePost } from "../../../actions/posts";
+import { addTag, dislikePost } from "../../../actions/posts";
 import { useDispatch, useSelector } from "react-redux";
 import Comments from "../../comments/Comments";
 import ReadMore from "../../../utils/readMore/ReadMore";
@@ -30,6 +30,7 @@ import { TwitterTweetEmbed } from "react-twitter-embed";
 import AlertDialog from "../../../utils/AlertDialog";
 import { useGlobalContext } from "../../../context";
 import { getComments } from "../../../actions/comments";
+import { likePost } from "../../../reducers/slice/postsSlice";
 
 const Post = ({ post, error, authError, setAuthError }) => {
   const [expanded, setExpanded] = useState(false);
@@ -84,7 +85,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
   };
 
   const handleLikePost = () => {
-    if (user[0]) dispatch(likePost(post._id, { userId: userId }));
+    if (user[0]) dispatch(likePost({ postId: post._id, userId: userId }));
   };
 
   const handleDislikePost = () => {
