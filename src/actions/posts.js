@@ -88,10 +88,10 @@ export const likePost = (postId, userId) => async (dispatch) => {
 };
 
 export const dislikePost = (postId, userId) => async (dispatch) => {
-  try {
-    const { data } = await API.addPostDislikes(postId, userId);
-    dispatch(addPostDislike(data));
-  } catch (error) {
-    dispatch(hasError(error.response.data));
-  }
+  // try {
+  //   const { data } = await API.addPostDislikes(postId, userId);
+  //   dispatch(addPostDislike(data));
+  // } catch (error) {
+  //   dispatch(hasError(error.response.data));
+  // }
 };

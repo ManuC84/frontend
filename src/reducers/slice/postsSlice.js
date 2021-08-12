@@ -37,6 +37,17 @@ export const likePost = createAsyncThunk("posts/likePost", async (obj) => {
   const { data } = await API.post(`/posts/${postId}/likes`, { userId: userId });
   return data;
 });
+//DISLIKE POST
+export const dislikePost = createAsyncThunk(
+  "posts/dislikePost",
+  async (obj) => {
+    const { postId, userId } = obj;
+    const { data } = await API.post(`/posts/${postId}/dislikes`, {
+      userId: userId,
+    });
+    return data;
+  }
+);
 
 export const postsSlice = createSlice({
   name: "posts",
@@ -323,6 +334,17 @@ export const postsSlice = createSlice({
       state.isNotification = false;
     },
     [likePost.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    },
+    //DISLIKE POST
+    [dislikePost.fulfilled]: (state, action) => {
+      state.posts = state.posts.map((post) =>
+        post._id === action.payload._id ? action.payload : post
+      );
+      state.isNotification = false;
+    },
+    [dislikePost.rejected]: (state, action) => {
       state.status = "failed";
       state.error = action.error.message;
     },

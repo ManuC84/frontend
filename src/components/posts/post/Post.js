@@ -22,7 +22,7 @@ import { ThumbUp, ThumbDown } from "@material-ui/icons";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import moment from "moment";
 import { useStyles } from "./styles";
-import { addTag, dislikePost } from "../../../actions/posts";
+import { addTag } from "../../../actions/posts";
 import { useDispatch, useSelector } from "react-redux";
 import Comments from "../../comments/Comments";
 import ReadMore from "../../../utils/readMore/ReadMore";
@@ -30,7 +30,7 @@ import { TwitterTweetEmbed } from "react-twitter-embed";
 import AlertDialog from "../../../utils/AlertDialog";
 import { useGlobalContext } from "../../../context";
 import { getComments } from "../../../actions/comments";
-import { likePost } from "../../../reducers/slice/postsSlice";
+import { likePost, dislikePost } from "../../../reducers/slice/postsSlice";
 
 const Post = ({ post, error, authError, setAuthError }) => {
   const [expanded, setExpanded] = useState(false);
@@ -89,7 +89,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
   };
 
   const handleDislikePost = () => {
-    if (user[0]) dispatch(dislikePost(post._id, { userId: userId }));
+    if (user[0]) dispatch(dislikePost({ postId: post._id, userId: userId }));
   };
 
   const handleAddTags = (e) => {
