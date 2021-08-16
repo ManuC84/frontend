@@ -31,12 +31,15 @@ import AlertDialog from "../../../utils/AlertDialog";
 import { useGlobalContext } from "../../../context";
 import { getComments } from "../../../actions/comments";
 import { likePost, dislikePost } from "../../../reducers/slice/postsSlice";
+import { fetchComments } from "../../../reducers/slice/commentsSlice";
 
 const Post = ({ post, error, authError, setAuthError }) => {
   const [expanded, setExpanded] = useState(false);
   const [showLikeAuthAlert, setShowLikeAuthAlert] = useState(false);
 
   const { posts, isNotification, status } = useSelector((state) => state.posts);
+    const { comments } = useSelector((state) => state.comments);
+
   const [tag, setTag] = useState("");
   const [addTagError, setAddTagError] = useState({ error: "", bool: false });
   const user = useState(JSON.parse(localStorage.getItem("profile")));
@@ -48,11 +51,21 @@ const Post = ({ post, error, authError, setAuthError }) => {
   const textRef = useRef(null);
   const dispatch = useDispatch();
   const classes = useStyles();
+  
 
   //Fetch comments length
   // useEffect(() => {
   //   dispatch(fetchComments(post._id));
   // }, []);
+
+//Fetch comments on post render from comments db
+    useEffect(() => {
+    dispatch(fetchComments(post._id));
+  }, []);
+
+  const postComments = comments.filter(
+    (comment) => comment.parentPostId === post._id
+  );
 
   useEffect(() => {
     if (isNotification) setExpanded(true);
@@ -81,7 +94,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
-    if (!expanded) dispatch(getComments(post._id));
+    // if (!expanded) dispatch(fetchComments(post._id));
   };
 
   const handleLikePost = () => {
@@ -289,7 +302,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
               color="textSecondary"
               variant="button"
             >
-              {post?.comments?.length}
+              {postComments.length}
             </Typography>
             <IconButton
               className={clsx(classes.expand, {
@@ -317,7 +330,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
         )}
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent style={{ paddingTop: "0" }}>
-            <Comments post={post} error={error} />
+            <Comments post={post} error={error} postComments={postComments} />
           </CardContent>
         </Collapse>
       </Card>

@@ -27,6 +27,7 @@ const Posts = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const location = useLocation();
+  
 
   let filteredPosts =
     posts.length > 1

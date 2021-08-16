@@ -55,7 +55,7 @@ export const postsSlice = createSlice({
     posts: [],
     status: "idle",
     isLoading: false,
-    error: null,
+    error: false,
     loadMorePosts: true,
     isNotification: false,
   },
