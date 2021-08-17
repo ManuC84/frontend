@@ -3,7 +3,7 @@ import { API } from "../../api/index";
 
 //FETCH ALL COMMENTS
 export const fetchComments = createAsyncThunk(
-  "posts/fetchComments",
+  "comments/fetchComments",
   async (parentPostId) => {
     const { data } = await API.get(`posts/${parentPostId}/comments`);
 
@@ -13,7 +13,7 @@ export const fetchComments = createAsyncThunk(
 
 //CREATE COMMENT
 export const createComment = createAsyncThunk(
-  "posts/createComment",
+  "comments/createComment",
   async (obj) => {
     const { postId, comment, creator } = obj;
     const { data } = await API.post(`posts/${postId}/comments`, {
@@ -21,6 +21,19 @@ export const createComment = createAsyncThunk(
       creator,
     });
 
+    return data;
+  }
+);
+
+//LIKE COMMENT
+export const likeComment = createAsyncThunk(
+  "comments/likeComment",
+  async (obj) => {
+    const { postId, commentId, userId } = obj;
+    const { data } = await API.post(
+      `posts/${postId}/comments/${commentId}/likes`,
+      { userId }
+    );
     return data;
   }
 );
@@ -57,6 +70,18 @@ export const commentsSlice = createSlice({
       state.comments.push(action.payload);
     },
     [createComment.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    },
+    //LIKE COMMENT
+
+    [likeComment.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+      state.comments = state.comments.map((comment) =>
+        comment._id === action.payload._id ? action.payload : comment
+      );
+    },
+    [likeComment.rejected]: (state, action) => {
       state.status = "failed";
       state.error = action.error.message;
     },

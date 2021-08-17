@@ -123,22 +123,21 @@ export const postsSlice = createSlice({
       };
     },
     fetchComments: (state, action) => {
-      const posts = state.posts;
-      const post = posts.find(
-        (post) => post._id === action.payload[0].parentPostId
-      );
-      post.comments = action.payload;
-      state.isLoading = false;
+      // const posts = state.posts;
+      // const post = posts.find(
+      //   (post) => post._id === action.payload[0].parentPostId
+      // );
+      // post.comments = action.payload;
+      // state.isLoading = false;
     },
 
     createComment: (state, action) => {
-      const post = state.posts.find(
-        (post) => post._id === action.payload.parentPostId
-      );
-      post.comments.push(action.payload);
-
-      state.isLoading = false;
-      state.isNotification = false;
+      // const post = state.posts.find(
+      //   (post) => post._id === action.payload.parentPostId
+      // );
+      // post.comments.push(action.payload);
+      // state.isLoading = false;
+      // state.isNotification = false;
     },
     fetchCommentReplies: (state, action) => {
       const posts = state.posts;
@@ -173,13 +172,13 @@ export const postsSlice = createSlice({
       // };
     },
     addPostDislike: (state, action) => {
-      return {
-        ...state,
-        posts: state.posts.map((post) =>
-          post._id === action.payload._id ? action.payload : post
-        ),
-        isNotification: false,
-      };
+      // return {
+      //   ...state,
+      //   posts: state.posts.map((post) =>
+      //     post._id === action.payload._id ? action.payload : post
+      //   ),
+      //   isNotification: false,
+      // };
     },
     addCommentLike: (state, action) => {
       return {
