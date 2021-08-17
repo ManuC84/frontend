@@ -12,6 +12,7 @@ import {
 import { useHistory } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
 import "./styles.css";
+import { createComment } from "../../reducers/slice/commentsSlice";
 
 const TextEditor = ({
   post,
@@ -34,7 +35,7 @@ const TextEditor = ({
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const history = useHistory();
-  const { isLoading } = useSelector((state) => state.posts);
+  const { status } = useSelector((state) => state.comments);
   const userData = user[0]?.data?.result;
 
   const handleShowEditor = () => setShowEditor(false);
@@ -67,14 +68,13 @@ const TextEditor = ({
     }
 
     if (type === "comments") {
-      setLoading(true);
-      await dispatch(
-        addComment(post._id, {
+      dispatch(
+        createComment({
+          postId: post._id,
           comment: body,
           creator: { name: userData.name, _id: userData._id },
         })
       );
-      setLoading(false);
     }
 
     if (type === "commentReplies") {
@@ -143,7 +143,7 @@ const TextEditor = ({
           type="submit"
           style={{ marginTop: "5px" }}
         >
-          {loading ? (
+          {status === "loading" ? (
             <CircularProgress color="secondary" size={22} />
           ) : (
             <span>Submit</span>

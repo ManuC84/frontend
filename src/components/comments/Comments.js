@@ -35,16 +35,6 @@ export default function Comments({ post, error, postComments }) {
     setPage(value);
   };
 
-  // useEffect(() => {
-  //   dispatch(fetchComments(post._id));
-  // }, []);
-
-  // const postComments = comments.filter(
-  //   (comment) => comment.parentPostId === post._id
-  // );
-  // console.log(postComments);
-  // console.log(post.comments);
-
   // Get current comments
   const indexOfLastComment = page * commentsPerPage;
   const indexOfFirstComment = indexOfLastComment - commentsPerPage;

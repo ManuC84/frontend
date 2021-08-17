@@ -38,7 +38,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
   const [showLikeAuthAlert, setShowLikeAuthAlert] = useState(false);
 
   const { posts, isNotification, status } = useSelector((state) => state.posts);
-    const { comments } = useSelector((state) => state.comments);
+  const { comments } = useSelector((state) => state.comments);
 
   const [tag, setTag] = useState("");
   const [addTagError, setAddTagError] = useState({ error: "", bool: false });
@@ -51,21 +51,22 @@ const Post = ({ post, error, authError, setAuthError }) => {
   const textRef = useRef(null);
   const dispatch = useDispatch();
   const classes = useStyles();
-  
 
-  //Fetch comments length
-  // useEffect(() => {
-  //   dispatch(fetchComments(post._id));
-  // }, []);
+  //Sort comments by newest helper function
+  function sortFunction(a, b) {
+    var dateA = new Date(a.createdAt).getTime();
+    var dateB = new Date(b.createdAt).getTime();
+    return dateA > dateB ? -1 : 1;
+  }
 
-//Fetch comments on post render from comments db
-    useEffect(() => {
+  //Fetch comments on post render from comments db
+  useEffect(() => {
     dispatch(fetchComments(post._id));
   }, []);
 
-  const postComments = comments.filter(
-    (comment) => comment.parentPostId === post._id
-  );
+  const postComments = comments
+    .filter((comment) => comment.parentPostId === post._id)
+    .sort(sortFunction);
 
   useEffect(() => {
     if (isNotification) setExpanded(true);
