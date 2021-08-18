@@ -217,13 +217,13 @@ export const postsSlice = createSlice({
       };
     },
     editComment: (state, action) => {
-      return {
-        ...state,
-        posts: state.posts.map((post) =>
-          post._id === action.payload._id ? action.payload : post
-        ),
-        isNotification: false,
-      };
+      // return {
+      //   ...state,
+      //   posts: state.posts.map((post) =>
+      //     post._id === action.payload._id ? action.payload : post
+      //   ),
+      //   isNotification: false,
+      // };
     },
     editCommentReply: (state, action) => {
       return {
@@ -334,7 +334,7 @@ export const postsSlice = createSlice({
     },
     [likePost.rejected]: (state, action) => {
       state.status = "failed";
-      state.error = action.error.message;
+      state.error = "testing";
     },
     //DISLIKE POST
     [dislikePost.fulfilled]: (state, action) => {

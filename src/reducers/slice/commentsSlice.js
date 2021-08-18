@@ -46,6 +46,22 @@ export const dislikeComment = createAsyncThunk(
       `posts/${postId}/comments/${commentId}/dislikes`,
       { userId }
     );
+
+    return data;
+  }
+);
+//EDIT COMMENT
+export const editComment = createAsyncThunk(
+  "comments/editComment",
+  async (obj) => {
+    const { postId, commentId, commentText } = obj;
+    const { data } = await API.put(
+      `posts/${postId}/comments/${commentId}/edit`,
+      {
+        commentText,
+      }
+    );
+    console.log(data);
     return data;
   }
 );
@@ -104,6 +120,17 @@ export const commentsSlice = createSlice({
       );
     },
     [dislikeComment.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    },
+    //EDIT COMMENT
+    [editComment.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+      state.comments = state.comments.map((comment) =>
+        comment._id === action.payload._id ? action.payload : comment
+      );
+    },
+    [editComment.rejected]: (state, action) => {
       state.status = "failed";
       state.error = action.error.message;
     },

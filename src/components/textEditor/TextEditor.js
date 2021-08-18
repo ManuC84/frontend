@@ -12,7 +12,7 @@ import {
 import { useHistory } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
 import "./styles.css";
-import { createComment } from "../../reducers/slice/commentsSlice";
+import { createComment, editComment } from "../../reducers/slice/commentsSlice";
 
 const TextEditor = ({
   post,
@@ -97,7 +97,13 @@ const TextEditor = ({
     }
 
     if (type === "commentEdition") {
-      dispatch(updateComment(post._id, comment._id, { commentText: body }));
+      dispatch(
+        editComment({
+          postId: post._id,
+          commentId: comment._id,
+          commentText: body,
+        })
+      );
       setIsEditing(false);
     }
 
