@@ -23,12 +23,14 @@ import ReadMore from "../../../utils/readMore/ReadMore";
 import clsx from "clsx";
 import TextEditor from "../../textEditor/TextEditor";
 import {
-  dislikeComment,
   removeComment,
   fetchCommentReplies,
   getCommentReplies,
 } from "../../../actions/comments";
-import { likeComment } from "../../../reducers/slice/commentsSlice";
+import {
+  likeComment,
+  dislikeComment,
+} from "../../../reducers/slice/commentsSlice";
 import moment from "moment";
 import CommentReplies from "../commentReplies/CommentReplies";
 import { useDispatch } from "react-redux";
@@ -139,7 +141,13 @@ const Comment = ({ comment, user, post, error }) => {
   };
   const handleDislikeComment = () => {
     if (user[0])
-      dispatch(dislikeComment(post._id, comment._id, { userId: userId }));
+      dispatch(
+        dislikeComment({
+          postId: post._id,
+          commentId: comment._id,
+          userId: userId,
+        })
+      );
   };
 
   return (

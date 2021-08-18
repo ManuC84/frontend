@@ -181,22 +181,22 @@ export const postsSlice = createSlice({
       // };
     },
     addCommentLike: (state, action) => {
-      return {
-        ...state,
-        posts: state.posts.map((post) =>
-          post._id === action.payload._id ? action.payload : post
-        ),
-        isNotification: false,
-      };
+      // return {
+      //   ...state,
+      //   posts: state.posts.map((post) =>
+      //     post._id === action.payload._id ? action.payload : post
+      //   ),
+      //   isNotification: false,
+      // };
     },
     addCommentDislike: (state, action) => {
-      return {
-        ...state,
-        posts: state.posts.map((post) =>
-          post._id === action.payload._id ? action.payload : post
-        ),
-        isNotification: false,
-      };
+      // return {
+      //   ...state,
+      //   posts: state.posts.map((post) =>
+      //     post._id === action.payload._id ? action.payload : post
+      //   ),
+      //   isNotification: false,
+      // };
     },
     addCommentReplyLike: (state, action) => {
       return {

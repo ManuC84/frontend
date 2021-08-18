@@ -37,6 +37,18 @@ export const likeComment = createAsyncThunk(
     return data;
   }
 );
+//DISLIKE COMMENT
+export const dislikeComment = createAsyncThunk(
+  "comments/dislikeComment",
+  async (obj) => {
+    const { postId, commentId, userId } = obj;
+    const { data } = await API.post(
+      `posts/${postId}/comments/${commentId}/dislikes`,
+      { userId }
+    );
+    return data;
+  }
+);
 
 export const commentsSlice = createSlice({
   name: "commentsReducer",
@@ -74,7 +86,6 @@ export const commentsSlice = createSlice({
       state.error = action.error.message;
     },
     //LIKE COMMENT
-
     [likeComment.fulfilled]: (state, action) => {
       state.status = "succeeded";
       state.comments = state.comments.map((comment) =>
@@ -82,6 +93,17 @@ export const commentsSlice = createSlice({
       );
     },
     [likeComment.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    },
+    //DISLIKE COMMENT
+    [dislikeComment.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+      state.comments = state.comments.map((comment) =>
+        comment._id === action.payload._id ? action.payload : comment
+      );
+    },
+    [dislikeComment.rejected]: (state, action) => {
       state.status = "failed";
       state.error = action.error.message;
     },
