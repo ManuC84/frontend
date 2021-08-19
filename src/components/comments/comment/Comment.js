@@ -30,6 +30,7 @@ import {
 import {
   likeComment,
   dislikeComment,
+  deleteComment,
 } from "../../../reducers/slice/commentsSlice";
 import moment from "moment";
 import CommentReplies from "../commentReplies/CommentReplies";
@@ -87,7 +88,7 @@ const Comment = ({ comment, user, post, error }) => {
       "Are you sure you want to delete this comment?"
     );
     if (!deleteAlert) return;
-    dispatch(removeComment(post._id, comment._id));
+    dispatch(deleteComment({ postId: post._id, commentId: comment._id }));
   };
 
   const handleClose = () => {

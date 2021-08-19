@@ -61,7 +61,19 @@ export const editComment = createAsyncThunk(
         commentText,
       }
     );
-    console.log(data);
+
+    return data;
+  }
+);
+//DELETE COMMENT
+export const deleteComment = createAsyncThunk(
+  "comments/deleteComment",
+  async (obj) => {
+    const { postId, commentId } = obj;
+    const { data } = await API.delete(
+      `posts/${postId}/comments/${commentId}/delete`
+    );
+
     return data;
   }
 );
@@ -131,6 +143,18 @@ export const commentsSlice = createSlice({
       );
     },
     [editComment.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    },
+    //DELETE COMMENT
+    [deleteComment.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+
+      state.comments = state.comments.filter(
+        (comment) => comment._id !== action.payload._id
+      );
+    },
+    [deleteComment.rejected]: (state, action) => {
       state.status = "failed";
       state.error = action.error.message;
     },

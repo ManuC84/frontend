@@ -235,13 +235,13 @@ export const postsSlice = createSlice({
       };
     },
     deleteComment: (state, action) => {
-      return {
-        ...state,
-        posts: state.posts.map((post) =>
-          post._id === action.payload._id ? action.payload : post
-        ),
-        isNotification: false,
-      };
+      // return {
+      //   ...state,
+      //   posts: state.posts.map((post) =>
+      //     post._id === action.payload._id ? action.payload : post
+      //   ),
+      //   isNotification: false,
+      // };
     },
     deleteCommentReply: (state, action) => {
       return {
