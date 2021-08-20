@@ -32,6 +32,7 @@ import { useGlobalContext } from "../../../context";
 import { getComments } from "../../../actions/comments";
 import { likePost, dislikePost } from "../../../reducers/slice/postsSlice";
 import { fetchComments } from "../../../reducers/slice/commentsSlice";
+import { sortFunction } from "../../../utils/Sort";
 
 const Post = ({ post, error, authError, setAuthError }) => {
   const [expanded, setExpanded] = useState(false);
@@ -51,13 +52,6 @@ const Post = ({ post, error, authError, setAuthError }) => {
   const textRef = useRef(null);
   const dispatch = useDispatch();
   const classes = useStyles();
-
-  //Sort comments by newest helper function
-  function sortFunction(a, b) {
-    var dateA = new Date(a.createdAt).getTime();
-    var dateB = new Date(b.createdAt).getTime();
-    return dateA > dateB ? -1 : 1;
-  }
 
   //Fetch comments on post render from comments db
   useEffect(() => {

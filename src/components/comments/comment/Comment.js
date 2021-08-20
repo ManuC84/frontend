@@ -22,11 +22,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ReadMore from "../../../utils/readMore/ReadMore";
 import clsx from "clsx";
 import TextEditor from "../../textEditor/TextEditor";
-import {
-  removeComment,
-  fetchCommentReplies,
-  getCommentReplies,
-} from "../../../actions/comments";
+import { removeComment, getCommentReplies } from "../../../actions/comments";
 import {
   likeComment,
   dislikeComment,
@@ -39,6 +35,8 @@ import { useGlobalContext } from "../../../context";
 import { useSelector } from "react-redux";
 import { current } from "@reduxjs/toolkit";
 import { fetchSinglePost } from "../../../reducers/slice/postsSlice";
+import { fetchCommentReplies } from "../../../reducers/slice/commentRepliesSlice";
+import { sortFunction } from "../../../utils/Sort";
 
 const Comment = ({ comment, user, post, error }) => {
   const [expanded, setExpanded] = useState(false);
@@ -51,6 +49,16 @@ const Comment = ({ comment, user, post, error }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { isNotification } = useSelector((state) => state.posts);
+  const { commentReplies } = useSelector((state) => state.commentReplies);
+
+  //Fetch comments on post render from comments db
+  useEffect(() => {
+    dispatch(fetchCommentReplies({ postId: post._id, commentId: comment._id }));
+  }, []);
+
+  const commentCommentReplies = commentReplies
+    .filter((commentReply) => commentReply.parentCommentId === comment._id)
+    .sort(sortFunction);
 
   const scrollRef = useRef(null);
 
@@ -103,7 +111,7 @@ const Comment = ({ comment, user, post, error }) => {
   // Get current comments replies
   const indexOfLastComment = page * commentsPerPage;
   const indexOfFirstComment = indexOfLastComment - commentsPerPage;
-  const currentCommentReplies = comment.commentReplies.slice(
+  const currentCommentReplies = commentCommentReplies.slice(
     indexOfFirstComment,
     indexOfLastComment
   );
@@ -126,7 +134,6 @@ const Comment = ({ comment, user, post, error }) => {
     setExpanded(!expanded);
     if (!expanded) {
       setShowEditor(false);
-      dispatch(getCommentReplies(post._id, comment._id));
     }
   };
 

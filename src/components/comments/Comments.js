@@ -28,6 +28,7 @@ export default function Comments({ post, error, postComments }) {
   const user = useState(JSON.parse(localStorage.getItem("profile")));
   const { isLoading } = useSelector((state) => state.posts);
   const { comments } = useSelector((state) => state.comments);
+
   const dispatch = useDispatch();
   const history = useHistory();
 

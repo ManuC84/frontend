@@ -285,9 +285,7 @@ export const postsSlice = createSlice({
       }
       state.status = "succeeded";
 
-      state.posts = state.posts.concat(
-        action.payload.filter((post) => post.image !== "/images/no-image.png")
-      );
+      state.posts = state.posts.concat(action.payload);
     },
     [fetchInfiniteScroll.rejected]: (state, action) => {
       state.status = "failed";
@@ -334,7 +332,7 @@ export const postsSlice = createSlice({
     },
     [likePost.rejected]: (state, action) => {
       state.status = "failed";
-      state.error = "testing";
+      state.error = action.error.message;
     },
     //DISLIKE POST
     [dislikePost.fulfilled]: (state, action) => {
