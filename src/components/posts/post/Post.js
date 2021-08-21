@@ -32,7 +32,7 @@ import { useGlobalContext } from "../../../context";
 import { getComments } from "../../../actions/comments";
 import { likePost, dislikePost } from "../../../reducers/slice/postsSlice";
 import { fetchComments } from "../../../reducers/slice/commentsSlice";
-import { sortFunction } from "../../../utils/Sort";
+import { sortFunctionDesc } from "../../../utils/Sort";
 
 const Post = ({ post, error, authError, setAuthError }) => {
   const [expanded, setExpanded] = useState(false);
@@ -60,7 +60,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
 
   const postComments = comments
     .filter((comment) => comment.parentPostId === post._id)
-    .sort(sortFunction);
+    .sort(sortFunctionDesc);
 
   useEffect(() => {
     if (isNotification) setExpanded(true);

@@ -14,19 +14,18 @@ export const fetchCommentReplies = createAsyncThunk(
   }
 );
 
-// //CREATE COMMENT
-// export const createComment = createAsyncThunk(
-//   "comments/createComment",
-//   async (obj) => {
-//     const { postId, comment, creator } = obj;
-//     const { data } = await API.post(`posts/${postId}/comments`, {
-//       comment,
-//       creator,
-//     });
-
-//     return data;
-//   }
-// );
+//CREATE COMMENT REPLY
+export const createCommentReply = createAsyncThunk(
+  "commentsReplies/createCommentReply",
+  async (obj) => {
+    const { postId, commentId, commentReply, creator } = obj;
+    const { data } = await API.post(`posts/${postId}/comments/${commentId}`, {
+      commentReply,
+      creator,
+    });
+    return data;
+  }
+);
 
 // //LIKE COMMENT
 // export const likeComment = createAsyncThunk(
@@ -104,18 +103,18 @@ export const commentRepliesSlice = createSlice({
       state.status = "failed";
       state.error = action.error.message;
     },
-    // //CREATE COMMENT
-    // [createComment.pending]: (state) => {
-    //   state.status = "loading";
-    // },
-    // [createComment.fulfilled]: (state, action) => {
-    //   state.status = "succeeded";
-    //   state.comments.push(action.payload);
-    // },
-    // [createComment.rejected]: (state, action) => {
-    //   state.status = "failed";
-    //   state.error = action.error.message;
-    // },
+    //CREATE COMMENT
+    [createCommentReply.pending]: (state) => {
+      state.status = "loading";
+    },
+    [createCommentReply.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+      state.commentReplies.push(action.payload);
+    },
+    [createCommentReply.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    },
     // //LIKE COMMENT
     // [likeComment.fulfilled]: (state, action) => {
     //   state.status = "succeeded";

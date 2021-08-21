@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
 import "./styles.css";
 import { createComment, editComment } from "../../reducers/slice/commentsSlice";
+import { createCommentReply } from "../../reducers/slice/commentRepliesSlice";
 
 const TextEditor = ({
   post,
@@ -80,7 +81,9 @@ const TextEditor = ({
     if (type === "commentReplies") {
       setLoading(true);
       await dispatch(
-        addCommentReply(post._id, comment._id, {
+        createCommentReply({
+          postId: post._id,
+          commentId: comment._id,
           commentReply: body,
           creator: { name: userData.name, _id: userData._id },
         })

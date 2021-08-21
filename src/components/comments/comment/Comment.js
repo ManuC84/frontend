@@ -36,7 +36,7 @@ import { useSelector } from "react-redux";
 import { current } from "@reduxjs/toolkit";
 import { fetchSinglePost } from "../../../reducers/slice/postsSlice";
 import { fetchCommentReplies } from "../../../reducers/slice/commentRepliesSlice";
-import { sortFunction } from "../../../utils/Sort";
+import { sortFunctionAsc } from "../../../utils/Sort";
 
 const Comment = ({ comment, user, post, error }) => {
   const [expanded, setExpanded] = useState(false);
@@ -51,14 +51,14 @@ const Comment = ({ comment, user, post, error }) => {
   const { isNotification } = useSelector((state) => state.posts);
   const { commentReplies } = useSelector((state) => state.commentReplies);
 
-  //Fetch comments on post render from comments db
+  //Fetch comment replies on post render from commentReplies db
   useEffect(() => {
     dispatch(fetchCommentReplies({ postId: post._id, commentId: comment._id }));
   }, []);
 
   const commentCommentReplies = commentReplies
     .filter((commentReply) => commentReply.parentCommentId === comment._id)
-    .sort(sortFunction);
+    .sort(sortFunctionAsc);
 
   const scrollRef = useRef(null);
 
@@ -117,8 +117,8 @@ const Comment = ({ comment, user, post, error }) => {
   );
 
   useEffect(() => {
-    setPage(Math.ceil(comment.commentReplies.length / 5));
-  }, [comment.commentReplies.length]);
+    setPage(Math.ceil(commentCommentReplies.length / 5));
+  }, [commentCommentReplies.length]);
 
   useEffect(() => {
     if (scrollRef.current && expanded) {
@@ -322,7 +322,7 @@ const Comment = ({ comment, user, post, error }) => {
                 variant="button"
                 className={classes.replyNumber}
               >
-                {comment?.commentReplies?.length}
+                {commentCommentReplies.length}
               </Typography>
             </div>
             <div onClick={handleExpandClick}>
@@ -361,11 +361,11 @@ const Comment = ({ comment, user, post, error }) => {
               setShowEditor={setShowEditor}
               error={error}
               setPage={setPage}
-              lastPage={Math.ceil(comment.commentReplies.length / 5)}
+              lastPage={Math.ceil(commentCommentReplies.length / 5)}
               scrollRef={scrollRef}
             />
           </Collapse>
-          {comment.commentReplies.length === 0 ? (
+          {commentCommentReplies.length === 0 ? (
             <Paper>
               <Typography variant="body2" style={{ padding: "1rem" }}>
                 This comment has no replies yet.
@@ -403,7 +403,7 @@ const Comment = ({ comment, user, post, error }) => {
               page={page}
               onChange={handleChange}
               align="center"
-              count={Math.ceil(comment.commentReplies.length / 5)}
+              count={Math.ceil(commentCommentReplies.length / 5)}
               variant="outlined"
               shape="rounded"
             />
