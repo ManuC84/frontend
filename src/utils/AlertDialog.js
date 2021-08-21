@@ -17,6 +17,7 @@ export default function AlertDialog({
   setAuthError,
 }) {
   const dispatch = useDispatch();
+
   const handleClose = () => {
     setAuthError(false);
     dispatch(hasError(false));

@@ -13,6 +13,18 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
+//Intercept response
+
+// API.interceptors.response.use(
+//   function (response) {
+//     return response;
+//   },
+//   function (error) {
+//     console.log(error);
+//     return Promise.reject(error);
+//   }
+// );
+
 //-----------------------------------Posts-------------------------------------------------
 export const getPosts = () => API.get("/posts");
 

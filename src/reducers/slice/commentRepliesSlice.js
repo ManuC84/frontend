@@ -27,18 +27,19 @@ export const createCommentReply = createAsyncThunk(
   }
 );
 
-// //LIKE COMMENT
-// export const likeComment = createAsyncThunk(
-//   "comments/likeComment",
-//   async (obj) => {
-//     const { postId, commentId, userId } = obj;
-//     const { data } = await API.post(
-//       `posts/${postId}/comments/${commentId}/likes`,
-//       { userId }
-//     );
-//     return data;
-//   }
-// );
+//LIKE COMMENT REPLY
+export const likeCommentReply = createAsyncThunk(
+  "commentReplies/likeCommentReply",
+  async (obj) => {
+    const { postId, commentId, commentReplyId, userId } = obj;
+    const { data } = await API.post(
+      `posts/${postId}/comments/${commentId}/commentReplies/${commentReplyId}/likes`,
+      { userId }
+    );
+    return data;
+  }
+);
+
 // //DISLIKE COMMENT
 // export const dislikeComment = createAsyncThunk(
 //   "comments/dislikeComment",
@@ -103,7 +104,7 @@ export const commentRepliesSlice = createSlice({
       state.status = "failed";
       state.error = action.error.message;
     },
-    //CREATE COMMENT
+    //CREATE COMMENT REPLY
     [createCommentReply.pending]: (state) => {
       state.status = "loading";
     },
@@ -115,17 +116,17 @@ export const commentRepliesSlice = createSlice({
       state.status = "failed";
       state.error = action.error.message;
     },
-    // //LIKE COMMENT
-    // [likeComment.fulfilled]: (state, action) => {
-    //   state.status = "succeeded";
-    //   state.comments = state.comments.map((comment) =>
-    //     comment._id === action.payload._id ? action.payload : comment
-    //   );
-    // },
-    // [likeComment.rejected]: (state, action) => {
-    //   state.status = "failed";
-    //   state.error = action.error.message;
-    // },
+    //LIKE COMMENT REPLY
+    [likeCommentReply.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+      state.commentReplies = state.commentReplies.map((commentReply) =>
+        commentReply._id === action.payload._id ? action.payload : commentReply
+      );
+    },
+    [likeCommentReply.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    },
     // //DISLIKE COMMENT
     // [dislikeComment.fulfilled]: (state, action) => {
     //   state.status = "succeeded";

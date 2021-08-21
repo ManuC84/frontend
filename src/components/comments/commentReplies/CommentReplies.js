@@ -20,11 +20,11 @@ import ReadMore from "../../../utils/readMore/ReadMore";
 import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  likeCommentReply,
   dislikeCommentReply,
   removeCommentReply,
 } from "../../../actions/comments";
 import TextEditor from "../../textEditor/TextEditor";
+import { likeCommentReply } from "../../../reducers/slice/commentRepliesSlice";
 
 const CommentReplies = ({ post, comment, user, commentReply, error }) => {
   const { isLoading } = useSelector((state) => state.posts);
@@ -40,7 +40,10 @@ const CommentReplies = ({ post, comment, user, commentReply, error }) => {
   const handleLikeCommentReply = () => {
     if (user[0])
       dispatch(
-        likeCommentReply(post._id, comment._id, commentReply._id, {
+        likeCommentReply({
+          postId: post._id,
+          commentId: comment._id,
+          commentReplyId: commentReply._id,
           userId: userId,
         })
       );

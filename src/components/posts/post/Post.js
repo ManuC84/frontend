@@ -68,7 +68,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
 
   //Listen to authError from backend
   useEffect(() => {
-    if (status === "failed" && error.authError) {
+    if (error.authError) {
       return setAuthError(true);
     }
   }, [error]);
