@@ -1,5 +1,11 @@
 import axios from "axios";
 import environment from "../../src/environment";
+import { showAuthAlert } from "../reducers/slice/authSlice";
+// import store from "../reducers/store";
+
+const toggleAuthAlert = (bool) => async (dispatch) => {
+  dispatch(showAuthAlert(bool));
+};
 
 export const API = axios.create({ baseURL: environment.baseUrl });
 
@@ -15,15 +21,17 @@ API.interceptors.request.use((req) => {
 
 //Intercept response
 
-// API.interceptors.response.use(
-//   function (response) {
-//     return response;
-//   },
-//   function (error) {
-//     console.log(error);
-//     return Promise.reject(error);
-//   }
-// );
+API.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    console.log(error);
+    if (error === "Request failed with status code 401") toggleAuthAlert(true);
+
+    return Promise.reject(error);
+  }
+);
 
 //-----------------------------------Posts-------------------------------------------------
 export const getPosts = () => API.get("/posts");

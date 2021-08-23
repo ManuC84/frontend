@@ -54,21 +54,22 @@ export const dislikeCommentReply = createAsyncThunk(
   }
 );
 
-// //EDIT COMMENT
-// export const editComment = createAsyncThunk(
-//   "comments/editComment",
-//   async (obj) => {
-//     const { postId, commentId, commentText } = obj;
-//     const { data } = await API.put(
-//       `posts/${postId}/comments/${commentId}/edit`,
-//       {
-//         commentText,
-//       }
-//     );
+//EDIT COMMENT REPLY
+export const editCommentReply = createAsyncThunk(
+  "commentReplies/editCommentReply",
+  async (obj) => {
+    const { postId, commentId, commentReplyId, commentReplyText } = obj;
+    const { data } = await API.put(
+      `posts/${postId}/comments/${commentId}/commentReplies/${commentReplyId}/edit`,
+      {
+        commentReplyText,
+      }
+    );
 
-//     return data;
-//   }
-// );
+    return data;
+  }
+);
+
 // //DELETE COMMENT
 // export const deleteComment = createAsyncThunk(
 //   "comments/deleteComment",
@@ -139,17 +140,17 @@ export const commentRepliesSlice = createSlice({
       state.status = "failed";
       state.error = action.error.message;
     },
-    // //EDIT COMMENT
-    // [editComment.fulfilled]: (state, action) => {
-    //   state.status = "succeeded";
-    //   state.comments = state.comments.map((comment) =>
-    //     comment._id === action.payload._id ? action.payload : comment
-    //   );
-    // },
-    // [editComment.rejected]: (state, action) => {
-    //   state.status = "failed";
-    //   state.error = action.error.message;
-    // },
+    //EDIT COMMENT REPLY
+    [editCommentReply.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+      state.commentReplies = state.commentReplies.map((commentReply) =>
+        commentReply._id === action.payload._id ? action.payload : commentReply
+      );
+    },
+    [editCommentReply.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    },
     // //DELETE COMMENT
     // [deleteComment.fulfilled]: (state, action) => {
     //   state.status = "succeeded";
