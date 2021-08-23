@@ -40,19 +40,20 @@ export const likeCommentReply = createAsyncThunk(
   }
 );
 
-// //DISLIKE COMMENT
-// export const dislikeComment = createAsyncThunk(
-//   "comments/dislikeComment",
-//   async (obj) => {
-//     const { postId, commentId, userId } = obj;
-//     const { data } = await API.post(
-//       `posts/${postId}/comments/${commentId}/dislikes`,
-//       { userId }
-//     );
+//DISLIKE COMMENT REPLY
+export const dislikeCommentReply = createAsyncThunk(
+  "commentReplies/dislikeCommentReply",
+  async (obj) => {
+    const { postId, commentId, commentReplyId, userId } = obj;
+    const { data } = await API.post(
+      `posts/${postId}/comments/${commentId}/commentReplies/${commentReplyId}/dislikes`,
+      { userId }
+    );
 
-//     return data;
-//   }
-// );
+    return data;
+  }
+);
+
 // //EDIT COMMENT
 // export const editComment = createAsyncThunk(
 //   "comments/editComment",
@@ -127,17 +128,17 @@ export const commentRepliesSlice = createSlice({
       state.status = "failed";
       state.error = action.error.message;
     },
-    // //DISLIKE COMMENT
-    // [dislikeComment.fulfilled]: (state, action) => {
-    //   state.status = "succeeded";
-    //   state.comments = state.comments.map((comment) =>
-    //     comment._id === action.payload._id ? action.payload : comment
-    //   );
-    // },
-    // [dislikeComment.rejected]: (state, action) => {
-    //   state.status = "failed";
-    //   state.error = action.error.message;
-    // },
+    //DISLIKE COMMENT REPLY
+    [dislikeCommentReply.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+      state.commentReplies = state.commentReplies.map((commentReply) =>
+        commentReply._id === action.payload._id ? action.payload : commentReply
+      );
+    },
+    [dislikeCommentReply.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    },
     // //EDIT COMMENT
     // [editComment.fulfilled]: (state, action) => {
     //   state.status = "succeeded";

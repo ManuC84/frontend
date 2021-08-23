@@ -19,12 +19,12 @@ import { ThumbUp, ThumbDown } from "@material-ui/icons";
 import ReadMore from "../../../utils/readMore/ReadMore";
 import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
+import { removeCommentReply } from "../../../actions/comments";
+import TextEditor from "../../textEditor/TextEditor";
 import {
   dislikeCommentReply,
-  removeCommentReply,
-} from "../../../actions/comments";
-import TextEditor from "../../textEditor/TextEditor";
-import { likeCommentReply } from "../../../reducers/slice/commentRepliesSlice";
+  likeCommentReply,
+} from "../../../reducers/slice/commentRepliesSlice";
 
 const CommentReplies = ({ post, comment, user, commentReply, error }) => {
   const { isLoading } = useSelector((state) => state.posts);
@@ -51,7 +51,10 @@ const CommentReplies = ({ post, comment, user, commentReply, error }) => {
   const handleDislikeCommentReply = () => {
     if (user[0])
       dispatch(
-        dislikeCommentReply(post._id, comment._id, commentReply._id, {
+        dislikeCommentReply({
+          postId: post._id,
+          commentId: comment._id,
+          commentReplyId: commentReply._id,
           userId: userId,
         })
       );
