@@ -70,18 +70,18 @@ export const editCommentReply = createAsyncThunk(
   }
 );
 
-// //DELETE COMMENT
-// export const deleteComment = createAsyncThunk(
-//   "comments/deleteComment",
-//   async (obj) => {
-//     const { postId, commentId } = obj;
-//     const { data } = await API.delete(
-//       `posts/${postId}/comments/${commentId}/delete`
-//     );
+//DELETE COMMENT REPLY
+export const deleteCommentReply = createAsyncThunk(
+  "commentReply/deleteCommentReply",
+  async (obj) => {
+    const { postId, commentId, commentReplyId } = obj;
+    const { data } = await API.delete(
+      `posts/${postId}/comments/${commentId}/commentReplies/${commentReplyId}/delete`
+    );
 
-//     return data;
-//   }
-// );
+    return data;
+  }
+);
 
 export const commentRepliesSlice = createSlice({
   name: "commentRepliesReducer",
@@ -151,17 +151,17 @@ export const commentRepliesSlice = createSlice({
       state.status = "failed";
       state.error = action.error.message;
     },
-    // //DELETE COMMENT
-    // [deleteComment.fulfilled]: (state, action) => {
-    //   state.status = "succeeded";
-    //   state.comments = state.comments.filter(
-    //     (comment) => comment._id !== action.payload._id
-    //   );
-    // },
-    // [deleteComment.rejected]: (state, action) => {
-    //   state.status = "failed";
-    //   state.error = action.error.message;
-    // },
+    //DELETE COMMENT REPLY
+    [deleteCommentReply.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+      state.commentReplies = state.commentReplies.filter(
+        (commentReply) => commentReply._id !== action.payload._id
+      );
+    },
+    [deleteCommentReply.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    },
   },
 });
 

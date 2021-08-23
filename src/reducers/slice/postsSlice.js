@@ -140,26 +140,26 @@ export const postsSlice = createSlice({
       // state.isNotification = false;
     },
     fetchCommentReplies: (state, action) => {
-      const posts = state.posts;
-      const post = posts.find(
-        (post) => post._id === action.payload[0].parentPostId
-      );
-      const comments = post.comments.find(
-        (comment) => comment._id === action.payload[0].parentCommentId
-      );
-      comments.commentReplies = action.payload;
-      state.isLoading = false;
+      // const posts = state.posts;
+      // const post = posts.find(
+      //   (post) => post._id === action.payload[0].parentPostId
+      // );
+      // const comments = post.comments.find(
+      //   (comment) => comment._id === action.payload[0].parentCommentId
+      // );
+      // comments.commentReplies = action.payload;
+      // state.isLoading = false;
     },
 
     createCommentReply: (state, action) => {
-      return {
-        ...state,
-        posts: state.posts.map((post) =>
-          post._id === action.payload._id ? action.payload : post
-        ),
-        isLoading: false,
-        isNotification: false,
-      };
+      // return {
+      //   ...state,
+      //   posts: state.posts.map((post) =>
+      //     post._id === action.payload._id ? action.payload : post
+      //   ),
+      //   isLoading: false,
+      //   isNotification: false,
+      // };
     },
 
     addPostLike: (state, action) => {
@@ -199,22 +199,22 @@ export const postsSlice = createSlice({
       // };
     },
     addCommentReplyLike: (state, action) => {
-      return {
-        ...state,
-        posts: state.posts.map((post) =>
-          post._id === action.payload._id ? action.payload : post
-        ),
-        isNotification: false,
-      };
+      // return {
+      //   ...state,
+      //   posts: state.posts.map((post) =>
+      //     post._id === action.payload._id ? action.payload : post
+      //   ),
+      //   isNotification: false,
+      // };
     },
     addCommentReplyDislike: (state, action) => {
-      return {
-        ...state,
-        posts: state.posts.map((post) =>
-          post._id === action.payload._id ? action.payload : post
-        ),
-        isNotification: false,
-      };
+      // return {
+      //   ...state,
+      //   posts: state.posts.map((post) =>
+      //     post._id === action.payload._id ? action.payload : post
+      //   ),
+      //   isNotification: false,
+      // };
     },
     editComment: (state, action) => {
       // return {
@@ -226,13 +226,13 @@ export const postsSlice = createSlice({
       // };
     },
     editCommentReply: (state, action) => {
-      return {
-        ...state,
-        posts: state.posts.map((post) =>
-          post._id === action.payload._id ? action.payload : post
-        ),
-        isNotification: false,
-      };
+      // return {
+      //   ...state,
+      //   posts: state.posts.map((post) =>
+      //     post._id === action.payload._id ? action.payload : post
+      //   ),
+      //   isNotification: false,
+      // };
     },
     deleteComment: (state, action) => {
       // return {
@@ -244,13 +244,13 @@ export const postsSlice = createSlice({
       // };
     },
     deleteCommentReply: (state, action) => {
-      return {
-        ...state,
-        posts: state.posts.map((post) =>
-          post._id === action.payload._id ? action.payload : post
-        ),
-        isNotification: false,
-      };
+      // return {
+      //   ...state,
+      //   posts: state.posts.map((post) =>
+      //     post._id === action.payload._id ? action.payload : post
+      //   ),
+      //   isNotification: false,
+      // };
     },
     showNotificationContent: (state, action) => {
       return {
