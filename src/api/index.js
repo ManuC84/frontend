@@ -1,10 +1,10 @@
 import axios from "axios";
 import environment from "../../src/environment";
-import { showAuthAlert } from "../reducers/slice/authSlice";
+import { setAuthAlert } from "../reducers/slice/authSlice";
 // import store from "../reducers/store";
 
 const toggleAuthAlert = (bool) => async (dispatch) => {
-  dispatch(showAuthAlert(bool));
+  dispatch(setAuthAlert(bool));
 };
 
 export const API = axios.create({ baseURL: environment.baseUrl });
@@ -26,8 +26,7 @@ API.interceptors.response.use(
     return response;
   },
   function (error) {
-    console.log(error);
-    if (error === "Request failed with status code 401") toggleAuthAlert(true);
+    // if (error.response.status === 401) store.dispatch(toggleAuthAlert(true));
 
     return Promise.reject(error);
   }
