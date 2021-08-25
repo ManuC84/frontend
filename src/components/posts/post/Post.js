@@ -92,7 +92,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
-    // if (!expanded) dispatch(fetchComments(post._id));
+    if (!expanded) dispatch(fetchComments(post._id));
   };
 
   const handleLikePost = () => {
