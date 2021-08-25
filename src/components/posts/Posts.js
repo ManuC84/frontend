@@ -45,9 +45,14 @@ const Posts = () => {
     <div className={classes.progress}>
       <CircularProgress />
     </div>
-  ) : status === "failed" &&
-    error.message === "Your search yielded no results, please try again" ? (
-    <div className={classes.tagError}>
+  ) : filteredPosts.length === 0 ? (
+    <div className={classes.errorMessage}>
+      <Alert severity="info">
+        <Typography>There's no posts to show</Typography>
+      </Alert>
+    </div>
+  ) : error.message ? (
+    <div className={classes.errorMessage}>
       <Alert severity="info">
         <Typography>{error.message}</Typography>
       </Alert>
