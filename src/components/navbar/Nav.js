@@ -406,7 +406,10 @@ const Nav = ({ appProps }) => {
                       component={Link}
                       to="/auth"
                       button
-                      onClick={signout}
+                      onClick={() => {
+                        signout();
+                        setDrawer(false);
+                      }}
                     >
                       <ListItemText
                         style={{ display: "flex", justifyContent: "center" }}
