@@ -30,7 +30,10 @@ const Posts = () => {
 
   let filteredPosts =
     posts.length > 1
-      ? posts.filter((post) => post.image !== "/images/no-image.png")
+      ? posts.filter(
+          (post) =>
+            post.image !== "/images/no-image.png" || post.provider === "Twitter"
+        )
       : posts;
 
   useEffect(() => {
