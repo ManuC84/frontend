@@ -142,6 +142,9 @@ const Comment = ({ comment, user, post, error }) => {
     setExpanded(!expanded);
     if (!expanded) {
       setShowEditor(false);
+      dispatch(
+        fetchCommentReplies({ postId: post._id, commentId: comment._id })
+      );
     }
   };
 
