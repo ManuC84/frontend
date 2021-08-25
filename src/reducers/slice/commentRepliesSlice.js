@@ -14,6 +14,18 @@ export const fetchCommentReplies = createAsyncThunk(
   }
 );
 
+//FETCH SINGLE COMMENT REPLY
+export const fetchSingleCommentReply = createAsyncThunk(
+  "commentReplies/fetchSingleCommentReply",
+  async (obj) => {
+    const { postId, commentId, commentReplyId } = obj;
+    const { data } = await API.get(
+      `posts/${postId}/comments/${commentId}/commentReplies/${commentReplyId}`
+    );
+    return data;
+  }
+);
+
 //CREATE COMMENT REPLY
 export const createCommentReply = createAsyncThunk(
   "commentsReplies/createCommentReply",
@@ -85,7 +97,12 @@ export const deleteCommentReply = createAsyncThunk(
 
 export const commentRepliesSlice = createSlice({
   name: "commentRepliesReducer",
-  initialState: { commentReplies: [], error: null, status: "idle" },
+  initialState: {
+    commentReplies: [],
+    error: null,
+    status: "idle",
+    showAllReplies: true,
+  },
 
   reducers: {
     filterNotificationReply: (state, action) => {
@@ -107,8 +124,22 @@ export const commentRepliesSlice = createSlice({
         );
         idx === -1 && state.commentReplies.push(commentReply);
       });
+      state.showAllReplies = false;
     },
     [fetchCommentReplies.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    },
+    //FETCH SINGLE COMMENT REPLY
+    [fetchSingleCommentReply.pending]: (state) => {
+      state.status = "loading";
+    },
+    [fetchSingleCommentReply.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+      state.commentReplies = action.payload;
+      state.showAllReplies = true;
+    },
+    [fetchSingleCommentReply.rejected]: (state, action) => {
       state.status = "failed";
       state.error = action.error.message;
     },

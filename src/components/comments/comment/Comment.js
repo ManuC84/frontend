@@ -52,11 +52,16 @@ const Comment = ({ comment, user, post, error }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { isNotification } = useSelector((state) => state.posts);
-  const { commentReplies } = useSelector((state) => state.commentReplies);
+  const { commentReplies, showAllReplies } = useSelector(
+    (state) => state.commentReplies
+  );
 
   //Fetch comment replies on post render from commentReplies db
   useEffect(() => {
-    dispatch(fetchCommentReplies({ postId: post._id, commentId: comment._id }));
+    if (!isNotification)
+      dispatch(
+        fetchCommentReplies({ postId: post._id, commentId: comment._id })
+      );
   }, []);
 
   const commentCommentReplies = commentReplies
@@ -410,13 +415,20 @@ const Comment = ({ comment, user, post, error }) => {
               variant="outlined"
               shape="rounded"
             />
-            {isNotification && (
+            {isNotification && showAllReplies && (
               <Button
                 variant="contained"
                 color="primary"
                 size="small"
                 style={{ marginTop: 15 }}
-                onClick={() => dispatch(fetchSinglePost(post._id))}
+                onClick={() =>
+                  dispatch(
+                    fetchCommentReplies({
+                      postId: post._id,
+                      commentId: comment._id,
+                    })
+                  )
+                }
               >
                 Show all replies
               </Button>
