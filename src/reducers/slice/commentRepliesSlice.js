@@ -87,7 +87,13 @@ export const commentRepliesSlice = createSlice({
   name: "commentRepliesReducer",
   initialState: { commentReplies: [], error: null, status: "idle" },
 
-  reducers: {},
+  reducers: {
+    filterNotificationReply: (state, action) => {
+      state.commentReplies = state.commentReplies.filter(
+        (commentReply) => commentReply._id === action.payload
+      );
+    },
+  },
   extraReducers: {
     // //FETCH ALL COMMENT REPLIES
     [fetchCommentReplies.pending]: (state) => {
@@ -164,5 +170,7 @@ export const commentRepliesSlice = createSlice({
     },
   },
 });
+
+export const { filterNotificationReply } = commentRepliesSlice.actions;
 
 export default commentRepliesSlice.reducer;

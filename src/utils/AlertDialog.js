@@ -22,7 +22,7 @@ export default function AlertDialog({
   const dispatch = useDispatch();
 
   const handleClose = () => {
-    setAuthAlert(false);
+    dispatch(setAuthAlert(false));
     dispatch(hasError(false));
   };
 

@@ -31,7 +31,10 @@ import AlertDialog from "../../../utils/AlertDialog";
 import { useGlobalContext } from "../../../context";
 import { getComments } from "../../../actions/comments";
 import { likePost, dislikePost } from "../../../reducers/slice/postsSlice";
-import { fetchComments } from "../../../reducers/slice/commentsSlice";
+import {
+  fetchComments,
+  filterNotificationComment,
+} from "../../../reducers/slice/commentsSlice";
 import { sortFunctionDesc } from "../../../utils/Sort";
 
 const Post = ({ post, error, authError, setAuthError }) => {
@@ -55,7 +58,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
 
   //Fetch comments on post render from comments db
   useEffect(() => {
-    dispatch(fetchComments(post._id));
+    if (!isNotification) dispatch(fetchComments(post._id));
   }, []);
 
   const postComments = comments

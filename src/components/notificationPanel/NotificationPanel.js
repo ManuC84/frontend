@@ -20,6 +20,8 @@ import { useDispatch } from "react-redux";
 import { useGlobalContext } from "../../context";
 
 import { getNotificationContent, clearAll } from "../../actions/notifications";
+import { filterNotificationReply } from "../../reducers/slice/commentRepliesSlice";
+import { fetchSingleComment } from "../../reducers/slice/commentsSlice";
 
 const NotificationPanel = ({
   user,
@@ -35,6 +37,7 @@ const NotificationPanel = ({
 
   const fetchNotification = (postId, commentId, commentReplyId, userId) => {
     dispatch(getNotificationContent(postId, commentId, commentReplyId, userId));
+    dispatch(fetchSingleComment({ postId, commentId }));
     var existing = localStorage.getItem("profile");
 
     existing = existing ? JSON.parse(existing) : {};

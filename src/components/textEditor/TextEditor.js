@@ -145,10 +145,6 @@ const TextEditor = ({
             const data = editor.getData();
             setBody(data);
           }}
-          config={{
-            removePlugins: ["MediaEmbed"],
-            mediaEmbed: {},
-          }}
         />
         {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
         <Button

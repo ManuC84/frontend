@@ -29,6 +29,7 @@ API.interceptors.response.use(
     return response;
   },
   function (error) {
+    console.log(error.response);
     if (error.response.status === 401 || error.response.status === 403)
       dispatch(toggleAuthAlert(true));
 

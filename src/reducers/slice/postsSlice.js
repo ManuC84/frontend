@@ -268,9 +268,10 @@ export const postsSlice = createSlice({
     },
     [fetchPosts.fulfilled]: (state, action) => {
       state.status = "succeeded";
-
+      state.error = false;
       state.posts = action.payload;
       state.loadMorePosts = true;
+      state.isNotification = false;
     },
     [fetchPosts.rejected]: (state, action) => {
       state.status = "failed";

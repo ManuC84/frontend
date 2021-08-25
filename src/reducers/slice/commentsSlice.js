@@ -11,6 +11,16 @@ export const fetchComments = createAsyncThunk(
   }
 );
 
+//FETCH SINGLE COMMENT
+export const fetchSingleComment = createAsyncThunk(
+  "comments/fetchSingleComment",
+  async (obj) => {
+    const { postId, commentId } = obj;
+    const { data } = await API.get(`posts/${postId}/comments/${commentId}`);
+    return data;
+  }
+);
+
 //CREATE COMMENT
 export const createComment = createAsyncThunk(
   "comments/createComment",
@@ -82,7 +92,13 @@ export const commentsSlice = createSlice({
   name: "commentsReducer",
   initialState: { comments: [], error: null, status: "idle" },
 
-  reducers: {},
+  reducers: {
+    filterNotificationComment: (state, action) => {
+      state.comments = state.comments.filter(
+        (comment) => comment._id === action.payload
+      );
+    },
+  },
   extraReducers: {
     //FETCH ALL COMMENTS
     [fetchComments.pending]: (state) => {
@@ -98,6 +114,18 @@ export const commentsSlice = createSlice({
       });
     },
     [fetchComments.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    },
+    //FETCH SINGLE COMMENT
+    [fetchSingleComment.pending]: (state) => {
+      state.status = "loading";
+    },
+    [fetchSingleComment.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+      state.comments = action.payload;
+    },
+    [fetchSingleComment.rejected]: (state, action) => {
       state.status = "failed";
       state.error = action.error.message;
     },
@@ -162,5 +190,6 @@ export const commentsSlice = createSlice({
 });
 
 export const selectAllComments = (state) => state.comments;
+export const { filterNotificationComment } = commentsSlice.actions;
 
 export default commentsSlice.reducer;

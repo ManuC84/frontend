@@ -35,7 +35,10 @@ import { useGlobalContext } from "../../../context";
 import { useSelector } from "react-redux";
 import { current } from "@reduxjs/toolkit";
 import { fetchSinglePost } from "../../../reducers/slice/postsSlice";
-import { fetchCommentReplies } from "../../../reducers/slice/commentRepliesSlice";
+import {
+  fetchCommentReplies,
+  filterNotificationReply,
+} from "../../../reducers/slice/commentRepliesSlice";
 import { sortFunctionAsc } from "../../../utils/Sort";
 
 const Comment = ({ comment, user, post, error }) => {

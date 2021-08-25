@@ -20,7 +20,7 @@ export const authSlice = createSlice({
       state.error = false;
     },
     setAuthAlert: (state, action) => {
-      state.AuthAlert = action.payload;
+      state.authAlert = action.payload;
     },
   },
 });
