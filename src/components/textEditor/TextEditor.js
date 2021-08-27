@@ -76,7 +76,10 @@ const TextEditor = ({
         createComment({
           postId: post._id,
           comment: body,
-          creator: { name: userData.name, _id: userData._id },
+          creator: {
+            name: userData.name,
+            _id: userData._id || userData.googleId,
+          },
         })
       );
     }
@@ -88,7 +91,10 @@ const TextEditor = ({
           postId: post._id,
           commentId: comment._id,
           commentReply: body,
-          creator: { name: userData.name, _id: userData._id },
+          creator: {
+            name: userData.name,
+            _id: userData._id || userData.googleId,
+          },
         })
       );
       setLoading(false);
