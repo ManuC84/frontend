@@ -16,6 +16,7 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     width: "100vh",
+    minHeight: "80vh",
   },
   card: {
     margin: "30px 0",

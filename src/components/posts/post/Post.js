@@ -13,12 +13,13 @@ import {
   IconButton,
   Typography,
   Fade,
+  CircularProgress,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { ThumbUp, ThumbDown } from "@material-ui/icons";
+import { ThumbUp, ThumbDown, SettingsPowerTwoTone } from "@material-ui/icons";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import moment from "moment";
 import { useStyles } from "./styles";
@@ -40,6 +41,18 @@ import { sortFunctionDesc } from "../../../utils/Sort";
 const Post = ({ post, error, authError, setAuthError }) => {
   const [expanded, setExpanded] = useState(false);
   const [showLikeAuthAlert, setShowLikeAuthAlert] = useState(false);
+  const [tweetLoading, setTweetLoading] = useState(true);
+
+  const ShowTweetEmbed = () => {
+    return (
+      <TwitterTweetEmbed
+        tweetId={tweetId}
+        onLoad={(tweet) => {
+          if (tweet) setTweetLoading(false);
+        }}
+      />
+    );
+  };
 
   const { posts, isNotification, status } = useSelector((state) => state.posts);
   const { comments } = useSelector((state) => state.comments);
@@ -214,7 +227,14 @@ const Post = ({ post, error, authError, setAuthError }) => {
               paddingTop: "0",
             }}
           >
-            <TwitterTweetEmbed tweetId={tweetId} />
+            {tweetLoading ? (
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <CircularProgress />
+                <ShowTweetEmbed></ShowTweetEmbed>
+              </div>
+            ) : (
+              <ShowTweetEmbed></ShowTweetEmbed>
+            )}
           </CardContent>
         ) : (
           <Link href={post.image} target="_blank" title="Go to image">
