@@ -60,6 +60,14 @@ const Posts = () => {
         <Typography>{error.message}</Typography>
       </Alert>
     </div>
+  ) : status === "failed" ? (
+    <div className={classes.errorMessage}>
+      <Alert severity="info">
+        <Typography>
+          There's been an error, please try again in a few minutes
+        </Typography>
+      </Alert>
+    </div>
   ) : (
     <section className={classes.postsContainer}>
       <InfiniteScroll
