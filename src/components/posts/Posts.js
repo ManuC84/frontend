@@ -48,7 +48,7 @@ const Posts = () => {
     <div className={classes.progress}>
       <CircularProgress />
     </div>
-  ) : filteredPosts.length === 0 ? (
+  ) : filteredPosts.length === 0 && status === "suceeded" ? (
     <div className={classes.errorMessage}>
       <Alert severity="info">
         <Typography>There's no posts to show</Typography>
