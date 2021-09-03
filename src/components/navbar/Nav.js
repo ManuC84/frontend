@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   AppBar,
   Button,
@@ -18,35 +18,35 @@ import {
   Divider,
   ListSubheader,
   Slide,
-} from "@material-ui/core";
-import MuiAlert from "@material-ui/lab/Alert";
-import MenuIcon from "@material-ui/icons/Menu";
-import ContactMailIcon from "@material-ui/icons/ContactMail";
-import CloseIcon from "@material-ui/icons/Close";
-import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
-import InfoIcon from "@material-ui/icons/Info";
-import HomeIcon from "@material-ui/icons/Home";
-import BookIcon from "@material-ui/icons/Book";
-import clsx from "clsx";
-import logo from "../../img/logo-final.png";
-import logo2 from "../../img/freely_comment_logo.png";
-import makeStyles from "./styles";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import LockIcon from "@material-ui/icons/Lock";
-import LockOpenIcon from "@material-ui/icons/LockOpen";
-import { Link, useHistory, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { fetchPosts } from "../../actions/posts";
-import { logout } from "../../reducers/slice/authSlice";
-import decode from "jwt-decode";
-import HideOnScroll from "../../utils/HideNav";
-import Search from "../searchbar/Search";
-import io from "socket.io-client";
-import environment from "../../environment";
-import NotificationPanel from "../notificationPanel/NotificationPanel";
-import OutsideClickHandler from "react-outside-click-handler";
-import { Copyright } from "../../pages/auth/Auth";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+} from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
+import MenuIcon from '@material-ui/icons/Menu';
+import ContactMailIcon from '@material-ui/icons/ContactMail';
+import CloseIcon from '@material-ui/icons/Close';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import InfoIcon from '@material-ui/icons/Info';
+import HomeIcon from '@material-ui/icons/Home';
+import BookIcon from '@material-ui/icons/Book';
+import clsx from 'clsx';
+import logo from '../../img/logo-final.png';
+import logo2 from '../../img/freely_comment_logo.png';
+import makeStyles from './styles';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import LockIcon from '@material-ui/icons/Lock';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { fetchPosts } from '../../actions/posts';
+import { logout } from '../../reducers/slice/authSlice';
+import decode from 'jwt-decode';
+import HideOnScroll from '../../utils/HideNav';
+import Search from '../searchbar/Search';
+import io from 'socket.io-client';
+import environment from '../../environment';
+import NotificationPanel from '../notificationPanel/NotificationPanel';
+import OutsideClickHandler from 'react-outside-click-handler';
+import { Copyright } from '../../pages/auth/Auth';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -59,34 +59,34 @@ const NavButtons = ({ location }) => {
     <div className={classes.navButtons}>
       <Link
         to="/"
-        style={{ textDecoration: "none" }}
+        style={{ textDecoration: 'none' }}
         onClick={() => dispatch(fetchPosts())}
       >
         <Button
           className={classes.navButton}
           style={{
-            textDecoration: location.pathname === "/" && "underline",
+            textDecoration: location.pathname === '/' && 'underline',
           }}
         >
           Home
         </Button>
       </Link>
-      <Link to="/about" style={{ textDecoration: "none" }}>
+      <Link style={{ textDecoration: 'none' }}>
         <Button
           className={classes.navButton}
           style={{
-            textDecoration: location.pathname === "/about" && "underline",
+            textDecoration: location.pathname === '/about' && 'underline',
           }}
         >
           About
         </Button>
       </Link>
-      <Link style={{ textDecoration: "none" }}>
+      <Link style={{ textDecoration: 'none' }}>
         <Button className={classes.navButton} style={{}}>
           Contact
         </Button>
       </Link>
-      <Link style={{ textDecoration: "none" }}>
+      <Link style={{ textDecoration: 'none' }}>
         <Button className={classes.navButton} style={{}}>
           Blog
         </Button>
@@ -100,7 +100,7 @@ let socket;
 const Nav = ({ appProps }) => {
   const classes = makeStyles();
   const dispatch = useDispatch();
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const [drawer, setDrawer] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [openNotifications, setOpenNotifications] = useState(false);
@@ -110,38 +110,38 @@ const Nav = ({ appProps }) => {
   const ENDPOINT = environment.baseUrl;
 
   function capitalizeFirstLetter(string) {
-    var words = string.split(" ");
+    var words = string.split(' ');
     var CapitalizedWords = [];
     words.forEach((element) => {
       CapitalizedWords.push(
         element[0].toUpperCase() + element.slice(1, element.length)
       );
     });
-    return CapitalizedWords.join(" ");
+    return CapitalizedWords.join(' ');
   }
 
   useEffect(() => {
     socket = io(ENDPOINT, {
-      transports: ["websocket", "polling", "flashsocket"],
+      transports: ['websocket', 'polling', 'flashsocket'],
     });
 
-    socket.on("user", (res) => {
+    socket.on('user', (res) => {
       const response = JSON.parse(res);
 
       if (response._id === user.data.result._id) {
         // Get the existing data
-        var existing = localStorage.getItem("profile");
+        var existing = localStorage.getItem('profile');
 
         // If no existing data, create an array
         // Otherwise, convert the localStorage string to an array
         existing = existing ? JSON.parse(existing) : {};
 
         // Add new data to localStorage Array
-        existing.data.result["notifications"] = response.notifications;
+        existing.data.result['notifications'] = response.notifications;
 
         // Save back to localStorage
-        localStorage.setItem("profile", JSON.stringify(existing));
-        setUser(JSON.parse(localStorage.getItem("profile")));
+        localStorage.setItem('profile', JSON.stringify(existing));
+        setUser(JSON.parse(localStorage.getItem('profile')));
         setSnackbarOpen(true);
       }
     });
@@ -159,12 +159,12 @@ const Nav = ({ appProps }) => {
         signout();
       }
     }
-    setUser(JSON.parse(localStorage.getItem("profile")));
+    setUser(JSON.parse(localStorage.getItem('profile')));
   }, [location]);
 
   const signout = () => {
     dispatch(logout());
-    history.push("/auth");
+    history.push('/auth');
     setUser(null);
   };
 
@@ -174,7 +174,7 @@ const Nav = ({ appProps }) => {
 
   //Close notification info snackbar
   const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
+    if (reason === 'clickaway') {
       return;
     }
 
@@ -209,7 +209,7 @@ const Nav = ({ appProps }) => {
                 Log In
               </Button>
               <IconButton
-                style={{ color: "white", padding: "0 12px" }}
+                style={{ color: 'white', padding: '0 12px' }}
                 aria-label="open drawer"
                 edge="end"
                 onClick={handleDrawerOpen}
@@ -241,7 +241,7 @@ const Nav = ({ appProps }) => {
                 }
                 color="primary"
                 size="medium"
-                style={{ marginRight: 10, textTransform: "none" }}
+                style={{ marginRight: 10, textTransform: 'none' }}
                 onClick={() => setOpenNotifications(!openNotifications)}
               >
                 <Typography variant="h6" style={{ fontSize: 16 }}>
@@ -249,7 +249,7 @@ const Nav = ({ appProps }) => {
                 </Typography>
               </Button>
               <IconButton
-                style={{ color: "white", padding: "0 12px" }}
+                style={{ color: 'white', padding: '0 12px' }}
                 aria-label="open drawer"
                 edge="end"
                 onClick={handleDrawerOpen}
@@ -269,7 +269,7 @@ const Nav = ({ appProps }) => {
         >
           <List className={classes.list}>
             <Button
-              style={{ marginBottom: "1rem" }}
+              style={{ marginBottom: '1rem' }}
               onClick={() => {
                 setDrawer(false);
                 setNotificationMenu(false);
@@ -279,10 +279,10 @@ const Nav = ({ appProps }) => {
             </Button>
             <div
               style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                height: "100%",
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                height: '100%',
               }}
             >
               <div>
@@ -338,7 +338,7 @@ const Nav = ({ appProps }) => {
                     onClick={() => setDrawer(false)}
                   >
                     <ListItemText
-                      style={{ display: "flex", justifyContent: "center" }}
+                      style={{ display: 'flex', justifyContent: 'center' }}
                     >
                       Log in
                     </ListItemText>
@@ -356,7 +356,7 @@ const Nav = ({ appProps }) => {
                         setUser={setUser}
                         openNotifications={openNotifications}
                         setOpenNotifications={setOpenNotifications}
-                        type={"menu"}
+                        type={'menu'}
                         setDrawer={setDrawer}
                         setOpenNotifications={setOpenNotifications}
                       />
@@ -366,8 +366,8 @@ const Nav = ({ appProps }) => {
                   <>
                     <ListItem
                       style={{
-                        display: "flex",
-                        flexDirection: "column",
+                        display: 'flex',
+                        flexDirection: 'column',
                         marginBottom: 20,
                       }}
                     >
@@ -375,8 +375,8 @@ const Nav = ({ appProps }) => {
                       <ListSubheader
                         style={{
                           marginBottom: 5,
-                          wordWrap: "break-word",
-                          fontWeight: "bolder",
+                          wordWrap: 'break-word',
+                          fontWeight: 'bolder',
                         }}
                         color="primary"
                       >
@@ -390,7 +390,7 @@ const Nav = ({ appProps }) => {
                         }
                         color="secondary"
                         overlap="circle"
-                        style={{ cursor: "pointer" }}
+                        style={{ cursor: 'pointer' }}
                         onClick={() => setNotificationMenu(true)}
                         alt="click for notifications"
                         showZero
@@ -409,7 +409,7 @@ const Nav = ({ appProps }) => {
                       onClick={signout}
                     >
                       <ListItemText
-                        style={{ display: "flex", justifyContent: "center" }}
+                        style={{ display: 'flex', justifyContent: 'center' }}
                       >
                         Log Out
                       </ListItemText>
@@ -423,13 +423,13 @@ const Nav = ({ appProps }) => {
                   style={{
                     marginTop: 50,
                     marginBottom: 10,
-                    display: "flex",
-                    justifyContent: "center",
+                    display: 'flex',
+                    justifyContent: 'center',
                   }}
                 >
                   <img src={logo2} alt="logo" style={{ height: 50 }} />
                 </ListItem>
-                <Copyright textColor={"black"} />
+                <Copyright textColor={'black'} />
               </div>
             </div>
           </List>
