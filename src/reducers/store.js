@@ -1,9 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
-import postsReducer from "./slice/postsSlice";
-import authReducer from "./slice/authSlice";
-import commentsReducer from "./slice/commentsSlice";
-import commentRepliesReducer from "./slice/commentRepliesSlice";
-import logger from "redux-logger";
+import { configureStore } from '@reduxjs/toolkit';
+import postsReducer from './slice/postsSlice';
+import authReducer from './slice/authSlice';
+import commentsReducer from './slice/commentsSlice';
+import commentRepliesReducer from './slice/commentRepliesSlice';
+import notificationsReducer from './slice/notificationsSlice';
 
 export default configureStore({
   reducer: {
@@ -11,6 +11,7 @@ export default configureStore({
     auth: authReducer,
     comments: commentsReducer,
     commentReplies: commentRepliesReducer,
+    notifications: notificationsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
