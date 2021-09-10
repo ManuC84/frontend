@@ -1,5 +1,5 @@
-import React from "react";
-import makeStyles from "./styles";
+import React, { useEffect } from 'react';
+import makeStyles from './styles';
 import {
   List,
   ListItem,
@@ -11,20 +11,21 @@ import {
   Link,
   Avatar,
   Paper,
-} from "@material-ui/core";
-import InboxIcon from "@material-ui/icons/Inbox";
-import ReadMore from "../../utils/readMore/ReadMore";
-import moment from "moment";
-import {} from "../../reducers/slice/postsSlice";
-import { useDispatch } from "react-redux";
-import { useGlobalContext } from "../../context";
+} from '@material-ui/core';
+import InboxIcon from '@material-ui/icons/Inbox';
+import ReadMore from '../../utils/readMore/ReadMore';
+import moment from 'moment';
+import {} from '../../reducers/slice/postsSlice';
+import { useDispatch } from 'react-redux';
+import { useGlobalContext } from '../../context';
 
-import { getNotificationContent, clearAll } from "../../actions/notifications";
+import { getNotificationContent, clearAll } from '../../actions/notifications';
 import {
   fetchSingleCommentReply,
   filterNotificationReply,
-} from "../../reducers/slice/commentRepliesSlice";
-import { fetchSingleComment } from "../../reducers/slice/commentsSlice";
+} from '../../reducers/slice/commentRepliesSlice';
+import { fetchSingleComment } from '../../reducers/slice/commentsSlice';
+import { fetchNotificationsTest } from '../../reducers/slice/notificationsSlice';
 
 const NotificationPanel = ({
   user,
@@ -42,78 +43,88 @@ const NotificationPanel = ({
     dispatch(getNotificationContent(postId, commentId, commentReplyId, userId));
     dispatch(fetchSingleComment({ postId, commentId }));
     dispatch(fetchSingleCommentReply({ postId, commentId, commentReplyId }));
-    var existing = localStorage.getItem("profile");
+
+    var existing = localStorage.getItem('profile');
 
     existing = existing ? JSON.parse(existing) : {};
-    let notifications = existing.data.result["notifications"];
+    let notifications = existing.data.result['notifications'];
     let updatedNotifications = notifications.map((notification) =>
       notification.commentReplyId === commentReplyId
         ? (notification.read = true)
-        : notification
+        : notification,
     );
     notifications = updatedNotifications;
 
-    localStorage.setItem("profile", JSON.stringify(existing));
+    localStorage.setItem('profile', JSON.stringify(existing));
     setUser(existing);
     if (setDrawer) setDrawer(false);
     if (setOpenNotifications) setOpenNotifications(false);
   };
 
   const clearAllNotifications = (type) => {
-    if (type == "clear") {
+    let existing;
+    if (type == 'clear') {
       dispatch(clearAll(user?.data?.result?._id, { type: type }));
-      var existing = localStorage.getItem("profile");
+      existing = localStorage.getItem('profile');
 
       existing = existing ? JSON.parse(existing) : {};
-      existing.data.result["notifications"] = [];
+      existing.data.result['notifications'] = [];
 
-      localStorage.setItem("profile", JSON.stringify(existing));
+      localStorage.setItem('profile', JSON.stringify(existing));
       setUser(existing);
     }
-    if (type == "read") {
+    if (type == 'read') {
       dispatch(clearAll(user?.data?.result?._id, { type: type }));
-      var existing = localStorage.getItem("profile");
+      existing = localStorage.getItem('profile');
 
       existing = existing ? JSON.parse(existing) : {};
-      let notifications = existing.data.result["notifications"];
+      let notifications = existing.data.result['notifications'];
       let updatedNotifications = notifications.map(
-        (notification) => (notification.read = true)
+        (notification) => (notification.read = true),
       );
       notifications = updatedNotifications;
 
-      localStorage.setItem("profile", JSON.stringify(existing));
+      localStorage.setItem('profile', JSON.stringify(existing));
       setUser(existing);
     }
   };
+
+  useEffect(() => {
+    dispatch(
+      fetchNotificationsTest(
+        user?.data?.result?._id || user?.data?.result?.googleId,
+      ),
+    );
+  });
 
   return (
     <Fade in={openNotifications} timeout={500}>
       <Paper
         elevation={3}
         className={
-          type === "menu"
+          type === 'menu'
             ? classes.notificationMenu
             : classes.notificationDropdown
         }
       >
         <div
           style={{
-            display: "flex",
-            justifyContent: "center",
+            display: 'flex',
+            justifyContent: 'center',
             marginBottom: 5,
           }}
         >
           <Button
             color="primary"
-            style={{ width: "100%" }}
-            onClick={() => clearAllNotifications("clear")}
+            style={{ width: '100%' }}
+            onClick={() => clearAllNotifications('clear')}
           >
             Clear all
           </Button>
           <Button
             color="primary"
-            style={{ width: "100%" }}
-            onClick={() => clearAllNotifications("read")}
+            style={{ width: '100%' }}
+            onClick={() => clearAllNotifications('read')}
           >
             Read all
           </Button>
@@ -122,10 +133,10 @@ const NotificationPanel = ({
         user?.data?.result?.notifications?.length === undefined ? (
           <div
             style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "50%",
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '50%',
             }}
           >
             <h5>There's no new notifications</h5>
@@ -135,8 +146,8 @@ const NotificationPanel = ({
             <List key={idx} style={{ padding: 0 }}>
               <ListItem
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
+                  display: 'flex',
+                  flexDirection: 'column',
                 }}
                 className={!notification.read && classes.listItemsBg}
                 button
@@ -146,7 +157,7 @@ const NotificationPanel = ({
                     notification.parentPostId,
                     notification.parentCommentId,
                     notification.commentReplyId,
-                    user?.data?.result?._id
+                    user?.data?.result?._id,
                   )
                 }
               >
@@ -154,21 +165,21 @@ const NotificationPanel = ({
                   <Avatar />
                 </ListItemIcon>
                 <Typography variant="caption">
-                  {moment(notification.createdAt).fromNow() + " "}
+                  {moment(notification.createdAt).fromNow() + ' '}
                 </Typography>
                 <h5 style={{ margin: 0 }}>{notification.name} replied:</h5>
 
                 <div
                   style={{
-                    margin: "5px 0",
-                    width: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
+                    margin: '5px 0',
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
                   }}
                 >
                   <ReadMore
-                    variant={"body2"}
+                    variant={'body2'}
                     lines={150}
                     content={notification.commentReply}
                   />

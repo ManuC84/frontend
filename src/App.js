@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Fab, Toolbar } from '@material-ui/core';
+import { Fab, Toolbar } from '@material-ui/core';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Nav from './components/navbar/Nav';
 import Home from './pages/home/Home';
