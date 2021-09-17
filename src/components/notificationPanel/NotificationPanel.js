@@ -28,7 +28,10 @@ import {
   filterNotificationReply,
 } from '../../reducers/slice/commentRepliesSlice';
 import { fetchSingleComment } from '../../reducers/slice/commentsSlice';
-import { fetchNotificationsTest } from '../../reducers/slice/notificationsSlice';
+import {
+  fetchNotificationsTest,
+  readNotification,
+} from '../../reducers/slice/notificationsSlice';
 
 const NotificationPanel = ({
   user,
@@ -43,8 +46,15 @@ const NotificationPanel = ({
   const { notifications } = useSelector((state) => state.notifications);
   // const { setExpanded } = useGlobalContext();
 
-  const fetchNotification = (postId, commentId, commentReplyId, userId) => {
+  const fetchNotification = (
+    postId,
+    commentId,
+    commentReplyId,
+    userId,
+    notificationId,
+  ) => {
     // dispatch(getNotificationContent(postId, commentId, commentReplyId, userId));
+    dispatch(readNotification(notificationId));
     dispatch(fetchNotificationPost(postId));
     dispatch(fetchSingleComment({ postId, commentId }));
     dispatch(fetchSingleCommentReply({ postId, commentId, commentReplyId }));
@@ -154,6 +164,7 @@ const NotificationPanel = ({
                     notification.parentCommentId,
                     notification.commentReplyId,
                     user?.data?.result?._id,
+                    notification._id,
                   )
                 }
               >

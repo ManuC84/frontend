@@ -9,6 +9,14 @@ export const fetchNotificationsTest = createAsyncThunk(
   },
 );
 
+export const readNotification = createAsyncThunk(
+  'notifications/readNotification',
+  async (id) => {
+    const { data } = await API.post(`notifications/readNotification/${id}`);
+    return data;
+  },
+);
+
 export const notificationsSlice = createSlice({
   name: 'notificationsReducer',
   initialState: { notifications: [] },
@@ -19,6 +27,7 @@ export const notificationsSlice = createSlice({
     },
   },
   extraReducers: {
+    //FETCH NOTIFICATIONS
     [fetchNotificationsTest.pending]: (state) => {
       state.status = 'loading';
     },
@@ -27,6 +36,20 @@ export const notificationsSlice = createSlice({
       state.notifications = action.payload;
     },
     [fetchNotificationsTest.rejected]: (state, action) => {
+      state.status = 'failed';
+      state.error = action.error.message;
+    },
+    //READ NOTIFICATION
+    [readNotification.pending]: (state) => {
+      state.status = 'loading';
+    },
+    [readNotification.fulfilled]: (state, action) => {
+      state.status = 'succeeded';
+      state.notifications = state.notifications.map((notification) =>
+        notification._id === action.payload._id ? action.payload : notification,
+      );
+    },
+    [readNotification.rejected]: (state, action) => {
       state.status = 'failed';
       state.error = action.error.message;
     },
