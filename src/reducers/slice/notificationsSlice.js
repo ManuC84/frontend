@@ -17,6 +17,20 @@ export const readNotification = createAsyncThunk(
   },
 );
 
+export const readAllNotifications = createAsyncThunk(
+  'notifications/readAllNotifications',
+  async (userId) => {
+    await API.put(`notifications/readAllNotifications/${userId}`);
+  },
+);
+
+export const clearAllNotifications = createAsyncThunk(
+  'notifications/clearAllNotifications',
+  async (userId) => {
+    await API.delete(`notifications/clearAllNotifications/${userId}`);
+  },
+);
+
 export const notificationsSlice = createSlice({
   name: 'notificationsReducer',
   initialState: { notifications: [] },
@@ -50,6 +64,32 @@ export const notificationsSlice = createSlice({
       );
     },
     [readNotification.rejected]: (state, action) => {
+      state.status = 'failed';
+      state.error = action.error.message;
+    },
+    //READ ALL NOTIFICATIONS
+    [readAllNotifications.pending]: (state) => {
+      state.status = 'loading';
+    },
+    [readAllNotifications.fulfilled]: (state, action) => {
+      state.status = 'succeeded';
+      state.notifications = state.notifications.map((notification) => {
+        return { ...notification, read: true };
+      });
+    },
+    [readAllNotifications.rejected]: (state, action) => {
+      state.status = 'failed';
+      state.error = action.error.message;
+    },
+    //CLEAR ALL NOTIFICATIONS
+    [clearAllNotifications.pending]: (state) => {
+      state.status = 'loading';
+    },
+    [clearAllNotifications.fulfilled]: (state) => {
+      state.status = 'succeeded';
+      state.notifications = [];
+    },
+    [clearAllNotifications.rejected]: (state, action) => {
       state.status = 'failed';
       state.error = action.error.message;
     },

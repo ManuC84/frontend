@@ -131,10 +131,9 @@ const Nav = ({ appProps }) => {
     socket.on('user', (res) => {
       // console.log(res);
       // const response = JSON.parse(res);
-
+      console.log(res, user.data.result);
       if (
-        res.parentUserId === user.data.result._id ||
-        user.data.result.googleId
+        res.parentUserId === (user.data.result._id || user.data.result.googleId)
       ) {
         // // Get the existing data
         // var existing = localStorage.getItem('profile');

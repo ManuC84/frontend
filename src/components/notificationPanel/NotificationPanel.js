@@ -22,7 +22,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useGlobalContext } from '../../context';
 
-import { getNotificationContent, clearAll } from '../../actions/notifications';
+import { getNotificationContent } from '../../actions/notifications';
 import {
   fetchSingleCommentReply,
   filterNotificationReply,
@@ -30,7 +30,9 @@ import {
 import { fetchSingleComment } from '../../reducers/slice/commentsSlice';
 import {
   fetchNotificationsTest,
+  readAllNotifications,
   readNotification,
+  clearAllNotifications,
 } from '../../reducers/slice/notificationsSlice';
 
 const NotificationPanel = ({
@@ -76,33 +78,33 @@ const NotificationPanel = ({
     if (setOpenNotifications) setOpenNotifications(false);
   };
 
-  const clearAllNotifications = (type) => {
-    let existing;
-    if (type == 'clear') {
-      dispatch(clearAll(user?.data?.result?._id, { type: type }));
-      existing = localStorage.getItem('profile');
+  // const clearAllNotifications = (type) => {
+  //   let existing;
+  //   if (type == 'clear') {
+  //     dispatch(clearAll(user?.data?.result?._id, { type: type }));
+  //     existing = localStorage.getItem('profile');
 
-      existing = existing ? JSON.parse(existing) : {};
-      existing.data.result['notifications'] = [];
+  //     existing = existing ? JSON.parse(existing) : {};
+  //     existing.data.result['notifications'] = [];
 
-      localStorage.setItem('profile', JSON.stringify(existing));
-      setUser(existing);
-    }
-    if (type == 'read') {
-      dispatch(clearAll(user?.data?.result?._id, { type: type }));
-      existing = localStorage.getItem('profile');
+  //     localStorage.setItem('profile', JSON.stringify(existing));
+  //     setUser(existing);
+  //   }
+  //   if (type == 'read') {
+  //     dispatch(clearAll(user?.data?.result?._id, { type: type }));
+  //     existing = localStorage.getItem('profile');
 
-      existing = existing ? JSON.parse(existing) : {};
-      let notifications = existing.data.result['notifications'];
-      let updatedNotifications = notifications.map(
-        (notification) => (notification.read = true),
-      );
-      notifications = updatedNotifications;
+  //     existing = existing ? JSON.parse(existing) : {};
+  //     let notifications = existing.data.result['notifications'];
+  //     let updatedNotifications = notifications.map(
+  //       (notification) => (notification.read = true),
+  //     );
+  //     notifications = updatedNotifications;
 
-      localStorage.setItem('profile', JSON.stringify(existing));
-      setUser(existing);
-    }
-  };
+  //     localStorage.setItem('profile', JSON.stringify(existing));
+  //     setUser(existing);
+  //   }
+  // };
 
   return (
     <Fade in={openNotifications} timeout={500}>
@@ -124,14 +126,26 @@ const NotificationPanel = ({
           <Button
             color="primary"
             style={{ width: '100%' }}
-            onClick={() => clearAllNotifications('clear')}
+            onClick={() =>
+              dispatch(
+                clearAllNotifications(
+                  user.data.result._id || user.data.result.googleId,
+                ),
+              )
+            }
           >
             Clear all
           </Button>
           <Button
             color="primary"
             style={{ width: '100%' }}
-            onClick={() => clearAllNotifications('read')}
+            onClick={() =>
+              dispatch(
+                readAllNotifications(
+                  user.data.result._id || user.data.result.googleId,
+                ),
+              )
+            }
           >
             Read all
           </Button>
