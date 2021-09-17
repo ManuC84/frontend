@@ -15,8 +15,11 @@ import {
 import InboxIcon from '@material-ui/icons/Inbox';
 import ReadMore from '../../utils/readMore/ReadMore';
 import moment from 'moment';
-import {} from '../../reducers/slice/postsSlice';
-import { useDispatch } from 'react-redux';
+import {
+  fetchNotificationPost,
+  fetchSinglePost,
+} from '../../reducers/slice/postsSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { useGlobalContext } from '../../context';
 
 import { getNotificationContent, clearAll } from '../../actions/notifications';
@@ -37,26 +40,28 @@ const NotificationPanel = ({
 }) => {
   const classes = makeStyles();
   const dispatch = useDispatch();
+  const { notifications } = useSelector((state) => state.notifications);
   // const { setExpanded } = useGlobalContext();
 
   const fetchNotification = (postId, commentId, commentReplyId, userId) => {
-    dispatch(getNotificationContent(postId, commentId, commentReplyId, userId));
+    // dispatch(getNotificationContent(postId, commentId, commentReplyId, userId));
+    dispatch(fetchNotificationPost(postId));
     dispatch(fetchSingleComment({ postId, commentId }));
     dispatch(fetchSingleCommentReply({ postId, commentId, commentReplyId }));
 
-    var existing = localStorage.getItem('profile');
+    // var existing = localStorage.getItem('profile');
 
-    existing = existing ? JSON.parse(existing) : {};
-    let notifications = existing.data.result['notifications'];
-    let updatedNotifications = notifications.map((notification) =>
-      notification.commentReplyId === commentReplyId
-        ? (notification.read = true)
-        : notification,
-    );
-    notifications = updatedNotifications;
+    // existing = existing ? JSON.parse(existing) : {};
+    // let notifications = existing.data.result['notifications'];
+    // let updatedNotifications = notifications.map((notification) =>
+    //   notification.commentReplyId === commentReplyId
+    //     ? (notification.read = true)
+    //     : notification,
+    // );
+    // notifications = updatedNotifications;
 
-    localStorage.setItem('profile', JSON.stringify(existing));
-    setUser(existing);
+    // localStorage.setItem('profile', JSON.stringify(existing));
+    // setUser(existing);
     if (setDrawer) setDrawer(false);
     if (setOpenNotifications) setOpenNotifications(false);
   };
@@ -88,14 +93,6 @@ const NotificationPanel = ({
       setUser(existing);
     }
   };
-
-  useEffect(() => {
-    dispatch(
-      fetchNotificationsTest(
-        user?.data?.result?._id || user?.data?.result?.googleId,
-      ),
-    );
-  });
 
   return (
     <Fade in={openNotifications} timeout={500}>
@@ -129,8 +126,7 @@ const NotificationPanel = ({
             Read all
           </Button>
         </div>
-        {user?.data?.result?.notifications?.length === 0 ||
-        user?.data?.result?.notifications?.length === undefined ? (
+        {notifications.length === 0 ? (
           <div
             style={{
               display: 'flex',
@@ -142,7 +138,7 @@ const NotificationPanel = ({
             <h5>There's no new notifications</h5>
           </div>
         ) : (
-          user?.data?.result?.notifications?.map((notification, idx) => (
+          notifications.map((notification, idx) => (
             <List key={idx} style={{ padding: 0 }}>
               <ListItem
                 style={{

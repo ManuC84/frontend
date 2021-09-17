@@ -1,27 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   Grid,
   CircularProgress,
   LinearProgress,
   Typography,
-} from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router";
-import Post from "./post/Post";
-import { useStyles } from "./styles";
+} from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router';
+import Post from './post/Post';
+import { useStyles } from './styles';
 import {
   fetchPosts,
   fetchInfiniteScroll,
-} from "../../reducers/slice/postsSlice";
-import InfiniteScroll from "react-infinite-scroll-component";
-import "./styleOverride.css";
+} from '../../reducers/slice/postsSlice';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import './styleOverride.css';
+import { fetchNotificationsTest } from '../../reducers/slice/notificationsSlice';
 
 const Posts = () => {
   const [authError, setAuthError] = useState(false);
+  const user = useState(JSON.parse(localStorage.getItem('profile')));
   const { posts, isLoading, status, error, loadMorePosts } = useSelector(
-    (state) => state.posts
+    (state) => state.posts,
   );
 
   const classes = useStyles();
@@ -32,23 +34,35 @@ const Posts = () => {
     posts.length > 1
       ? posts.filter(
           (post) =>
-            post.image !== "/images/no-image.png" || post.provider === "Twitter"
+            post.image !== '/images/no-image.png' ||
+            post.provider === 'Twitter',
         )
       : posts;
 
+  //Fetch all posts if in home
   useEffect(() => {
-    if (location.pathname === "/") dispatch(fetchPosts());
+    if (location.pathname === '/') dispatch(fetchPosts());
+  }, []);
+
+  //Fetch notifications
+  useEffect(() => {
+    if (user[0])
+      dispatch(
+        fetchNotificationsTest(
+          user[0]?.data?.result?._id || user[0]?.data?.result?.googleId,
+        ),
+      );
   }, []);
 
   const fetchInfinite = () => {
     dispatch(fetchInfiniteScroll(posts.length));
   };
 
-  return status === "loading" ? (
+  return status === 'loading' ? (
     <div className={classes.progress}>
       <CircularProgress />
     </div>
-  ) : filteredPosts.length === 0 && status === "suceeded" ? (
+  ) : filteredPosts.length === 0 && status === 'suceeded' ? (
     <div className={classes.errorMessage}>
       <Alert severity="info">
         <Typography>There's no posts to show</Typography>
@@ -60,7 +74,7 @@ const Posts = () => {
         <Typography>{error.message}</Typography>
       </Alert>
     </div>
-  ) : status === "failed" ? (
+  ) : status === 'failed' && !error.authError ? (
     <div className={classes.errorMessage}>
       <Alert severity="info">
         <Typography>
@@ -84,7 +98,7 @@ const Posts = () => {
         endMessage={
           error === "You've reached the end" && (
             <Alert
-              style={{ display: "flex", justifyContent: "center" }}
+              style={{ display: 'flex', justifyContent: 'center' }}
               severity="info"
             >
               <Typography>{error}</Typography>

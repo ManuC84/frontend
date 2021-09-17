@@ -13,7 +13,11 @@ export const notificationsSlice = createSlice({
   name: 'notificationsReducer',
   initialState: { notifications: [] },
 
-  reducers: {},
+  reducers: {
+    addNewNotification: (state, action) => {
+      state.notifications.unshift(action.payload);
+    },
+  },
   extraReducers: {
     [fetchNotificationsTest.pending]: (state) => {
       state.status = 'loading';
@@ -29,6 +33,6 @@ export const notificationsSlice = createSlice({
   },
 });
 
-export const {} = notificationsSlice.actions;
+export const { addNewNotification } = notificationsSlice.actions;
 
 export default notificationsSlice.reducer;

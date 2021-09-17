@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Avatar,
   Grid,
@@ -11,35 +11,38 @@ import {
   Menu,
   MenuItem,
   Fade,
-} from "@material-ui/core";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+} from '@material-ui/core';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-import { ThumbUp, ThumbDown } from "@material-ui/icons";
-import Pagination from "@material-ui/lab/Pagination";
+import { ThumbUp, ThumbDown } from '@material-ui/icons';
+import Pagination from '@material-ui/lab/Pagination';
 
-import { useStyles } from "./styles";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ReadMore from "../../../utils/readMore/ReadMore";
-import clsx from "clsx";
-import TextEditor from "../../textEditor/TextEditor";
-import { removeComment, getCommentReplies } from "../../../actions/comments";
+import { useStyles } from './styles';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ReadMore from '../../../utils/readMore/ReadMore';
+import clsx from 'clsx';
+import TextEditor from '../../textEditor/TextEditor';
+import { removeComment, getCommentReplies } from '../../../actions/comments';
 import {
   likeComment,
   dislikeComment,
   deleteComment,
-} from "../../../reducers/slice/commentsSlice";
-import moment from "moment";
-import CommentReplies from "../commentReplies/CommentReplies";
-import { useDispatch } from "react-redux";
-import { useGlobalContext } from "../../../context";
-import { useSelector } from "react-redux";
-import { current } from "@reduxjs/toolkit";
-import { fetchSinglePost } from "../../../reducers/slice/postsSlice";
+} from '../../../reducers/slice/commentsSlice';
+import moment from 'moment';
+import CommentReplies from '../commentReplies/CommentReplies';
+import { useDispatch } from 'react-redux';
+import { useGlobalContext } from '../../../context';
+import { useSelector } from 'react-redux';
+import { current } from '@reduxjs/toolkit';
+import {
+  fetchSinglePost,
+  toggleIsNotification,
+} from '../../../reducers/slice/postsSlice';
 import {
   fetchCommentReplies,
   filterNotificationReply,
-} from "../../../reducers/slice/commentRepliesSlice";
-import { sortFunctionAsc } from "../../../utils/Sort";
+} from '../../../reducers/slice/commentRepliesSlice';
+import { sortFunctionAsc } from '../../../utils/Sort';
 
 const Comment = ({ comment, user, post, error }) => {
   const [expanded, setExpanded] = useState(false);
@@ -53,14 +56,14 @@ const Comment = ({ comment, user, post, error }) => {
   const dispatch = useDispatch();
   const { isNotification } = useSelector((state) => state.posts);
   const { commentReplies, showAllReplies } = useSelector(
-    (state) => state.commentReplies
+    (state) => state.commentReplies,
   );
 
   //Fetch comment replies on post render from commentReplies db
   useEffect(() => {
     if (!isNotification)
       dispatch(
-        fetchCommentReplies({ postId: post._id, commentId: comment._id })
+        fetchCommentReplies({ postId: post._id, commentId: comment._id }),
       );
   }, []);
 
@@ -78,15 +81,15 @@ const Comment = ({ comment, user, post, error }) => {
   //Scroll to bottom when notification shows
   useEffect(() => {
     setTimeout(() => {
-      if (isNotification) {
+      if (isNotification && scrollRef.current) {
         scrollRef.current.scrollIntoView({
-          behaviour: "smooth",
-          block: "center",
-          inline: "center",
+          behaviour: 'smooth',
+          block: 'center',
+          inline: 'center',
         });
       }
     }, 500);
-  }, [comment]);
+  }, []);
 
   const userId =
     user[0] && (user[0]?.data?.result?.googleId || user[0]?.data?.result?._id);
@@ -101,7 +104,7 @@ const Comment = ({ comment, user, post, error }) => {
 
   const handleDelete = () => {
     let deleteAlert = window.confirm(
-      "Are you sure you want to delete this comment?"
+      'Are you sure you want to delete this comment?',
     );
     if (!deleteAlert) return;
     dispatch(deleteComment({ postId: post._id, commentId: comment._id }));
@@ -121,7 +124,7 @@ const Comment = ({ comment, user, post, error }) => {
   const indexOfFirstComment = indexOfLastComment - commentsPerPage;
   const currentCommentReplies = commentCommentReplies.slice(
     indexOfFirstComment,
-    indexOfLastComment
+    indexOfLastComment,
   );
 
   useEffect(() => {
@@ -131,9 +134,9 @@ const Comment = ({ comment, user, post, error }) => {
   useEffect(() => {
     if (scrollRef.current && expanded) {
       scrollRef.current.scrollIntoView({
-        behaviour: "smooth",
-        block: "center",
-        inline: "center",
+        behaviour: 'smooth',
+        block: 'center',
+        inline: 'center',
       });
     }
   }, [expanded]);
@@ -143,7 +146,7 @@ const Comment = ({ comment, user, post, error }) => {
     if (!expanded) {
       setShowEditor(false);
       dispatch(
-        fetchCommentReplies({ postId: post._id, commentId: comment._id })
+        fetchCommentReplies({ postId: post._id, commentId: comment._id }),
       );
     }
   };
@@ -155,7 +158,7 @@ const Comment = ({ comment, user, post, error }) => {
           postId: post._id,
           commentId: comment._id,
           userId: userId,
-        })
+        }),
       );
   };
   const handleDislikeComment = () => {
@@ -165,7 +168,7 @@ const Comment = ({ comment, user, post, error }) => {
           postId: post._id,
           commentId: comment._id,
           userId: userId,
-        })
+        }),
       );
   };
 
@@ -173,9 +176,9 @@ const Comment = ({ comment, user, post, error }) => {
     <Grow in={true}>
       <Paper
         style={{
-          padding: "20px 20px 0 20px",
-          marginBottom: "10px",
-          backgroundColor: "#f9fafb",
+          padding: '20px 20px 0 20px',
+          marginBottom: '10px',
+          backgroundColor: '#f9fafb',
         }}
         elevation={2}
       >
@@ -190,12 +193,12 @@ const Comment = ({ comment, user, post, error }) => {
           <Grid item xs zeroMinWidth>
             <Typography
               variant="h6"
-              style={{ margin: 0, textAlign: "left", fontSize: "0.9rem" }}
+              style={{ margin: 0, textAlign: 'left', fontSize: '0.9rem' }}
             >
               {comment.creator[0]?.name}
             </Typography>
             <Typography
-              style={{ textAlign: "left", color: "gray", fontSize: "0.8rem" }}
+              style={{ textAlign: 'left', color: 'gray', fontSize: '0.8rem' }}
             >
               {moment(comment.createdAt).fromNow()}
             </Typography>
@@ -205,8 +208,8 @@ const Comment = ({ comment, user, post, error }) => {
                 <ReadMore
                   lines={200}
                   content={comment.comment}
-                  variant={"body2"}
-                  color={"textPrimary"}
+                  variant={'body2'}
+                  color={'textPrimary'}
                 />
               ) : (
                 <div>
@@ -214,7 +217,7 @@ const Comment = ({ comment, user, post, error }) => {
                     post={post}
                     comment={comment}
                     user={user}
-                    type={"commentEdition"}
+                    type={'commentEdition'}
                     setShowEditor={setShowEditor}
                     error={error}
                     isEditing={isEditing}
@@ -246,12 +249,12 @@ const Comment = ({ comment, user, post, error }) => {
               getContentAnchorEl={null}
               disableScrollLock={true}
               anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "center",
+                vertical: 'bottom',
+                horizontal: 'center',
               }}
               transformOrigin={{
-                vertical: "top",
-                horizontal: "center",
+                vertical: 'top',
+                horizontal: 'center',
               }}
             >
               <MenuItem onClick={handleEdit}>Edit</MenuItem>
@@ -268,12 +271,12 @@ const Comment = ({ comment, user, post, error }) => {
               getContentAnchorEl={null}
               disableScrollLock={true}
               anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "center",
+                vertical: 'bottom',
+                horizontal: 'center',
               }}
               transformOrigin={{
-                vertical: "top",
-                horizontal: "center",
+                vertical: 'top',
+                horizontal: 'center',
               }}
             >
               <MenuItem onClick={handleClose}>Report</MenuItem>
@@ -282,24 +285,24 @@ const Comment = ({ comment, user, post, error }) => {
         </Grid>
         <div
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
           }}
         >
           {/* LIKE AND DISLIKE BUTTONS */}
           <div
             style={{
-              display: "flex",
-              alignItems: "center",
-              marginLeft: "2.5rem",
+              display: 'flex',
+              alignItems: 'center',
+              marginLeft: '2.5rem',
             }}
           >
             <div onClick={handleLikeComment}>
               <IconButton
                 aria-label="Like"
                 disabled={!user[0]}
-                color={comment.likes.includes(userId) ? "primary" : "default"}
+                color={comment.likes.includes(userId) ? 'primary' : 'default'}
               >
                 <ThumbUp fontSize="small" />
               </IconButton>
@@ -310,21 +313,21 @@ const Comment = ({ comment, user, post, error }) => {
                 aria-label="dislike"
                 disabled={!user[0]}
                 color={
-                  comment.dislikes.includes(userId) ? "secondary" : "default"
+                  comment.dislikes.includes(userId) ? 'secondary' : 'default'
                 }
               >
                 <ThumbDown fontSize="small" />
               </IconButton>
             </div>
           </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
             <div>
               <Typography
                 variant="button"
                 color="textSecondary"
                 className={classes.showReplies}
               >
-                {!expanded ? "Show Replies" : "Hide Replies"}
+                {!expanded ? 'Show Replies' : 'Hide Replies'}
               </Typography>
             </div>
             <div>
@@ -352,9 +355,9 @@ const Comment = ({ comment, user, post, error }) => {
         {/* COMMENT REPLIES */}
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           {!showEditor && (
-            <div style={{ display: "flex", justifyContent: "center" }}>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Button
-                style={{ margin: "10px 0" }}
+                style={{ margin: '10px 0' }}
                 color="primary"
                 variant="outlined"
                 onClick={() => setShowEditor(true)}
@@ -368,7 +371,7 @@ const Comment = ({ comment, user, post, error }) => {
               post={post}
               comment={comment}
               user={user}
-              type={"commentReplies"}
+              type={'commentReplies'}
               setShowEditor={setShowEditor}
               error={error}
               setPage={setPage}
@@ -378,7 +381,7 @@ const Comment = ({ comment, user, post, error }) => {
           </Collapse>
           {commentCommentReplies.length === 0 ? (
             <Paper>
-              <Typography variant="body2" style={{ padding: "1rem" }}>
+              <Typography variant="body2" style={{ padding: '1rem' }}>
                 This comment has no replies yet.
               </Typography>
             </Paper>
@@ -393,6 +396,7 @@ const Comment = ({ comment, user, post, error }) => {
                   commentReply={commentReply}
                   error={error}
                   setPage={setPage}
+                  isNotification={isNotification}
                 />
 
                 {idx === arr.length - 1 && (
@@ -403,14 +407,14 @@ const Comment = ({ comment, user, post, error }) => {
           )}
           <div
             style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              marginBottom: "16px",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              marginBottom: '16px',
             }}
           >
             <Pagination
-              style={{ marginTop: "16px" }}
+              style={{ marginTop: '16px' }}
               page={page}
               onChange={handleChange}
               align="center"
@@ -424,14 +428,15 @@ const Comment = ({ comment, user, post, error }) => {
                 color="primary"
                 size="small"
                 style={{ marginTop: 15 }}
-                onClick={() =>
+                onClick={() => {
                   dispatch(
                     fetchCommentReplies({
                       postId: post._id,
                       commentId: comment._id,
-                    })
-                  )
-                }
+                    }),
+                  );
+                  dispatch(toggleIsNotification(false));
+                }}
               >
                 Show all replies
               </Button>
