@@ -49,6 +49,7 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import { Copyright } from '../../pages/auth/Auth';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { useSelector } from 'react-redux';
+import { useGlobalContext } from '../../context';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -104,13 +105,13 @@ const Nav = ({ appProps }) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const [drawer, setDrawer] = useState(false);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [openNotifications, setOpenNotifications] = useState(false);
   const [notificationMenu, setNotificationMenu] = useState(false);
   const { notifications } = useSelector((state) => state.notifications);
   const history = useHistory();
   const location = useLocation();
   const ENDPOINT = environment.baseUrl;
+  const { setSnackbarOpen} = useGlobalContext();
 
   function capitalizeFirstLetter(string) {
     var words = string.split(' ');
@@ -180,14 +181,7 @@ const Nav = ({ appProps }) => {
     setDrawer(true);
   };
 
-  //Close notification info snackbar
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setSnackbarOpen(false);
-  };
+  
 
   return (
     <HideOnScroll {...appProps}>
@@ -446,15 +440,7 @@ const Nav = ({ appProps }) => {
             </div>
           </List>
         </Drawer>
-        <Snackbar
-          open={snackbarOpen}
-          autoHideDuration={6000}
-          onClose={handleClose}
-        >
-          <Alert onClose={handleClose} severity="error">
-            You have a new notification
-          </Alert>
-        </Snackbar>
+        
 
         {user && openNotifications ? (
           <OutsideClickHandler

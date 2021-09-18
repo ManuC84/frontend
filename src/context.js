@@ -1,16 +1,12 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from 'react';
 
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
-  //expand comment section
-  const [expanded, setExpanded] = useState(false);
-  const [authError, setAuthError] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   return (
-    <AppContext.Provider
-      value={{ expanded, setExpanded, authError, setAuthError }}
-    >
+    <AppContext.Provider value={{ snackbarOpen, setSnackbarOpen }}>
       {children}
     </AppContext.Provider>
   );
