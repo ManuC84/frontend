@@ -2,9 +2,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
   commentReply: {
-    marginLeft: 80,
+    marginLeft: 50,
     [theme.breakpoints.down('xs')]: {
-      marginLeft: 25,
+      marginLeft: 0,
     },
   },
   '@keyframes fadeout': {

@@ -34,6 +34,7 @@ import {
   readNotification,
   clearAllNotifications,
 } from '../../reducers/slice/notificationsSlice';
+import { sortFunctionAsc, sortFunctionDesc } from '../../utils/Sort';
 
 const NotificationPanel = ({
   user,
@@ -162,52 +163,54 @@ const NotificationPanel = ({
             <h5>There's no new notifications</h5>
           </div>
         ) : (
-          notifications.map((notification, idx) => (
-            <List key={idx} style={{ padding: 0 }}>
-              <ListItem
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-                className={!notification.read && classes.listItemsBg}
-                button
-                divider
-                onClick={() =>
-                  fetchNotification(
-                    notification.parentPostId,
-                    notification.parentCommentId,
-                    notification.commentReplyId,
-                    user?.data?.result?._id,
-                    notification._id,
-                  )
-                }
-              >
-                <ListItemIcon>
-                  <Avatar />
-                </ListItemIcon>
-                <Typography variant="caption">
-                  {moment(notification.createdAt).fromNow() + ' '}
-                </Typography>
-                <h5 style={{ margin: 0 }}>{notification.name} replied:</h5>
-
-                <div
+          notifications
+            .map((notification, idx) => (
+              <List key={idx} style={{ padding: 0 }}>
+                <ListItem
                   style={{
-                    margin: '5px 0',
-                    width: '100%',
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'center',
                   }}
+                  className={!notification.read && classes.listItemsBg}
+                  button
+                  divider
+                  onClick={() =>
+                    fetchNotification(
+                      notification.parentPostId,
+                      notification.parentCommentId,
+                      notification.commentReplyId,
+                      user?.data?.result?._id,
+                      notification._id,
+                    )
+                  }
                 >
-                  <ReadMore
-                    variant={'body2'}
-                    lines={150}
-                    content={notification.commentReply}
-                  />
-                </div>
-              </ListItem>
-            </List>
-          ))
+                  <ListItemIcon>
+                    <Avatar src={notification.imageUrl} />
+                  </ListItemIcon>
+                  <Typography variant="caption">
+                    {moment(notification.createdAt).fromNow() + ' '}
+                  </Typography>
+                  <h5 style={{ margin: 0 }}>{notification.name} replied:</h5>
+
+                  <div
+                    style={{
+                      margin: '5px 0',
+                      width: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <ReadMore
+                      variant={'body2'}
+                      lines={150}
+                      content={notification.commentReply}
+                    />
+                  </div>
+                </ListItem>
+              </List>
+            ))
+            .sort(sortFunctionAsc)
         )}
       </Paper>
     </Fade>

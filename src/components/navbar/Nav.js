@@ -392,7 +392,7 @@ const Nav = ({ appProps }) => {
                       </ListSubheader>
                       <Badge
                         badgeContent={
-                          user?.data?.result?.notifications?.filter(
+                          notifications.filter(
                             (notification) => notification.read === false,
                           ).length
                         }
@@ -400,7 +400,8 @@ const Nav = ({ appProps }) => {
                         overlap="circle"
                         style={{ cursor: 'pointer' }}
                         onClick={() => setNotificationMenu(true)}
-                        alt="click for notifications"
+                        alt="badge"
+                        title="Click for notifications"
                         showZero
                       >
                         <Avatar

@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 import makeStyles from './styles';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-
+import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
 import { ThumbUp, ThumbDown } from '@material-ui/icons';
 import ReadMore from '../../../utils/readMore/ReadMore';
 import moment from 'moment';
@@ -104,6 +104,9 @@ const CommentReplies = ({
         <CardContent className={classes.commentReply}>
           <Grid container wrap="nowrap" spacing={2}>
             <Grid item>
+              <SubdirectoryArrowRightIcon color="disabled" />
+            </Grid>
+            <Grid item>
               <Avatar
                 title={commentReply.creator[0]?.name}
                 alt="avatar"
@@ -158,11 +161,8 @@ const CommentReplies = ({
                 <MoreVertIcon />
               </IconButton>
             </Grid>
-            {(user[0]?.data?.result?.googleId &&
-              user[0]?.data?.result?.googleId ===
-                commentReply?.creator[0]?.googleId) ||
-            (user[0]?.data?.result?._id &&
-              user[0]?.data?.result?._id === commentReply?.creator[0]?._id) ? (
+            {(user[0]?.data?.result?._id || user[0]?.data?.result?.googleId) ===
+            commentReply?.creator[0]?._id ? (
               <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}

@@ -74,7 +74,7 @@ const Posts = () => {
         <Typography>{error.message}</Typography>
       </Alert>
     </div>
-  ) : status === 'failed' && !error.authError ? (
+  ) : status === 'failed' && error === 'Request failed with status code 404' ? (
     <div className={classes.errorMessage}>
       <Alert severity="info">
         <Typography>

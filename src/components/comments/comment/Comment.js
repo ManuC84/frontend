@@ -234,11 +234,8 @@ const Comment = ({ comment, user, post, error }) => {
             </IconButton>
           </Grid>
 
-          {(user[0]?.data?.result?.googleId &&
-            user[0]?.data?.result?.googleId ===
-              comment?.creator[0]?.googleId) ||
-          (user[0]?.data?.result?._id &&
-            user[0]?.data?.result?._id === comment?.creator[0]?._id) ? (
+          {(user[0]?.data?.result?.googleId || user[0]?.data?.result?._id) ===
+          comment?.creator[0]?._id ? (
             <Menu
               id="simple-menu"
               anchorEl={anchorEl}
