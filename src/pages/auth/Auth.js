@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { GoogleLogin } from "react-google-login";
-import { useDispatch } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import { useStyles } from "./styles";
-import { auth } from "../../reducers/slice/authSlice";
-import { signin, signup } from "../../actions/auth";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import React, { useState, useEffect } from 'react';
+import { GoogleLogin } from 'react-google-login';
+import { useDispatch } from 'react-redux';
+import { Redirect, useHistory } from 'react-router-dom';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { useStyles } from './styles';
+import { auth, hasAuthError } from '../../reducers/slice/authSlice';
+import { signin, signup } from '../../actions/auth';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import {
   OutlinedInput,
   FormControl,
@@ -26,33 +26,33 @@ import {
   Button,
   Avatar,
   Collapse,
-} from "@material-ui/core/";
-import { useSelector } from "react-redux";
-import { Alert } from "@material-ui/lab";
-import { clearError } from "../../reducers/slice/authSlice";
+} from '@material-ui/core/';
+import { useSelector } from 'react-redux';
+import { Alert } from '@material-ui/lab';
+import { clearError } from '../../reducers/slice/authSlice';
 
 export function Copyright({ textColor }) {
   return (
     <Typography
       variant="body2"
-      style={{ color: textColor ? textColor : "white" }}
+      style={{ color: textColor ? textColor : 'white' }}
       align="center"
     >
-      {"Copyright © "}
+      {'Copyright © '}
       <Link color="inherit" href="/about">
         FreelyComment
-      </Link>{" "}
+      </Link>{' '}
       {new Date().getFullYear()}
-      {"."}
+      {'.'}
     </Typography>
   );
 }
 
 const initialState = {
-  userName: "",
-  email: "",
-  password: "",
-  repeatPassword: "",
+  userName: '',
+  email: '',
+  password: '',
+  repeatPassword: '',
 };
 
 export default function Auth() {
@@ -78,7 +78,7 @@ export default function Auth() {
     }
   }, [error]);
 
-  const user = JSON.parse(localStorage.getItem("profile"));
+  const user = JSON.parse(localStorage.getItem('profile'));
 
   const switchMode = () => {
     dispatch(clearError());
@@ -115,14 +115,22 @@ export default function Auth() {
     const token = res?.tokenId;
     try {
       dispatch(auth({ data: { result, token } }));
-      history.push("/");
+      history.push('/');
     } catch (error) {
-      console.log(error);
+      dispatch(
+        hasAuthError({
+          googleError: 'Google sign in was unsuccessful. Try Again later',
+        }),
+      );
     }
   };
 
   const googleFailure = () => {
-    console.log("Google sign in was unsuccessful. Try Again later");
+    dispatch(
+      hasAuthError({
+        googleError: 'Google sign in was unsuccessful. Try Again later',
+      }),
+    );
   };
 
   return !user ? (
@@ -133,7 +141,7 @@ export default function Auth() {
         </Avatar>
         {isSignup ? (
           <>
-            {" "}
+            {' '}
             <Typography component="h1" variant="h5">
               Sign up
             </Typography>
@@ -188,7 +196,7 @@ export default function Auth() {
                       fullWidth
                       name="password"
                       label="Password"
-                      type={showPassword ? "text" : "password"}
+                      type={showPassword ? 'text' : 'password'}
                       id="password"
                       autoComplete="current-password"
                       onChange={handleChange}
@@ -263,7 +271,7 @@ export default function Auth() {
                     autoComplete="email"
                     autoFocus
                     onChange={handleChange}
-                    style={{ margin: "0" }}
+                    style={{ margin: '0' }}
                   />
                   {errorMessages?.emailError && (
                     <Alert severity="error">{errorMessages?.emailError}</Alert>
@@ -284,7 +292,7 @@ export default function Auth() {
                       fullWidth
                       name="password"
                       label="Password"
-                      type={showPassword ? "text" : "password"}
+                      type={showPassword ? 'text' : 'password'}
                       id="password"
                       autoComplete="current-password"
                       onChange={handleChange}
@@ -339,6 +347,9 @@ export default function Auth() {
                   onFailure={googleFailure}
                   cookiePolicy="single_host_origin"
                 />
+                {error?.googleError && (
+                  <Alert severity="error">{error.googleError}</Alert>
+                )}
 
                 <Grid container>
                   <Grid item xs>
@@ -359,6 +370,6 @@ export default function Auth() {
       </Paper>
     </Container>
   ) : (
-    <Redirect to={"/"} />
+    <Redirect to={'/'} />
   );
 }
