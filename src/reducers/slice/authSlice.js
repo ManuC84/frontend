@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const authSlice = createSlice({
   name: "authReducer",
-  initialState: { authData: null, error: false },
+  initialState: { authData: null, error: false, authAlert: false },
 
   reducers: {
     auth: (state, action) => {
@@ -19,9 +19,23 @@ export const authSlice = createSlice({
     clearError: (state) => {
       state.error = false;
     },
+    setAuthAlert: (state, action) => {
+      state.authAlert = action.payload;
+    },
   },
 });
 
-export const { auth, logout, hasAuthError, clearError, clearNotifications } =
-  authSlice.actions;
+export const {
+  auth,
+  logout,
+  hasAuthError,
+  clearError,
+  clearNotifications,
+  setAuthAlert,
+} = authSlice.actions;
+
+export const toggleAuthAlert = (bool) => async (dispatch) => {
+  dispatch(setAuthAlert(bool));
+};
+
 export default authSlice.reducer;

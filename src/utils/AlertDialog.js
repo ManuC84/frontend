@@ -8,6 +8,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { Link } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { hasError } from "../reducers/slice/postsSlice";
+import { useSelector } from "react-redux";
+import { setAuthAlert } from "../reducers/slice/authSlice";
 
 export default function AlertDialog({
   textContent,
@@ -16,16 +18,18 @@ export default function AlertDialog({
   authError,
   setAuthError,
 }) {
+  const { authAlert } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
   const handleClose = () => {
-    setAuthError(false);
+    dispatch(setAuthAlert(false));
     dispatch(hasError(false));
   };
 
   return (
     <div>
       <Dialog
-        open={authError}
+        open={authAlert}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"

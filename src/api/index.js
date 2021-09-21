@@ -1,7 +1,13 @@
 import axios from "axios";
 import environment from "../../src/environment";
+import { setAuthAlert } from "../reducers/slice/authSlice";
+// import store from "../reducers/store";
 
-const API = axios.create({ baseURL: environment.baseUrl });
+const toggleAuthAlert = (bool) => async (dispatch) => {
+  dispatch(setAuthAlert(bool));
+};
+
+export const API = axios.create({ baseURL: environment.baseUrl });
 
 //Passing headers to backend for authorization
 API.interceptors.request.use((req) => {
@@ -12,6 +18,19 @@ API.interceptors.request.use((req) => {
   }
   return req;
 });
+
+//Intercept response
+
+API.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    // if (error.response.status === 401) store.dispatch(toggleAuthAlert(true));
+
+    return Promise.reject(error);
+  }
+);
 
 //-----------------------------------Posts-------------------------------------------------
 export const getPosts = () => API.get("/posts");
@@ -36,8 +55,14 @@ export const addTags = (id, tag) => API.post(`posts/tags/addTags/${id}`, tag);
 
 //----------------------------------Comments--------------------------------------------------------
 
+export const fetchComments = (parentPostId) =>
+  API.get(`posts/${parentPostId}/comments`);
+
 export const addComments = (id, payload) =>
   API.post(`posts/${id}/comments`, payload);
+
+export const fetchCommentReplies = (parentPostId, parentCommentId) =>
+  API.get(`posts/${parentPostId}/comments/${parentCommentId}/commentReplies`);
 
 export const addCommentReply = (postId, commentId, payload) =>
   API.post(`posts/${postId}/comments/${commentId}`, payload);

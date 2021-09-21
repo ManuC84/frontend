@@ -36,7 +36,8 @@ import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { fetchPosts } from '../../actions/posts';
+import { fetchPosts } from '../../reducers/slice/postsSlice';
+import { addNewNotification } from '../../reducers/slice/notificationsSlice';
 import { logout } from '../../reducers/slice/authSlice';
 import decode from 'jwt-decode';
 import HideOnScroll from '../../utils/HideNav';
@@ -47,6 +48,8 @@ import NotificationPanel from '../notificationPanel/NotificationPanel';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { Copyright } from '../../pages/auth/Auth';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import { useSelector } from 'react-redux';
+import { useGlobalContext } from '../../context';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -71,7 +74,7 @@ const NavButtons = ({ location }) => {
           Home
         </Button>
       </Link>
-      <Link style={{ textDecoration: 'none' }}>
+      <Link to="/about" style={{ textDecoration: 'none' }}>
         <Button
           className={classes.navButton}
           style={{
@@ -81,12 +84,12 @@ const NavButtons = ({ location }) => {
           About
         </Button>
       </Link>
-      <Link style={{ textDecoration: 'none' }}>
+      <Link to="#" style={{ textDecoration: 'none' }}>
         <Button className={classes.navButton} style={{}}>
           Contact
         </Button>
       </Link>
-      <Link style={{ textDecoration: 'none' }}>
+      <Link to="#" style={{ textDecoration: 'none' }}>
         <Button className={classes.navButton} style={{}}>
           Blog
         </Button>
@@ -102,19 +105,20 @@ const Nav = ({ appProps }) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const [drawer, setDrawer] = useState(false);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [openNotifications, setOpenNotifications] = useState(false);
   const [notificationMenu, setNotificationMenu] = useState(false);
+  const { notifications } = useSelector((state) => state.notifications);
   const history = useHistory();
   const location = useLocation();
   const ENDPOINT = environment.baseUrl;
+  const { setSnackbarOpen } = useGlobalContext();
 
   function capitalizeFirstLetter(string) {
     var words = string.split(' ');
     var CapitalizedWords = [];
     words.forEach((element) => {
       CapitalizedWords.push(
-        element[0].toUpperCase() + element.slice(1, element.length)
+        element[0].toUpperCase() + element.slice(1, element.length),
       );
     });
     return CapitalizedWords.join(' ');
@@ -126,22 +130,27 @@ const Nav = ({ appProps }) => {
     });
 
     socket.on('user', (res) => {
-      const response = JSON.parse(res);
+      // console.log(res);
+      // const response = JSON.parse(res);
+      console.log(res, user.data.result);
+      if (
+        res.parentUserId === (user.data.result._id || user.data.result.googleId)
+      ) {
+        // // Get the existing data
+        // var existing = localStorage.getItem('profile');
 
-      if (response._id === user.data.result._id) {
-        // Get the existing data
-        var existing = localStorage.getItem('profile');
+        // // If no existing data, create an array
+        // // Otherwise, convert the localStorage string to an array
+        // existing = existing ? JSON.parse(existing) : {};
 
-        // If no existing data, create an array
-        // Otherwise, convert the localStorage string to an array
-        existing = existing ? JSON.parse(existing) : {};
+        // // Add new data to localStorage Array
+        // existing.data.result['notifications'] = response.notifications;
 
-        // Add new data to localStorage Array
-        existing.data.result['notifications'] = response.notifications;
+        // // Save back to localStorage
+        // localStorage.setItem('profile', JSON.stringify(existing));
 
-        // Save back to localStorage
-        localStorage.setItem('profile', JSON.stringify(existing));
-        setUser(JSON.parse(localStorage.getItem('profile')));
+        // setUser(JSON.parse(localStorage.getItem('profile')));
+        dispatch(addNewNotification(res));
         setSnackbarOpen(true);
       }
     });
@@ -172,15 +181,6 @@ const Nav = ({ appProps }) => {
     setDrawer(true);
   };
 
-  //Close notification info snackbar
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setSnackbarOpen(false);
-  };
-
   return (
     <HideOnScroll {...appProps}>
       <AppBar elevation={3} className={classes.root}>
@@ -193,7 +193,7 @@ const Nav = ({ appProps }) => {
             <img src={logo} alt="logo" className={classes.logo} />
           </Link>
 
-          <NavButtons location={location} />
+          {/* <NavButtons location={location} /> */}
 
           {!user ? (
             <div>
@@ -225,8 +225,8 @@ const Nav = ({ appProps }) => {
                 endIcon={
                   <Badge
                     badgeContent={
-                      user?.data?.result?.notifications?.filter(
-                        (notification) => notification.read === false
+                      notifications.filter(
+                        (notification) => notification.read === false,
                       ).length
                     }
                     color="secondary"
@@ -384,15 +384,16 @@ const Nav = ({ appProps }) => {
                       </ListSubheader>
                       <Badge
                         badgeContent={
-                          user?.data?.result?.notifications?.filter(
-                            (notification) => notification.read === false
+                          notifications.filter(
+                            (notification) => notification.read === false,
                           ).length
                         }
                         color="secondary"
                         overlap="circle"
                         style={{ cursor: 'pointer' }}
                         onClick={() => setNotificationMenu(true)}
-                        alt="click for notifications"
+                        alt="badge"
+                        title="Click for notifications"
                         showZero
                       >
                         <Avatar
@@ -406,7 +407,10 @@ const Nav = ({ appProps }) => {
                       component={Link}
                       to="/auth"
                       button
-                      onClick={signout}
+                      onClick={() => {
+                        signout();
+                        setDrawer(false);
+                      }}
                     >
                       <ListItemText
                         style={{ display: 'flex', justifyContent: 'center' }}
@@ -434,15 +438,6 @@ const Nav = ({ appProps }) => {
             </div>
           </List>
         </Drawer>
-        <Snackbar
-          open={snackbarOpen}
-          autoHideDuration={6000}
-          onClose={handleClose}
-        >
-          <Alert onClose={handleClose} severity="error">
-            You have a new notification
-          </Alert>
-        </Snackbar>
 
         {user && openNotifications ? (
           <OutsideClickHandler

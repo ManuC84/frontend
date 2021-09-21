@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Avatar,
   Grid,
@@ -11,22 +11,30 @@ import {
   Menu,
   MenuItem,
   Fade,
-} from "@material-ui/core";
-import makeStyles from "./styles";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-
-import { ThumbUp, ThumbDown } from "@material-ui/icons";
-import ReadMore from "../../../utils/readMore/ReadMore";
-import moment from "moment";
-import { useSelector, useDispatch } from "react-redux";
+} from '@material-ui/core';
+import makeStyles from './styles';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
+import { ThumbUp, ThumbDown } from '@material-ui/icons';
+import ReadMore from '../../../utils/readMore/ReadMore';
+import moment from 'moment';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeCommentReply } from '../../../actions/comments';
+import TextEditor from '../../textEditor/TextEditor';
 import {
-  likeCommentReply,
+  deleteCommentReply,
   dislikeCommentReply,
-  removeCommentReply,
-} from "../../../actions/comments";
-import TextEditor from "../../textEditor/TextEditor";
+  likeCommentReply,
+} from '../../../reducers/slice/commentRepliesSlice';
 
-const CommentReplies = ({ post, comment, user, commentReply, error }) => {
+const CommentReplies = ({
+  post,
+  comment,
+  user,
+  commentReply,
+  error,
+  isNotification,
+}) => {
   const { isLoading } = useSelector((state) => state.posts);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -40,26 +48,38 @@ const CommentReplies = ({ post, comment, user, commentReply, error }) => {
   const handleLikeCommentReply = () => {
     if (user[0])
       dispatch(
-        likeCommentReply(post._id, comment._id, commentReply._id, {
+        likeCommentReply({
+          postId: post._id,
+          commentId: comment._id,
+          commentReplyId: commentReply._id,
           userId: userId,
-        })
+        }),
       );
   };
   const handleDislikeCommentReply = () => {
     if (user[0])
       dispatch(
-        dislikeCommentReply(post._id, comment._id, commentReply._id, {
+        dislikeCommentReply({
+          postId: post._id,
+          commentId: comment._id,
+          commentReplyId: commentReply._id,
           userId: userId,
-        })
+        }),
       );
   };
 
   const handleDelete = () => {
     let deleteAlert = window.confirm(
-      "Are you sure you want to delete this comment?"
+      'Are you sure you want to delete this comment?',
     );
     if (!deleteAlert) return;
-    dispatch(removeCommentReply(post._id, comment._id, commentReply._id));
+    dispatch(
+      deleteCommentReply({
+        postId: post._id,
+        commentId: comment._id,
+        commentReplyId: commentReply._id,
+      }),
+    );
   };
 
   // Comment's drop down menu related
@@ -79,10 +99,13 @@ const CommentReplies = ({ post, comment, user, commentReply, error }) => {
     <CircularProgress />
   ) : (
     <Grow in={true}>
-      <div>
+      <div className={isNotification && classes.notificationFadeOut}>
         <Divider variant="middle" />
         <CardContent className={classes.commentReply}>
           <Grid container wrap="nowrap" spacing={2}>
+            <Grid item>
+              <SubdirectoryArrowRightIcon color="disabled" />
+            </Grid>
             <Grid item>
               <Avatar
                 title={commentReply.creator[0]?.name}
@@ -93,15 +116,15 @@ const CommentReplies = ({ post, comment, user, commentReply, error }) => {
             <Grid item xs zeroMinWidth>
               <Typography
                 variant="h6"
-                style={{ margin: 0, textAlign: "left", fontSize: "0.9rem" }}
+                style={{ margin: 0, textAlign: 'left', fontSize: '0.9rem' }}
               >
                 {commentReply.creator[0]?.name}
               </Typography>
               <Typography
                 style={{
-                  textAlign: "left",
-                  color: "gray",
-                  fontSize: "0.8rem",
+                  textAlign: 'left',
+                  color: 'gray',
+                  fontSize: '0.8rem',
                 }}
               >
                 {moment(commentReply.createdAt).fromNow()}
@@ -112,8 +135,8 @@ const CommentReplies = ({ post, comment, user, commentReply, error }) => {
                   <ReadMore
                     lines={200}
                     content={commentReply.commentReply}
-                    variant={"body2"}
-                    color={"textPrimary"}
+                    variant={'body2'}
+                    color={'textPrimary'}
                   />
                 ) : (
                   <div>
@@ -122,7 +145,7 @@ const CommentReplies = ({ post, comment, user, commentReply, error }) => {
                       comment={comment}
                       commentReply={commentReply}
                       user={user}
-                      type={"commentReplyEdition"}
+                      type={'commentReplyEdition'}
                       setShowEditor={setShowEditor}
                       error={error}
                       isEditing={isEditing}
@@ -138,11 +161,8 @@ const CommentReplies = ({ post, comment, user, commentReply, error }) => {
                 <MoreVertIcon />
               </IconButton>
             </Grid>
-            {(user[0]?.data?.result?.googleId &&
-              user[0]?.data?.result?.googleId ===
-                commentReply?.creator[0]?.googleId) ||
-            (user[0]?.data?.result?._id &&
-              user[0]?.data?.result?._id === commentReply?.creator[0]?._id) ? (
+            {(user[0]?.data?.result?._id || user[0]?.data?.result?.googleId) ===
+            commentReply?.creator[0]?._id ? (
               <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}
@@ -153,12 +173,12 @@ const CommentReplies = ({ post, comment, user, commentReply, error }) => {
                 getContentAnchorEl={null}
                 disableScrollLock={true}
                 anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "center",
+                  vertical: 'bottom',
+                  horizontal: 'center',
                 }}
                 transformOrigin={{
-                  vertical: "top",
-                  horizontal: "center",
+                  vertical: 'top',
+                  horizontal: 'center',
                 }}
               >
                 <MenuItem onClick={handleEdit}>Edit</MenuItem>
@@ -175,12 +195,12 @@ const CommentReplies = ({ post, comment, user, commentReply, error }) => {
                 getContentAnchorEl={null}
                 disableScrollLock={true}
                 anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "center",
+                  vertical: 'bottom',
+                  horizontal: 'center',
                 }}
                 transformOrigin={{
-                  vertical: "top",
-                  horizontal: "center",
+                  vertical: 'top',
+                  horizontal: 'center',
                 }}
               >
                 <MenuItem onClick={handleClose}>Report</MenuItem>
@@ -190,16 +210,16 @@ const CommentReplies = ({ post, comment, user, commentReply, error }) => {
           {/* COMMENT REPLIES LIKES AND DISLIKES */}
           <div
             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}
           >
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                marginLeft: "2.5rem",
+                display: 'flex',
+                alignItems: 'center',
+                marginLeft: '2.5rem',
               }}
             >
               <div onClick={handleLikeCommentReply}>
@@ -207,7 +227,7 @@ const CommentReplies = ({ post, comment, user, commentReply, error }) => {
                   aria-label="Like"
                   disabled={!user[0]}
                   color={
-                    commentReply.likes.includes(userId) ? "primary" : "default"
+                    commentReply.likes.includes(userId) ? 'primary' : 'default'
                   }
                 >
                   <ThumbUp fontSize="small" />
@@ -220,8 +240,8 @@ const CommentReplies = ({ post, comment, user, commentReply, error }) => {
                   disabled={!user[0]}
                   color={
                     commentReply.dislikes.includes(userId)
-                      ? "secondary"
-                      : "default"
+                      ? 'secondary'
+                      : 'default'
                   }
                 >
                   <ThumbDown fontSize="small" />

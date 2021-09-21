@@ -1,40 +1,85 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   Grid,
   CircularProgress,
   LinearProgress,
   Typography,
-} from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import { useSelector, useDispatch } from "react-redux";
-import Post from "./post/Post";
-import { useStyles } from "./styles";
-import { infiniteFetch } from "../../actions/posts";
-import InfiniteScroll from "react-infinite-scroll-component";
-import "./styleOverride.css";
+} from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router';
+import Post from './post/Post';
+import { useStyles } from './styles';
+import {
+  fetchPosts,
+  fetchInfiniteScroll,
+} from '../../reducers/slice/postsSlice';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import './styleOverride.css';
+import { fetchNotificationsTest } from '../../reducers/slice/notificationsSlice';
 
 const Posts = () => {
   const [authError, setAuthError] = useState(false);
-  const { posts, isLoading, error, loadMorePosts } = useSelector(
-    (state) => state.posts
+  const user = useState(JSON.parse(localStorage.getItem('profile')));
+  const { posts, isLoading, status, error, loadMorePosts } = useSelector(
+    (state) => state.posts,
   );
 
   const classes = useStyles();
   const dispatch = useDispatch();
+  const location = useLocation();
 
-  const fetchImages = () => {
-    dispatch(infiniteFetch(posts.length));
+  let filteredPosts =
+    posts.length > 1
+      ? posts.filter(
+          (post) =>
+            post.image !== '/images/no-image.png' ||
+            post.provider === 'Twitter',
+        )
+      : posts;
+
+  //Fetch all posts if in home
+  useEffect(() => {
+    if (location.pathname === '/') dispatch(fetchPosts());
+  }, []);
+
+  //Fetch notifications
+  useEffect(() => {
+    if (user[0])
+      dispatch(
+        fetchNotificationsTest(
+          user[0]?.data?.result?._id || user[0]?.data?.result?.googleId,
+        ),
+      );
+  }, []);
+
+  const fetchInfinite = () => {
+    dispatch(fetchInfiniteScroll(posts.length));
   };
 
-  return isLoading ? (
+  return status === 'loading' ? (
     <div className={classes.progress}>
       <CircularProgress />
     </div>
-  ) : error.message === "Your search yielded no results, please try again" ? (
-    <div className={classes.tagError}>
+  ) : filteredPosts.length === 0 && status === 'suceeded' ? (
+    <div className={classes.errorMessage}>
+      <Alert severity="info">
+        <Typography>There's no posts to show</Typography>
+      </Alert>
+    </div>
+  ) : error.message ? (
+    <div className={classes.errorMessage}>
       <Alert severity="info">
         <Typography>{error.message}</Typography>
+      </Alert>
+    </div>
+  ) : status === 'failed' && error === 'Request failed with status code 404' ? (
+    <div className={classes.errorMessage}>
+      <Alert severity="info">
+        <Typography>
+          There's been an error, please try again in a few minutes
+        </Typography>
       </Alert>
     </div>
   ) : (
@@ -43,7 +88,7 @@ const Posts = () => {
         className={classes.infiniteComponent}
         width="100%"
         dataLength={posts.length}
-        next={fetchImages}
+        next={fetchInfinite}
         hasMore={loadMorePosts}
         loader={
           <div className={classes.infiniteProgress}>
@@ -53,7 +98,7 @@ const Posts = () => {
         endMessage={
           error === "You've reached the end" && (
             <Alert
-              style={{ display: "flex", justifyContent: "center" }}
+              style={{ display: 'flex', justifyContent: 'center' }}
               severity="info"
             >
               <Typography>{error}</Typography>
@@ -61,7 +106,7 @@ const Posts = () => {
           )
         }
       >
-        {posts.map((post) => (
+        {filteredPosts.map((post) => (
           <Post
             post={post}
             key={post._id}

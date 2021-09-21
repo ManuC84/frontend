@@ -25,7 +25,7 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     width: "100%",
   },
-  tagError: {
+  errorMessage: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",

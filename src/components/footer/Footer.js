@@ -1,25 +1,25 @@
-import React from "react";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import { Container, Grid } from "@material-ui/core";
-import Link from "@material-ui/core/Link";
-import logo from "../../img/freely_comment_logo.png";
-import clsx from "clsx";
-import FacebookIcon from "@material-ui/icons/Facebook";
-import TwitterIcon from "@material-ui/icons/Twitter";
-import InstagramIcon from "@material-ui/icons/Instagram";
-import LinkedInIcon from "@material-ui/icons/LinkedIn";
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import { Container, Grid } from '@material-ui/core';
+import Link from '@material-ui/core/Link';
+import logo from '../../img/freely_comment_logo.png';
+import clsx from 'clsx';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
 
 function Copyright() {
   const classes = useStyles();
   return (
-    <Typography variant="body2" className={classes.typography}>
-      {"Copyright © "}
+    <Typography variant="body2" className={classes.copyright}>
+      {'Copyright © '}
       <Link color="inherit" href="/">
         Freelycomment
-      </Link>{" "}
+      </Link>{' '}
       {new Date().getFullYear()} beta version still in development
-      {"."}
+      {'.'}
     </Typography>
   );
 }
@@ -30,40 +30,46 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   footer: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-around",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
     flexGrow: 1,
     padding: theme.spacing(3, 2),
-    marginTop: "auto",
+    marginTop: 'auto',
     backgroundColor: theme.palette.grey[800],
   },
+  copyright: {
+    textAlign: 'center',
+    marginTop: 30,
+    color: 'white',
+  },
   typography: {
-    color: "white",
-    textAlign: "center",
+    color: 'white',
+    textAlign: 'left',
   },
   footerContentContainer: {
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column',
 
     height: 200,
   },
   footerContent: {
-    padding: 5,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    padding: '5px 0',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
   footerHeading: {
     marginBottom: 10,
   },
   footerLink: {
-    cursor: "pointer",
-    color: "white",
-    "&:hover": {
-      color: "#0DDDC9",
+    cursor: 'pointer',
+    color: 'white',
+    '&:hover': {
+      color: '#0DDDC9',
     },
   },
+  icon: { paddingRight: 5 },
 }));
 
 export default function Footer() {
@@ -89,7 +95,7 @@ export default function Footer() {
                   className={clsx(
                     classes.typography,
                     classes.footerContent,
-                    classes.footerLink
+                    classes.footerLink,
                   )}
                 >
                   Home
@@ -101,7 +107,7 @@ export default function Footer() {
                   className={clsx(
                     classes.typography,
                     classes.footerContent,
-                    classes.footerLink
+                    classes.footerLink,
                   )}
                 >
                   About
@@ -113,7 +119,7 @@ export default function Footer() {
                   className={clsx(
                     classes.typography,
                     classes.footerContent,
-                    classes.footerLink
+                    classes.footerLink,
                   )}
                 >
                   Contact
@@ -125,7 +131,7 @@ export default function Footer() {
                   className={clsx(
                     classes.typography,
                     classes.footerContent,
-                    classes.footerLink
+                    classes.footerLink,
                   )}
                 >
                   Blog
@@ -147,40 +153,40 @@ export default function Footer() {
                 className={clsx(
                   classes.typography,
                   classes.footerContent,
-                  classes.footerLink
+                  classes.footerLink,
                 )}
               >
-                <FacebookIcon /> Facebook
+                <FacebookIcon className={classes.icon} /> Facebook
               </Typography>
               <Typography
                 variant="body2"
                 className={clsx(
                   classes.typography,
                   classes.footerContent,
-                  classes.footerLink
+                  classes.footerLink,
                 )}
               >
-                <LinkedInIcon /> Linkedin
+                <LinkedInIcon className={classes.icon} /> Linkedin
               </Typography>
               <Typography
                 variant="body2"
                 className={clsx(
                   classes.typography,
                   classes.footerContent,
-                  classes.footerLink
+                  classes.footerLink,
                 )}
               >
-                <InstagramIcon /> Instagram
+                <InstagramIcon className={classes.icon} /> Instagram
               </Typography>
               <Typography
                 variant="body2"
                 className={clsx(
                   classes.typography,
                   classes.footerContent,
-                  classes.footerLink
+                  classes.footerLink,
                 )}
               >
-                <TwitterIcon /> Twitter
+                <TwitterIcon className={classes.icon} /> Twitter
               </Typography>
             </div>
           </div>
@@ -198,7 +204,7 @@ export default function Footer() {
                 className={clsx(
                   classes.typography,
                   classes.footerContent,
-                  classes.footerLink
+                  classes.footerLink,
                 )}
               >
                 Contact us
@@ -208,7 +214,7 @@ export default function Footer() {
                 className={clsx(
                   classes.typography,
                   classes.footerContent,
-                  classes.footerLink
+                  classes.footerLink,
                 )}
               >
                 Faq

@@ -27,6 +27,7 @@ import {
   fetchPosts,
   fetchPostsByTags,
 } from "../../actions/posts";
+import { createPost } from "../../reducers/slice/postsSlice";
 import { invalid } from "moment";
 import { useSelector } from "react-redux";
 import AddIcon from "@material-ui/icons/Add";
@@ -41,6 +42,8 @@ const Search = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const user = JSON.parse(localStorage.getItem("profile"));
   const [selectedValue, setSelectedValue] = useState(1);
+
+  const userData = user?.data?.result;
 
   const uniqueTags = new Set(tagButtonContent);
 
@@ -74,7 +77,10 @@ const Search = () => {
 
     if (searchType === "url") {
       dispatch(
-        submitSearchUrl({ url: searchUrl, creator: user?.data?.result })
+        createPost({
+          url: searchUrl,
+          creator: { name: userData?.name, _id: userData?._id },
+        })
       );
       setSearchError(false);
       setSearchUrl("");
