@@ -117,11 +117,7 @@ export default function Auth() {
       dispatch(auth({ data: { result, token } }));
       history.push('/');
     } catch (error) {
-      dispatch(
-        hasAuthError({
-          googleError: 'Google sign in was unsuccessful. Try Again later',
-        }),
-      );
+      console.log(error);
     }
   };
 
