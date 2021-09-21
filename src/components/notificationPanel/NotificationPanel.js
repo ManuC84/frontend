@@ -47,7 +47,6 @@ const NotificationPanel = ({
   const classes = makeStyles();
   const dispatch = useDispatch();
   const { notifications } = useSelector((state) => state.notifications);
-  // const { setExpanded } = useGlobalContext();
 
   const fetchNotification = (
     postId,
@@ -56,56 +55,14 @@ const NotificationPanel = ({
     userId,
     notificationId,
   ) => {
-    // dispatch(getNotificationContent(postId, commentId, commentReplyId, userId));
     dispatch(readNotification(notificationId));
     dispatch(fetchNotificationPost(postId));
     dispatch(fetchSingleComment({ postId, commentId }));
     dispatch(fetchSingleCommentReply({ postId, commentId, commentReplyId }));
 
-    // var existing = localStorage.getItem('profile');
-
-    // existing = existing ? JSON.parse(existing) : {};
-    // let notifications = existing.data.result['notifications'];
-    // let updatedNotifications = notifications.map((notification) =>
-    //   notification.commentReplyId === commentReplyId
-    //     ? (notification.read = true)
-    //     : notification,
-    // );
-    // notifications = updatedNotifications;
-
-    // localStorage.setItem('profile', JSON.stringify(existing));
-    // setUser(existing);
     if (setDrawer) setDrawer(false);
     if (setOpenNotifications) setOpenNotifications(false);
   };
-
-  // const clearAllNotifications = (type) => {
-  //   let existing;
-  //   if (type == 'clear') {
-  //     dispatch(clearAll(user?.data?.result?._id, { type: type }));
-  //     existing = localStorage.getItem('profile');
-
-  //     existing = existing ? JSON.parse(existing) : {};
-  //     existing.data.result['notifications'] = [];
-
-  //     localStorage.setItem('profile', JSON.stringify(existing));
-  //     setUser(existing);
-  //   }
-  //   if (type == 'read') {
-  //     dispatch(clearAll(user?.data?.result?._id, { type: type }));
-  //     existing = localStorage.getItem('profile');
-
-  //     existing = existing ? JSON.parse(existing) : {};
-  //     let notifications = existing.data.result['notifications'];
-  //     let updatedNotifications = notifications.map(
-  //       (notification) => (notification.read = true),
-  //     );
-  //     notifications = updatedNotifications;
-
-  //     localStorage.setItem('profile', JSON.stringify(existing));
-  //     setUser(existing);
-  //   }
-  // };
 
   return (
     <Fade in={openNotifications} timeout={500}>

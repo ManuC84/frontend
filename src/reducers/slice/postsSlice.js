@@ -81,41 +81,7 @@ export const postsSlice = createSlice({
     toggleIsNotification: (state, action) => {
       state.isNotification = action.payload;
     },
-    // fetchAll: (state, action) => {
-    //   return {
-    //     ...state,
-    //     posts: action.payload.filter(
-    //       (post) => post.image !== "/images/no-image.png"
-    //     ),
-    //     isLoading: false,
-    //     isNotification: false,
-    //   };
-    // },
-    fetchSinglePost: (state, action) => {
-      // return {
-      //   ...state,
-      //   posts: action.payload,
-      //   loadMorePosts: false,
-      //   isLoading: false,
-      //   isNotification: false,
-      // };
-    },
-    fetchInfinite: (state, action) => {
-      // return {
-      //   ...state,
-      //   posts: state.posts.concat(
-      //     action.payload.filter((post) => post.image !== "/images/no-image.png")
-      //   ),
-      // };
-    },
-    // create: (state, action) => {
-    //   return {
-    //   //   ...state,
-    //   //   posts: action.payload,
-    //   //   loadMorePosts: false,
-    //   //   error: false,
-    //   // };
-    // },
+
     fetchByTag: (state, action) => {
       return {
         ...state,
@@ -133,136 +99,7 @@ export const postsSlice = createSlice({
         ),
       };
     },
-    fetchComments: (state, action) => {
-      // const posts = state.posts;
-      // const post = posts.find(
-      //   (post) => post._id === action.payload[0].parentPostId
-      // );
-      // post.comments = action.payload;
-      // state.isLoading = false;
-    },
 
-    createComment: (state, action) => {
-      // const post = state.posts.find(
-      //   (post) => post._id === action.payload.parentPostId
-      // );
-      // post.comments.push(action.payload);
-      // state.isLoading = false;
-      // state.isNotification = false;
-    },
-    fetchCommentReplies: (state, action) => {
-      // const posts = state.posts;
-      // const post = posts.find(
-      //   (post) => post._id === action.payload[0].parentPostId
-      // );
-      // const comments = post.comments.find(
-      //   (comment) => comment._id === action.payload[0].parentCommentId
-      // );
-      // comments.commentReplies = action.payload;
-      // state.isLoading = false;
-    },
-
-    createCommentReply: (state, action) => {
-      // return {
-      //   ...state,
-      //   posts: state.posts.map((post) =>
-      //     post._id === action.payload._id ? action.payload : post
-      //   ),
-      //   isLoading: false,
-      //   isNotification: false,
-      // };
-    },
-
-    addPostLike: (state, action) => {
-      // return {
-      //   ...state,
-      //   posts: state.posts.map((post) =>
-      //     post._id === action.payload._id ? action.payload : post
-      //   ),
-      //   isNotification: false,
-      // };
-    },
-    addPostDislike: (state, action) => {
-      // return {
-      //   ...state,
-      //   posts: state.posts.map((post) =>
-      //     post._id === action.payload._id ? action.payload : post
-      //   ),
-      //   isNotification: false,
-      // };
-    },
-    addCommentLike: (state, action) => {
-      // return {
-      //   ...state,
-      //   posts: state.posts.map((post) =>
-      //     post._id === action.payload._id ? action.payload : post
-      //   ),
-      //   isNotification: false,
-      // };
-    },
-    addCommentDislike: (state, action) => {
-      // return {
-      //   ...state,
-      //   posts: state.posts.map((post) =>
-      //     post._id === action.payload._id ? action.payload : post
-      //   ),
-      //   isNotification: false,
-      // };
-    },
-    addCommentReplyLike: (state, action) => {
-      // return {
-      //   ...state,
-      //   posts: state.posts.map((post) =>
-      //     post._id === action.payload._id ? action.payload : post
-      //   ),
-      //   isNotification: false,
-      // };
-    },
-    addCommentReplyDislike: (state, action) => {
-      // return {
-      //   ...state,
-      //   posts: state.posts.map((post) =>
-      //     post._id === action.payload._id ? action.payload : post
-      //   ),
-      //   isNotification: false,
-      // };
-    },
-    editComment: (state, action) => {
-      // return {
-      //   ...state,
-      //   posts: state.posts.map((post) =>
-      //     post._id === action.payload._id ? action.payload : post
-      //   ),
-      //   isNotification: false,
-      // };
-    },
-    editCommentReply: (state, action) => {
-      // return {
-      //   ...state,
-      //   posts: state.posts.map((post) =>
-      //     post._id === action.payload._id ? action.payload : post
-      //   ),
-      //   isNotification: false,
-      // };
-    },
-    deleteComment: (state, action) => {
-      // return {
-      //   ...state,
-      //   posts: state.posts.map((post) =>
-      //     post._id === action.payload._id ? action.payload : post
-      //   ),
-      //   isNotification: false,
-      // };
-    },
-    deleteCommentReply: (state, action) => {
-      // return {
-      //   ...state,
-      //   posts: state.posts.map((post) =>
-      //     post._id === action.payload._id ? action.payload : post
-      //   ),
-      //   isNotification: false,
-      // };
-    },
     showNotificationContent: (state, action) => {
       return {
         ...state,
@@ -312,6 +149,7 @@ export const postsSlice = createSlice({
       state.status = 'succeeded';
 
       state.posts = action.payload;
+      state.error = false;
       state.loadMorePosts = false;
     },
     [createPost.rejected]: (state, action) => {
