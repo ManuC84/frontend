@@ -111,7 +111,7 @@ const Nav = ({ appProps }) => {
   const history = useHistory();
   const location = useLocation();
   const ENDPOINT = environment.baseUrl;
-  const { setSnackbarOpen} = useGlobalContext();
+  const { setSnackbarOpen } = useGlobalContext();
 
   function capitalizeFirstLetter(string) {
     var words = string.split(' ');
@@ -181,8 +181,6 @@ const Nav = ({ appProps }) => {
     setDrawer(true);
   };
 
-  
-
   return (
     <HideOnScroll {...appProps}>
       <AppBar elevation={3} className={classes.root}>
@@ -195,7 +193,7 @@ const Nav = ({ appProps }) => {
             <img src={logo} alt="logo" className={classes.logo} />
           </Link>
 
-          <NavButtons location={location} />
+          {/* <NavButtons location={location} /> */}
 
           {!user ? (
             <div>
@@ -440,7 +438,6 @@ const Nav = ({ appProps }) => {
             </div>
           </List>
         </Drawer>
-        
 
         {user && openNotifications ? (
           <OutsideClickHandler

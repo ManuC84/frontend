@@ -74,9 +74,13 @@ const Post = ({ post, error, authError, setAuthError }) => {
     if (!isNotification) dispatch(fetchComments(post._id));
   }, []);
 
-  const postComments = comments
-    .filter((comment) => comment.parentPostId === post._id)
-    .sort(sortFunctionDesc);
+  //Pending to find solution for error when comment has been deleted and db returns null
+  const postComments =
+    comments[0] !== null
+      ? comments
+          .filter((comment) => comment.parentPostId === post._id)
+          .sort(sortFunctionDesc)
+      : [];
 
   useEffect(() => {
     if (isNotification) setExpanded(true);

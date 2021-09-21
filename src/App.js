@@ -15,7 +15,7 @@ import { useGlobalContext } from './context';
 
 function App(props) {
   const { snackbarOpen, setSnackbarOpen } = useGlobalContext();
-  console.log(snackbarOpen);
+
   //Close notification info snackbar
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -46,7 +46,7 @@ function App(props) {
         open={snackbarOpen}
         autoHideDuration={6000}
         onClose={handleClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
       >
         <Alert onClose={handleClose} severity="error">
           You have a new notification

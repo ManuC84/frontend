@@ -40,6 +40,9 @@ const TextEditor = ({
   const inputRef = useRef(null);
   const history = useHistory();
   const { status } = useSelector((state) => state.comments);
+  const { error: commentReplyError } = useSelector(
+    (state) => state.commentReplies,
+  );
   const userData = user[0]?.data?.result;
 
   const handleShowEditor = () => setShowEditor(false);
@@ -87,7 +90,7 @@ const TextEditor = ({
 
     if (type === 'commentReplies') {
       setLoading(true);
-      await dispatch(
+      dispatch(
         createCommentReply({
           postId: post._id,
           commentId: comment._id,
@@ -100,6 +103,9 @@ const TextEditor = ({
         }),
       );
       setLoading(false);
+
+      if (commentReplyError === 'Request failed with status code 404')
+        return window.alert('This comment has been deleted');
 
       if (scrollRef.current) {
         scrollRef.current.scrollIntoView({
