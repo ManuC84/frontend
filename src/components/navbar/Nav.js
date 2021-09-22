@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import {
   AppBar,
   Button,
@@ -50,6 +50,8 @@ import { Copyright } from '../../pages/auth/Auth';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { useSelector } from 'react-redux';
 import { useGlobalContext } from '../../context';
+import EditIcon from '@material-ui/icons/Edit';
+import Upload from '../../utils/Upload';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -113,6 +115,11 @@ const Nav = ({ appProps }) => {
   const ENDPOINT = environment.baseUrl;
   const { setSnackbarOpen } = useGlobalContext();
 
+  //upload profile photo modal
+  const [openModal, setOpenModal] = React.useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
+
   function capitalizeFirstLetter(string) {
     var words = string.split(' ');
     var CapitalizedWords = [];
@@ -130,26 +137,9 @@ const Nav = ({ appProps }) => {
     });
 
     socket.on('user', (res) => {
-      // console.log(res);
-      // const response = JSON.parse(res);
-      console.log(res, user.data.result);
       if (
         res.parentUserId === (user.data.result._id || user.data.result.googleId)
       ) {
-        // // Get the existing data
-        // var existing = localStorage.getItem('profile');
-
-        // // If no existing data, create an array
-        // // Otherwise, convert the localStorage string to an array
-        // existing = existing ? JSON.parse(existing) : {};
-
-        // // Add new data to localStorage Array
-        // existing.data.result['notifications'] = response.notifications;
-
-        // // Save back to localStorage
-        // localStorage.setItem('profile', JSON.stringify(existing));
-
-        // setUser(JSON.parse(localStorage.getItem('profile')));
         dispatch(addNewNotification(res));
         setSnackbarOpen(true);
       }
@@ -402,6 +392,21 @@ const Nav = ({ appProps }) => {
                           src={user?.data?.result?.imageUrl}
                         />
                       </Badge>
+                      {user.data.result._id && (
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            marginTop: 5,
+                          }}
+                        >
+                          <EditIcon
+                            onClick={handleOpenModal}
+                            style={{ cursor: 'pointer' }}
+                          />{' '}
+                          <ListSubheader>Edit your profile photo</ListSubheader>
+                        </div>
+                      )}
                     </ListItem>
                     <ListItem
                       component={Link}
@@ -453,10 +458,15 @@ const Nav = ({ appProps }) => {
               openNotifications={openNotifications}
               setOpenNotifications={setOpenNotifications}
               setDrawer={setDrawer}
-              setOpenNotifications={setOpenNotifications}
             />
           </OutsideClickHandler>
         ) : null}
+        <Upload
+          openModal={openModal}
+          handleCloseModal={handleCloseModal}
+          user={user}
+          setOpenModal={setOpenModal}
+        />
       </AppBar>
     </HideOnScroll>
   );
