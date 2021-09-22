@@ -46,11 +46,13 @@ const useStyles = makeStyles((theme) => ({
   typography: {
     color: 'white',
     textAlign: 'left',
+    [theme.breakpoints.down('xs')]: {
+      textAlign: 'center',
+    },
   },
   footerContentContainer: {
     display: 'flex',
     flexDirection: 'column',
-
     height: 200,
   },
   footerContent: {
@@ -58,6 +60,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    [theme.breakpoints.down('xs')]: {
+      justifyContent: 'center',
+    },
   },
   footerHeading: {
     marginBottom: 10,
