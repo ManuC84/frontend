@@ -106,7 +106,7 @@ export default function Footer() {
                   Home
                 </Typography>
               </Link>
-              <Link href="/about">
+              <Link>
                 <Typography
                   variant="body2"
                   className={clsx(

@@ -76,7 +76,7 @@ const NavButtons = ({ location }) => {
           Home
         </Button>
       </Link>
-      <Link to="/about" style={{ textDecoration: 'none' }}>
+      <Link to="#" style={{ textDecoration: 'none' }}>
         <Button
           className={classes.navButton}
           style={{
@@ -291,26 +291,27 @@ const Nav = ({ appProps }) => {
                   <ListItemText>Home</ListItemText>
                 </ListItem>
                 <ListItem
-                  component={Link}
-                  to="/about"
+                  // component={Link}
+                  // to="/about"
                   button
-                  onClick={() => {
-                    setDrawer(false);
-                    setNotificationMenu(false);
-                  }}
+                  disabled
+                  // onClick={() => {
+                  //   setDrawer(false);
+                  //   setNotificationMenu(false);
+                  // }}
                 >
                   <ListItemIcon>
                     <InfoIcon />
                   </ListItemIcon>
                   <ListItemText>About</ListItemText>
                 </ListItem>
-                <ListItem button>
+                <ListItem button disabled>
                   <ListItemIcon>
                     <ContactMailIcon />
                   </ListItemIcon>
                   <ListItemText>Contact</ListItemText>
                 </ListItem>
-                <ListItem button>
+                <ListItem button disabled>
                   <ListItemIcon>
                     <BookIcon />
                   </ListItemIcon>
