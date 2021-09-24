@@ -241,11 +241,11 @@ const Post = ({ post, error, authError, setAuthError }) => {
             )}
           </CardContent>
         ) : (
-          <Link href={post.image} target="_blank" title="Go to image">
+          <Link href={post.url} target="_blank" title="Go to website">
             <CardMedia
               className={classes.media}
               image={post.image}
-              title="image"
+              title="go to website"
             />
           </Link>
         )}
