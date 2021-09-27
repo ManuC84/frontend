@@ -22,9 +22,8 @@ import { fetchNotificationsTest } from '../../reducers/slice/notificationsSlice'
 const Posts = () => {
   const [authError, setAuthError] = useState(false);
   const user = useState(JSON.parse(localStorage.getItem('profile')));
-  const { posts, isLoading, status, error, loadMorePosts } = useSelector(
-    (state) => state.posts,
-  );
+  const { posts, isLoading, status, error, loadMorePosts, isNotification } =
+    useSelector((state) => state.posts);
 
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -96,7 +95,8 @@ const Posts = () => {
           </div>
         }
         endMessage={
-          error === "You've reached the end" && (
+          error === "You've reached the end" &&
+          !isNotification && (
             <Alert
               style={{ display: 'flex', justifyContent: 'center' }}
               severity="info"
