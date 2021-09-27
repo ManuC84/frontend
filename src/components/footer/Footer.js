@@ -68,10 +68,14 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 10,
   },
   footerLink: {
+    width: 'fit-content',
     cursor: 'pointer',
     color: 'white',
     '&:hover': {
       color: '#0DDDC9',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: 'auto',
     },
   },
   icon: { paddingRight: 5 },
