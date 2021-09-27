@@ -15,7 +15,6 @@ import { useGlobalContext } from './context';
 
 function App(props) {
   const { snackbarOpen, setSnackbarOpen } = useGlobalContext();
-  console.log(process.env.REACT_APP_BUCKET_NAME);
 
   //Close notification info snackbar
   const handleClose = (event, reason) => {
