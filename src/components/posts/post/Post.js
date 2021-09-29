@@ -342,11 +342,9 @@ const Post = ({ post, error, authError, setAuthError }) => {
         {!user[0] && (
           <Collapse in={showLikeAuthAlert}>
             <CardContent style={{ padding: '0' }}>
-              {showLikeAuthAlert && (
-                <Alert severity="info">
-                  Please log in to like and dislike posts
-                </Alert>
-              )}
+              <Alert severity="info">
+                Please log in to like and dislike posts
+              </Alert>
             </CardContent>
           </Collapse>
         )}
