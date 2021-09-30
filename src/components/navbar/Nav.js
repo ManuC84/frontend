@@ -163,7 +163,6 @@ const Nav = ({ appProps }) => {
 
   const signout = () => {
     dispatch(logout());
-    history.push('/auth');
     setUser(null);
   };
 
