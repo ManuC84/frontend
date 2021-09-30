@@ -150,6 +150,8 @@ const Post = ({ post, error, authError, setAuthError }) => {
         return;
       }
     }
+    if (!tag)
+      return setAddTagError({ error: 'Please enter a tag', bool: true });
     dispatch(addTag(post._id, { tag: tag }));
     setTag('');
     textRef.current.value = '';

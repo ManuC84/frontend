@@ -296,7 +296,7 @@ const Search = () => {
           </div>
         )}
         <Collapse in={searchError}>
-          {searchError && <Alert severity="error">{errorMessage}</Alert>}
+          <Alert severity="error">{errorMessage}</Alert>
         </Collapse>
       </Paper>
     </div>
