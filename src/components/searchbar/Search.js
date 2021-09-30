@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   Container,
   Paper,
@@ -17,30 +17,30 @@ import {
   Chip,
   Select,
   MenuItem,
-} from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import CloseIcon from "@material-ui/icons/Close";
-import SearchBar from "material-ui-search-bar";
-import makeStyles from "./styles";
+} from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+import CloseIcon from '@material-ui/icons/Close';
+import SearchBar from 'material-ui-search-bar';
+import makeStyles from './styles';
 import {
   submitSearchUrl,
   fetchPosts,
   fetchPostsByTags,
-} from "../../actions/posts";
-import { createPost } from "../../reducers/slice/postsSlice";
-import { invalid } from "moment";
-import { useSelector } from "react-redux";
-import AddIcon from "@material-ui/icons/Add";
-import ClearIcon from "@material-ui/icons/Clear";
+} from '../../actions/posts';
+import { createPost } from '../../reducers/slice/postsSlice';
+import { invalid } from 'moment';
+import { useSelector } from 'react-redux';
+import AddIcon from '@material-ui/icons/Add';
+import ClearIcon from '@material-ui/icons/Clear';
 
 const Search = () => {
-  const [searchUrl, setSearchUrl] = useState("");
-  const [searchTags, setSearchTags] = useState("");
+  const [searchUrl, setSearchUrl] = useState('');
+  const [searchTags, setSearchTags] = useState('');
   const [tagButtonContent, setTagButtonContent] = useState([]);
-  const [searchType, setSearchType] = useState("url");
+  const [searchType, setSearchType] = useState('url');
   const [searchError, setSearchError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const user = JSON.parse(localStorage.getItem("profile"));
+  const [errorMessage, setErrorMessage] = useState('');
+  const user = JSON.parse(localStorage.getItem('profile'));
   const [selectedValue, setSelectedValue] = useState(1);
 
   const userData = user?.data?.result;
@@ -51,47 +51,56 @@ const Search = () => {
   const { posts, error } = useSelector((state) => state.posts);
   const classes = makeStyles();
   const urlRegex = new RegExp(
-    /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i
+    /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i,
   );
   const urlCheck = urlRegex.test(searchUrl);
 
   // Handle search submit
-  const handleSubmit = () => {
-    if (!searchUrl && searchType === "url") {
+  const handleSubmit = useCallback(() => {
+    if (!searchUrl && searchType === 'url') {
       setSearchError(true);
-      setErrorMessage("Please enter a value");
+      setErrorMessage('Please enter a value');
       return;
     }
 
-    if (tagButtonContent.length === 0 && searchType === "tags") {
+    if (tagButtonContent.length === 0 && searchType === 'tags') {
       setSearchError(true);
-      setErrorMessage("Please enter a tag");
+      setErrorMessage('Please enter a tag');
       return;
     }
 
-    if (searchUrl && !urlCheck && searchType === "url") {
+    if (searchUrl && !urlCheck && searchType === 'url') {
       setSearchError(true);
-      setErrorMessage("Please enter a valid url");
+      setErrorMessage('Please enter a valid url');
       return;
     }
 
-    if (searchType === "url") {
+    if (searchType === 'url') {
       dispatch(
         createPost({
           url: searchUrl,
           creator: { name: userData?.name, _id: userData?._id },
-        })
+        }),
       );
       setSearchError(false);
-      setSearchUrl("");
+      setSearchUrl('');
     }
 
-    if (searchType === "tags") {
+    if (searchType === 'tags') {
       dispatch(fetchPostsByTags({ tags: Array.from(uniqueTags) }));
       setTagButtonContent([]);
       setSearchError(false);
     }
-  };
+  }, [
+    dispatch,
+    searchType,
+    searchUrl,
+    tagButtonContent.length,
+    uniqueTags,
+    urlCheck,
+    userData?._id,
+    userData?.name,
+  ]);
 
   // Fetch all posts on load
   useEffect(() => {
@@ -110,40 +119,40 @@ const Search = () => {
   // Enter press for submit search
   useEffect(() => {
     const listener = (e) => {
-      if (e.code === "Enter" || e.code === "NumpadEnter") {
+      if (e.code === 'Enter' || e.code === 'NumpadEnter') {
         handleSubmit();
       }
     };
-    document.addEventListener("keydown", listener);
+    document.addEventListener('keydown', listener);
     return () => {
-      document.removeEventListener("keydown", listener);
+      document.removeEventListener('keydown', listener);
     };
   }, [handleSubmit]);
 
   // Handle tag button creation
   const handleTags = () => {
     setTagButtonContent([...tagButtonContent, searchTags]);
-    setSearchTags("");
+    setSearchTags('');
   };
 
   // Handle tag key behavior
   useEffect(() => {
-    if (searchType === "tags") {
+    if (searchType === 'tags') {
       const listener = (e) => {
-        if (e.code === "Comma" || e.code === "Tab") {
+        if (e.code === 'Comma' || e.code === 'Tab') {
           if (tagButtonContent.length > 9) {
-            setErrorMessage("Maximum of 10 tags allowed");
+            setErrorMessage('Maximum of 10 tags allowed');
             setSearchError(true);
             return;
           }
           e.preventDefault();
           handleTags();
-          setSearchTags("");
+          setSearchTags('');
         }
       };
-      document.addEventListener("keydown", listener);
+      document.addEventListener('keydown', listener);
       return () => {
-        document.removeEventListener("keydown", listener);
+        document.removeEventListener('keydown', listener);
       };
     }
   }, [handleTags]);
@@ -151,21 +160,21 @@ const Search = () => {
   // Handle tag delete
   const handleTagDelete = (index) => {
     setTagButtonContent(
-      tagButtonContent.filter((tag, tagIdx) => tagIdx !== index)
+      tagButtonContent.filter((tag, tagIdx) => tagIdx !== index),
     );
   };
 
   // Handle radio buttons
   const handleUrlButton = () => {
-    setSearchType("url");
-    setSearchTags("");
+    setSearchType('url');
+    setSearchTags('');
     setTagButtonContent([]);
     setSearchError(false);
   };
 
   const handleTagsButton = () => {
-    setSearchType("tags");
-    setSearchUrl("");
+    setSearchType('tags');
+    setSearchUrl('');
     setSearchError(false);
   };
 
@@ -175,33 +184,33 @@ const Search = () => {
         <div className={classes.searchBarContainer}>
           <SearchBar
             inputProps={
-              searchType === "tags"
+              searchType === 'tags'
                 ? {
                     maxLength: 32,
                   }
                 : {}
             }
-            value={searchType === "url" ? searchUrl : searchTags}
+            value={searchType === 'url' ? searchUrl : searchTags}
             onChange={
-              searchType === "url"
+              searchType === 'url'
                 ? (newValue) => setSearchUrl(newValue)
                 : (newValue) => setSearchTags(newValue)
             }
             onCancelSearch={() =>
-              searchType === "url" ? dispatch(fetchPosts()) : handleTags()
+              searchType === 'url' ? dispatch(fetchPosts()) : handleTags()
             }
             closeIcon={
-              searchType === "tags" ? (
-                <AddIcon style={{ color: "grey" }} />
+              searchType === 'tags' ? (
+                <AddIcon style={{ color: 'grey' }} />
               ) : (
-                <ClearIcon style={{ color: "grey" }} />
+                <ClearIcon style={{ color: 'grey' }} />
               )
             }
             className={classes.searchBar}
             placeholder={
-              searchType === "url"
-                ? "Search url..."
-                : "Search comma separated tags..."
+              searchType === 'url'
+                ? 'Search url...'
+                : 'Search comma separated tags...'
             }
           />
 
@@ -229,7 +238,7 @@ const Search = () => {
             </RadioGroup>
           </FormControl>
           <div
-            style={{ display: "flex", flexDirection: "column", width: "150px" }}
+            style={{ display: 'flex', flexDirection: 'column', width: '150px' }}
           >
             <FormControl variant="outlined">
               <InputLabel id="demo-simple-select-label">Category</InputLabel>
@@ -240,20 +249,17 @@ const Search = () => {
                 onChange={(event) => setSelectedValue(event.target.value)}
                 MenuProps={{
                   anchorOrigin: {
-                    vertical: "bottom",
-                    horizontal: "center",
+                    vertical: 'bottom',
+                    horizontal: 'center',
                   },
                   transformOrigin: {
-                    vertical: "top",
-                    horizontal: "center",
+                    vertical: 'top',
+                    horizontal: 'center',
                   },
                   getContentAnchorEl: null,
                   disableScrollLock: true,
                 }}
               >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
                 <MenuItem value={1}>News</MenuItem>
                 <MenuItem value={2}>Videos</MenuItem>
                 <MenuItem value={3}>Social Media</MenuItem>

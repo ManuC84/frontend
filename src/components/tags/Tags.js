@@ -1,55 +1,97 @@
-import React from "react";
+import React from 'react';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Chip from '@material-ui/core/Chip';
+import { Button, Collapse, Grow, TextField } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+import { useDispatch } from 'react-redux';
+import { fetchPostsByTags } from '../../actions/posts';
+import CloseIcon from '@material-ui/icons/Close';
 
-const Tags = () => {
+const Tags = ({
+  openTagModal,
+  handleCloseTagsModal,
+  post,
+  setTag,
+  handleAddTags,
+  textRef,
+  addTagError,
+}) => {
+  const descriptionElementRef = React.useRef(null);
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    if (openTagModal) {
+      const { current: descriptionElement } = descriptionElementRef;
+      if (descriptionElement !== null) {
+        descriptionElement.focus();
+      }
+    }
+  }, [openTagModal]);
+
   return (
     <div>
-      {/* TAGS PENDING TO FIT THEM SOMEWHERE */}
-      {/* <CardContent style={{ padding: "0 16px" }}>
-        <Typography>Tags</Typography>
-        {!post.tags.length ? (
-          <Typography variant="body2" color="textSecondary" component="p">
-            This post contains no tags, add some!
-          </Typography>
-        ) : (
-          <ReadMore
-            lines={80}
-            content={post.tags.map((tag) => "#" + tag + ", ").join("")}
-            variant={"body2"}
-            color={"textSecondary"}
+      <Dialog
+        open={openTagModal}
+        onClose={handleCloseTagsModal}
+        scroll={'paper'}
+        aria-labelledby="scroll-dialog-title"
+        aria-describedby="scroll-dialog-description"
+      >
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <DialogTitle id="scroll-dialog-title">Tags</DialogTitle>
+          <CloseIcon
+            onClick={handleCloseTagsModal}
+            style={{ padding: '16px 24px', cursor: 'pointer' }}
           />
-        )}
-      </CardContent>
-      <CardContent className={classes.addTagContainer}>
-        <form onSubmit={handleAddTags}>
+        </div>
+        <DialogContent dividers={true}>
+          {post.tags.length > 0 ? (
+            <div>
+              {post.tags.map((tag, idx) => (
+                <Grow in={true}>
+                  <Chip
+                    label={tag}
+                    key={idx}
+                    style={{ margin: 5, cursor: 'pointer' }}
+                    color="primary"
+                    onClick={(e) => {
+                      dispatch(fetchPostsByTags({ tags: [tag] }));
+                      handleCloseTagsModal();
+                    }}
+                  />
+                </Grow>
+              ))}
+            </div>
+          ) : (
+            <Alert severity="info">This post has no tags yet, add some!</Alert>
+          )}
+        </DialogContent>
+        <DialogActions style={{ justifyContent: 'center' }}>
           <TextField
-            label="Tag"
+            variant="outlined"
             size="small"
-            required
+            type="text"
             onChange={(e) => setTag(e.target.value)}
             inputRef={textRef}
-            className={classes.addTagInput}
           />
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            className={classes.addTagButton}
-            type="submit"
-          >
-            Add tag!
+          <Button variant="outlined" onClick={handleAddTags}>
+            Add Tag
           </Button>
-        </form>
+        </DialogActions>
+
         <Collapse in={addTagError.bool}>
-          {addTagError.bool && post._id === addTagError.postsId ? (
-            <Alert
-              severity="error"
-              onClick={() => setAddTagError({ bool: false })}
-            >
-              {addTagError.error}
-            </Alert>
-          ) : null}
+          <Alert severity="error">{addTagError.error}</Alert>
         </Collapse>
-      </CardContent> */}
+      </Dialog>
     </div>
   );
 };

@@ -348,7 +348,6 @@ const Nav = ({ appProps }) => {
                         setOpenNotifications={setOpenNotifications}
                         type={'menu'}
                         setDrawer={setDrawer}
-                        setOpenNotifications={setOpenNotifications}
                       />
                     </div>
                   </Slide>

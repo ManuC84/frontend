@@ -14,6 +14,8 @@ import {
   Typography,
   Fade,
   CircularProgress,
+  Menu,
+  MenuItem,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -37,11 +39,31 @@ import {
   filterNotificationComment,
 } from '../../../reducers/slice/commentsSlice';
 import { sortFunctionDesc } from '../../../utils/Sort';
+import Tags from '../../tags/Tags';
 
 const Post = ({ post, error, authError, setAuthError }) => {
   const [expanded, setExpanded] = useState(false);
   const [showLikeAuthAlert, setShowLikeAuthAlert] = useState(false);
   const [tweetLoading, setTweetLoading] = useState(true);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [openTagModal, setOpenTagModal] = React.useState(false);
+  const textRef = useRef(null);
+
+  const { posts, isNotification, status } = useSelector((state) => state.posts);
+  const { comments } = useSelector((state) => state.comments);
+
+  const [tag, setTag] = useState('');
+  const [addTagError, setAddTagError] = useState({ error: '', bool: false });
+  const dispatch = useDispatch();
+  const classes = useStyles();
+
+  const user = useState(JSON.parse(localStorage.getItem('profile')));
+  const userId =
+    user[0] && (user[0]?.data?.result?.googleId || user[0]?.data?.result?._id);
+
+  const handleCloseTagsModal = () => {
+    setOpenTagModal(false);
+  };
 
   const ShowTweetEmbed = () => {
     return (
@@ -54,20 +76,16 @@ const Post = ({ post, error, authError, setAuthError }) => {
     );
   };
 
-  const { posts, isNotification, status } = useSelector((state) => state.posts);
-  const { comments } = useSelector((state) => state.comments);
-
-  const [tag, setTag] = useState('');
-  const [addTagError, setAddTagError] = useState({ error: '', bool: false });
-  const user = useState(JSON.parse(localStorage.getItem('profile')));
-  const userId =
-    user[0] && (user[0]?.data?.result?.googleId || user[0]?.data?.result?._id);
-
   const tweetId = post?.url.split('/').slice(-1)[0];
 
-  const textRef = useRef(null);
-  const dispatch = useDispatch();
-  const classes = useStyles();
+  //Dropdown menu
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   //Fetch comments on post render from comments db
   useEffect(() => {
@@ -169,9 +187,41 @@ const Post = ({ post, error, authError, setAuthError }) => {
             />
           }
           action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
+            <>
+              <IconButton aria-label="settings">
+                <MoreVertIcon onClick={handleClick} />
+              </IconButton>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClick={handleClose}
+                onClose={handleClose}
+                getContentAnchorEl={null}
+                disableScrollLock={true}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'center',
+                }}
+              >
+                <MenuItem>Report</MenuItem>
+                <MenuItem onClick={() => setOpenTagModal(true)}>Tags</MenuItem>
+              </Menu>
+              <Tags
+                openTagModal={openTagModal}
+                handleCloseTagsModal={handleCloseTagsModal}
+                post={post}
+                setTag={setTag}
+                handleAddTags={handleAddTags}
+                textRef={textRef}
+                addTagError={addTagError}
+              />
+            </>
           }
           title={
             <>
