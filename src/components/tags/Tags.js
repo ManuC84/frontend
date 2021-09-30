@@ -5,7 +5,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Chip from '@material-ui/core/Chip';
-import { Button, Collapse, Grow, TextField } from '@material-ui/core';
+import {
+  Button,
+  IconButton,
+  Collapse,
+  Grow,
+  TextField,
+} from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { useDispatch } from 'react-redux';
 import { fetchPostsByTags } from '../../actions/posts';
@@ -48,10 +54,13 @@ const Tags = ({
           }}
         >
           <DialogTitle id="scroll-dialog-title">Tags</DialogTitle>
-          <CloseIcon
+          <IconButton
+            size="medium"
             onClick={handleCloseTagsModal}
-            style={{ padding: '16px 24px', cursor: 'pointer' }}
-          />
+            style={{ marginRight: 24 }}
+          >
+            <CloseIcon />
+          </IconButton>
         </div>
         <DialogContent dividers={true}>
           {post.tags.length > 0 ? (
