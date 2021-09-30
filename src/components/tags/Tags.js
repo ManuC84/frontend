@@ -83,7 +83,7 @@ const Tags = ({
             onChange={(e) => setTag(e.target.value)}
             inputRef={textRef}
           />
-          <Button variant="outlined" size="small" onClick={handleAddTags}>
+          <Button variant="outlined" onClick={handleAddTags}>
             Add Tag
           </Button>
         </DialogActions>
