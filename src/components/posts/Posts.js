@@ -59,7 +59,10 @@ const Posts = () => {
 
   return status === 'loading' ? (
     <div className={classes.progress}>
-      <CircularProgress />
+      <CircularProgress color="secondary" />
+      <Typography style={{ color: 'white', marginTop: 10 }}>
+        Heroku dynos loading, please be patient
+      </Typography>
     </div>
   ) : filteredPosts.length === 0 && status === 'suceeded' ? (
     <div className={classes.errorMessage}>
