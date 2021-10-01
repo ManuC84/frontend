@@ -217,8 +217,8 @@ const Post = ({ post, error, authError, setAuthError }) => {
           }
           action={
             <>
-              <IconButton aria-label="settings">
-                <MoreVertIcon onClick={handleClick} />
+              <IconButton onClick={handleClick} aria-label="settings">
+                <MoreVertIcon />
               </IconButton>
               <Menu
                 id="simple-menu"
@@ -228,7 +228,6 @@ const Post = ({ post, error, authError, setAuthError }) => {
                 onClick={handleClose}
                 onClose={handleClose}
                 getContentAnchorEl={null}
-                disableScrollLock={true}
                 anchorOrigin={{
                   vertical: 'bottom',
                   horizontal: 'center',
@@ -391,7 +390,6 @@ const Post = ({ post, error, authError, setAuthError }) => {
                 onClick={handleSocialShareClose}
                 onClose={handleSocialShareClose}
                 getContentAnchorEl={null}
-                disableScrollLock={true}
                 anchorOrigin={{
                   vertical: 'bottom',
                   horizontal: 'center',

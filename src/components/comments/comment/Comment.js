@@ -244,7 +244,6 @@ const Comment = ({ comment, user, post, error }) => {
               onClick={handleClose}
               onClose={handleClose}
               getContentAnchorEl={null}
-              disableScrollLock={true}
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'center',
@@ -266,7 +265,6 @@ const Comment = ({ comment, user, post, error }) => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
               getContentAnchorEl={null}
-              disableScrollLock={true}
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'center',

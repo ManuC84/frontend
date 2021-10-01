@@ -257,7 +257,6 @@ const Search = () => {
                     horizontal: 'center',
                   },
                   getContentAnchorEl: null,
-                  disableScrollLock: true,
                 }}
               >
                 <MenuItem value={1}>News</MenuItem>

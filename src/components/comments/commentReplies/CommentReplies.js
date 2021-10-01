@@ -171,7 +171,6 @@ const CommentReplies = ({
                 onClick={handleClose}
                 onClose={handleClose}
                 getContentAnchorEl={null}
-                disableScrollLock={true}
                 anchorOrigin={{
                   vertical: 'bottom',
                   horizontal: 'center',
@@ -193,7 +192,6 @@ const CommentReplies = ({
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
                 getContentAnchorEl={null}
-                disableScrollLock={true}
                 anchorOrigin={{
                   vertical: 'bottom',
                   horizontal: 'center',
