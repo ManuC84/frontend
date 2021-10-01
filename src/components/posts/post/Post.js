@@ -19,6 +19,7 @@ import {
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import LinkIcon from '@material-ui/icons/Link';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { ThumbUp, ThumbDown, SettingsPowerTwoTone } from '@material-ui/icons';
@@ -40,12 +41,29 @@ import {
 } from '../../../reducers/slice/commentsSlice';
 import { sortFunctionDesc } from '../../../utils/Sort';
 import Tags from '../../tags/Tags';
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  InstapaperShareButton,
+  InstapaperIcon,
+  LinkedinShareButton,
+  LinkedinIcon,
+  RedditShareButton,
+  RedditIcon,
+  TelegramShareButton,
+  TelegramIcon,
+  TwitterShareButton,
+  TwitterIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
+} from 'react-share';
 
 const Post = ({ post, error, authError, setAuthError }) => {
   const [expanded, setExpanded] = useState(false);
   const [showLikeAuthAlert, setShowLikeAuthAlert] = useState(false);
   const [tweetLoading, setTweetLoading] = useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorElSocial, setAnchorElSocial] = React.useState(null);
   const [openTagModal, setOpenTagModal] = React.useState(false);
   const textRef = useRef(null);
 
@@ -85,6 +103,15 @@ const Post = ({ post, error, authError, setAuthError }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  //Social share menu
+  const handleSocialShareClick = (event) => {
+    setAnchorElSocial(event.currentTarget);
+  };
+
+  const handleSocialShareClose = () => {
+    setAnchorElSocial(null);
   };
 
   //Fetch comments on post render from comments db
@@ -353,9 +380,123 @@ const Post = ({ post, error, authError, setAuthError }) => {
               </IconButton>
             </div>
             <div>
-              <IconButton aria-label="share">
+              <IconButton onClick={handleSocialShareClick} aria-label="share">
                 <ShareIcon />
               </IconButton>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorElSocial}
+                keepMounted
+                open={Boolean(anchorElSocial)}
+                onClick={handleSocialShareClose}
+                onClose={handleSocialShareClose}
+                getContentAnchorEl={null}
+                disableScrollLock={true}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+                }}
+                transformOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+                }}
+              >
+                <MenuItem
+                  onClick={() => {
+                    navigator.clipboard.writeText(
+                      `https://freelycomment.netlify.app/posts/${post._id}`,
+                    );
+                    alert('Link copied to clipboard');
+                  }}
+                >
+                  <LinkIcon style={{ marginRight: 5 }} />
+                  Copy Link
+                </MenuItem>
+                <FacebookShareButton
+                  style={{ display: 'flex', alignItems: 'center' }}
+                  url={`https://freelycomment.netlify.app/posts/${post._id}`}
+                  title={post.title}
+                >
+                  <MenuItem>
+                    <FacebookIcon
+                      size={25}
+                      round={true}
+                      style={{ marginRight: 5 }}
+                    />
+                    Facebook
+                  </MenuItem>
+                </FacebookShareButton>
+                <MenuItem>
+                  <TwitterShareButton
+                    style={{ display: 'flex', alignItems: 'center' }}
+                    url={`https://freelycomment.netlify.app/posts/${post._id}`}
+                    title={post.title}
+                  >
+                    <TwitterIcon
+                      size={25}
+                      round={true}
+                      style={{ marginRight: 5 }}
+                    />
+                    Twitter
+                  </TwitterShareButton>
+                </MenuItem>
+                <MenuItem>
+                  <RedditShareButton
+                    style={{ display: 'flex', alignItems: 'center' }}
+                    url={`https://freelycomment.netlify.app/posts/${post._id}`}
+                    title={post.title}
+                  >
+                    <RedditIcon
+                      size={25}
+                      round={true}
+                      style={{ marginRight: 5 }}
+                    />
+                    Reddit
+                  </RedditShareButton>
+                </MenuItem>
+                <MenuItem>
+                  <LinkedinShareButton
+                    style={{ display: 'flex', alignItems: 'center' }}
+                    url={`https://freelycomment.netlify.app/posts/${post._id}`}
+                    title={post.title}
+                  >
+                    <LinkedinIcon
+                      size={25}
+                      round={true}
+                      style={{ marginRight: 5 }}
+                    />
+                    Linkedin
+                  </LinkedinShareButton>
+                </MenuItem>
+                <MenuItem>
+                  <InstapaperShareButton
+                    style={{ display: 'flex', alignItems: 'center' }}
+                    url={`https://freelycomment.netlify.app/posts/${post._id}`}
+                    title={post.title}
+                  >
+                    <InstapaperIcon
+                      size={25}
+                      round={true}
+                      style={{ marginRight: 5 }}
+                    />
+                    Instagram
+                  </InstapaperShareButton>
+                </MenuItem>
+                <MenuItem>
+                  <TelegramShareButton
+                    style={{ display: 'flex', alignItems: 'center' }}
+                    url={`https://freelycomment.netlify.app/posts/${post._id}`}
+                    title={post.title}
+                  >
+                    <TelegramIcon
+                      size={25}
+                      round={true}
+                      style={{ marginRight: 5 }}
+                    />
+                    Telegram
+                  </TelegramShareButton>
+                </MenuItem>
+              </Menu>
             </div>
           </div>
           <div
