@@ -122,7 +122,6 @@ export default function Auth() {
   };
 
   const googleFailure = (res) => {
-    console.log(res);
     dispatch(
       hasAuthError({
         googleError: 'Google sign in was unsuccessful. Try Again later',

@@ -7,11 +7,20 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   return data;
 });
 
+//SORT POSTS
+export const sortPosts = createAsyncThunk('posts/sortPosts', async (type) => {
+  const { data } = await API.get(`/posts/?sort=${type}`);
+  return data;
+});
+
 //INFINITE SCROLL
 export const fetchInfiniteScroll = createAsyncThunk(
   'posts/fetchInfiniteScroll',
-  async (skip) => {
-    const { data } = await API.get(`/posts?skip=${skip}`);
+  async (obj) => {
+    const { skip, sort } = obj;
+    const { data } = !sort
+      ? await API.get(`/posts?skip=${skip}`)
+      : await API.get(`/posts?skip=${skip}&sort=${sort}`);
     return data;
   },
 );
@@ -66,6 +75,7 @@ export const postsSlice = createSlice({
     error: false,
     loadMorePosts: true,
     isNotification: false,
+    sort: '',
   },
   reducers: {
     startLoading: (state) => {
@@ -80,6 +90,9 @@ export const postsSlice = createSlice({
     },
     toggleIsNotification: (state, action) => {
       state.isNotification = action.payload;
+    },
+    isSort: (state, action) => {
+      state.sort = action.payload;
     },
 
     fetchByTag: (state, action) => {
@@ -120,8 +133,24 @@ export const postsSlice = createSlice({
       state.posts = action.payload;
       state.loadMorePosts = true;
       state.isNotification = false;
+      state.sort = '';
     },
     [fetchPosts.rejected]: (state, action) => {
+      state.status = 'failed';
+      state.error = action.error.message;
+    },
+    //SORT  POSTS
+    [sortPosts.pending]: (state) => {
+      state.status = 'loading';
+    },
+    [sortPosts.fulfilled]: (state, action) => {
+      state.status = 'succeeded';
+      state.error = false;
+      state.posts = action.payload;
+      state.loadMorePosts = true;
+      state.isNotification = false;
+    },
+    [sortPosts.rejected]: (state, action) => {
       state.status = 'failed';
       state.error = action.error.message;
     },
@@ -239,6 +268,7 @@ export const {
   removeError,
   showNotificationContent,
   toggleIsNotification,
+  isSort,
 } = postsSlice.actions;
 
 export default postsSlice.reducer;

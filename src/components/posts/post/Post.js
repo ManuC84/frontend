@@ -391,7 +391,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
                 onClose={handleSocialShareClose}
                 getContentAnchorEl={null}
                 anchorOrigin={{
-                  vertical: 'bottom',
+                  vertical: 'top',
                   horizontal: 'center',
                 }}
                 transformOrigin={{

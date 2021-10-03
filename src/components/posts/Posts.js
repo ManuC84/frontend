@@ -22,7 +22,7 @@ import { fetchNotificationsTest } from '../../reducers/slice/notificationsSlice'
 const Posts = () => {
   const [authError, setAuthError] = useState(false);
   const user = useState(JSON.parse(localStorage.getItem('profile')));
-  const { posts, isLoading, status, error, loadMorePosts, isNotification } =
+  const { posts, sort, status, error, loadMorePosts, isNotification } =
     useSelector((state) => state.posts);
 
   const classes = useStyles();
@@ -54,12 +54,16 @@ const Posts = () => {
   }, []);
 
   const fetchInfinite = () => {
-    dispatch(fetchInfiniteScroll(posts.length));
+    if (!sort) {
+      dispatch(fetchInfiniteScroll({ skip: posts.length }));
+    } else {
+      dispatch(fetchInfiniteScroll({ skip: posts.length, sort: sort }));
+    }
   };
 
   return status === 'loading' ? (
     <div className={classes.progress}>
-      <CircularProgress color="secondary" />
+      <CircularProgress style={{ color: 'white' }} />
       <Typography style={{ color: 'white', marginTop: 10 }}>
         Heroku dynos loading, please be patient
       </Typography>
