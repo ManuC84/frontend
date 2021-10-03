@@ -46,9 +46,6 @@ const useStyles = makeStyles((theme) => ({
   typography: {
     color: 'white',
     textAlign: 'left',
-    [theme.breakpoints.down('xs')]: {
-      textAlign: 'center',
-    },
   },
   footerContentContainer: {
     display: 'flex',
@@ -60,9 +57,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    [theme.breakpoints.down('xs')]: {
-      justifyContent: 'center',
-    },
   },
   footerHeading: {
     marginBottom: 10,
@@ -87,7 +81,7 @@ export default function Footer() {
   return (
     <footer className={classes.footer}>
       <Grid container spacing={2} alignItems="center">
-        <Grid align="center" item lg={3} md={3} sm={3} xs={12}>
+        <Grid item lg={3} md={3} sm={3} xs={12}>
           <img src={logo} alt="logo" style={{ height: 50 }} />
         </Grid>
         <Grid item lg={3} md={3} sm={3} xs={12}>
