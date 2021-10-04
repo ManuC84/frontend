@@ -11,11 +11,27 @@ import {
   Collapse,
   Grow,
   TextField,
+  Typography,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { useDispatch } from 'react-redux';
 import { fetchPostsByTags } from '../../actions/posts';
 import CloseIcon from '@material-ui/icons/Close';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  buttonText: {
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 10,
+      fontWeight: 'bold',
+    },
+  },
+  addButton: {
+    [theme.breakpoints.down('xs')]: {
+      height: '100%',
+    },
+  },
+}));
 
 const Tags = ({
   openTagModal,
@@ -26,6 +42,7 @@ const Tags = ({
   textRef,
   addTagError,
 }) => {
+  const classes = useStyles();
   const descriptionElementRef = React.useRef(null);
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -92,8 +109,13 @@ const Tags = ({
             onChange={(e) => setTag(e.target.value)}
             inputRef={textRef}
           />
-          <Button variant="outlined" size="medium" onClick={handleAddTags}>
-            Add Tag
+          <Button
+            className={classes.addButton}
+            variant="outlined"
+            size="medium"
+            onClick={handleAddTags}
+          >
+            <Typography className={classes.buttonText}>Add Tag</Typography>
           </Button>
         </DialogActions>
 
