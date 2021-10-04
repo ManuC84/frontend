@@ -27,7 +27,7 @@ const SinglePost = (props) => {
   ) : (
     <Container className={classes.container}>
       <Posts />
-      <Link href="/">
+      <Link href="/" style={{ textDecoration: 'none' }}>
         <Button variant="contained" color="secondary">
           Back to home
         </Button>
