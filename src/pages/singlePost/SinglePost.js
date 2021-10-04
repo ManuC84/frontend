@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { CircularProgress, Container } from "@material-ui/core";
+import { CircularProgress, Container, Button, Link } from '@material-ui/core';
 
-import { useStyles } from "./styles";
-import { useDispatch, useSelector } from "react-redux";
-import Posts from "../../components/posts/Posts";
-import { fetchSinglePost } from "../../reducers/slice/postsSlice";
+import { useStyles } from './styles';
+import { useDispatch, useSelector } from 'react-redux';
+import Posts from '../../components/posts/Posts';
+import { fetchSinglePost } from '../../reducers/slice/postsSlice';
 
 const SinglePost = (props) => {
   const { posts, status, error } = useSelector((state) => state.posts);
@@ -20,13 +20,18 @@ const SinglePost = (props) => {
     dispatch(fetchSinglePost(postId));
   }, []);
 
-  return status === "loading" ? (
+  return status === 'loading' ? (
     <Container className={classes.progressContainer}>
       <CircularProgress justify="center" />
     </Container>
   ) : (
     <Container className={classes.container}>
       <Posts />
+      <Link href="/">
+        <Button variant="contained" color="secondary">
+          Back to home
+        </Button>
+      </Link>
     </Container>
   );
 };
