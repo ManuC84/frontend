@@ -39,7 +39,7 @@ import {
   fetchComments,
   filterNotificationComment,
 } from '../../../reducers/slice/commentsSlice';
-import { sortFunctionDesc } from '../../../utils/Sort';
+import { sortFunctionAsc, sortFunctionDesc } from '../../../utils/Sort';
 import Tags from '../../tags/Tags';
 import {
   FacebookShareButton,

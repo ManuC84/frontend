@@ -42,7 +42,7 @@ import {
   fetchCommentReplies,
   filterNotificationReply,
 } from '../../../reducers/slice/commentRepliesSlice';
-import { sortFunctionAsc } from '../../../utils/Sort';
+import { sortFunctionAsc, sortFunctionDesc } from '../../../utils/Sort';
 
 const Comment = ({ comment, user, post, error }) => {
   const [expanded, setExpanded] = useState(false);
@@ -67,9 +67,9 @@ const Comment = ({ comment, user, post, error }) => {
       );
   }, []);
 
-  const commentCommentReplies = commentReplies
-    .filter((commentReply) => commentReply.parentCommentId === comment._id)
-    .sort(sortFunctionAsc);
+  const commentCommentReplies = commentReplies.filter(
+    (commentReply) => commentReply.parentCommentId === comment._id,
+  );
 
   const scrollRef = useRef(null);
 
@@ -122,10 +122,9 @@ const Comment = ({ comment, user, post, error }) => {
   // Get current comments replies
   const indexOfLastComment = page * commentsPerPage;
   const indexOfFirstComment = indexOfLastComment - commentsPerPage;
-  const currentCommentReplies = commentCommentReplies.slice(
-    indexOfFirstComment,
-    indexOfLastComment,
-  );
+  const currentCommentReplies = commentCommentReplies
+    .slice(indexOfFirstComment, indexOfLastComment)
+    .sort(sortFunctionAsc);
 
   useEffect(() => {
     setPage(Math.ceil(commentCommentReplies.length / 5));
