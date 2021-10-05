@@ -68,7 +68,10 @@ const Upload = ({ openModal, handleCloseModal, user, setOpenModal }) => {
     >
       <CloseIcon
         style={{ marginLeft: 'auto', padding: 5, cursor: 'pointer' }}
-        onClick={handleCloseModal}
+        onClick={() => {
+          handleCloseModal();
+          setUploadError(false);
+        }}
       />
       <form
         style={{
