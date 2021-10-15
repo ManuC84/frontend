@@ -363,8 +363,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
                 <ThumbUp />
               </IconButton>
             </div>
-
-            {post.likes.length - post.dislikes.length}
+            {post.likes.length}
             <div
               onClick={handleDislikePost}
               onMouseEnter={() => setShowLikeAuthAlert(true)}
@@ -378,6 +377,8 @@ const Post = ({ post, error, authError, setAuthError }) => {
                 <ThumbDown />
               </IconButton>
             </div>
+            {post.dislikes.length}
+
             <div>
               <IconButton onClick={handleSocialShareClick} aria-label="share">
                 <ShareIcon />

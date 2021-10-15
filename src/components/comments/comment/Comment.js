@@ -302,7 +302,7 @@ const Comment = ({ comment, user, post, error }) => {
                 <ThumbUp fontSize="small" />
               </IconButton>
             </div>
-            {comment.likes.length - comment.dislikes.length}
+            {comment.likes.length}
             <div onClick={handleDislikeComment}>
               <IconButton
                 aria-label="dislike"
@@ -314,6 +314,7 @@ const Comment = ({ comment, user, post, error }) => {
                 <ThumbDown fontSize="small" />
               </IconButton>
             </div>
+            {comment.dislikes.length}
           </div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <div>

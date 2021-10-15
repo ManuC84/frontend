@@ -231,7 +231,7 @@ const CommentReplies = ({
                   <ThumbUp fontSize="small" />
                 </IconButton>
               </div>
-              {commentReply.likes.length - commentReply.dislikes.length}
+              {commentReply.likes.length}
               <div onClick={handleDislikeCommentReply}>
                 <IconButton
                   aria-label="dislike"
@@ -245,6 +245,7 @@ const CommentReplies = ({
                   <ThumbDown fontSize="small" />
                 </IconButton>
               </div>
+              {commentReply.dislikes.length}
             </div>
           </div>
         </CardContent>
