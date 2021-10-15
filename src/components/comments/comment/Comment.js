@@ -126,6 +126,7 @@ const Comment = ({ comment, user, post, error }) => {
     .slice(indexOfFirstComment, indexOfLastComment)
     .sort(sortFunctionAsc);
 
+  //Change to next page automatically
   useEffect(() => {
     setPage(Math.ceil(commentCommentReplies.length / 5));
   }, [commentCommentReplies.length]);
