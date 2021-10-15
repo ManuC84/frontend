@@ -63,7 +63,7 @@ const Posts = () => {
 
   return status === 'loading' ? (
     <div className={classes.progress}>
-      <CircularProgress style={{ color: 'white' }} />
+      <CircularProgress color="secondary" />
       <Typography style={{ color: 'white', marginTop: 10 }}>
         Heroku dynos loading, please be patient
       </Typography>
