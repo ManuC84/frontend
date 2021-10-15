@@ -14,6 +14,10 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     height: '90vh',
+    [theme.breakpoints.down('xs')]: {
+      justifyContent: 'flex-start',
+      marginTop: 100,
+    },
   },
   infiniteProgress: {
     display: 'flex',
