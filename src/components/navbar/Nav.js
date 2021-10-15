@@ -18,7 +18,10 @@ import {
   Divider,
   ListSubheader,
   Slide,
+  useTheme,
+  useMediaQuery,
 } from '@material-ui/core';
+import { Link as MuiLink } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import MenuIcon from '@material-ui/icons/Menu';
 import ContactMailIcon from '@material-ui/icons/ContactMail';
@@ -52,6 +55,7 @@ import { useSelector } from 'react-redux';
 import { useGlobalContext } from '../../context';
 import EditIcon from '@material-ui/icons/Edit';
 import Upload from '../../utils/Upload';
+import { FiChrome } from 'react-icons/fi';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -114,6 +118,8 @@ const Nav = ({ appProps }) => {
   const location = useLocation();
   const ENDPOINT = environment.baseUrl;
   const { setSnackbarOpen } = useGlobalContext();
+  const theme = useTheme();
+  const showBadge = useMediaQuery(theme.breakpoints.down('xs'));
 
   //upload profile photo modal
   const [openModal, setOpenModal] = React.useState(false);
@@ -238,14 +244,37 @@ const Nav = ({ appProps }) => {
                   {capitalizeFirstLetter(user?.data?.result?.name)}
                 </Typography>
               </Button>
-              <IconButton
-                style={{ color: 'white', padding: '0 12px' }}
-                aria-label="open drawer"
-                edge="end"
-                onClick={handleDrawerOpen}
-              >
-                <MenuIcon className={classes.menuIcon} />
-              </IconButton>
+              {showBadge ? (
+                <Badge
+                  badgeContent={
+                    notifications.filter(
+                      (notification) => notification.read === false,
+                    ).length
+                  }
+                  color="secondary"
+                  overlap="circle"
+                  alt="badge"
+                  showZero
+                >
+                  <IconButton
+                    style={{ color: 'white', padding: '0 12px' }}
+                    aria-label="open drawer"
+                    edge="end"
+                    onClick={handleDrawerOpen}
+                  >
+                    <MenuIcon className={classes.menuIcon} />
+                  </IconButton>
+                </Badge>
+              ) : (
+                <IconButton
+                  style={{ color: 'white', padding: '0 12px' }}
+                  aria-label="open drawer"
+                  edge="end"
+                  onClick={handleDrawerOpen}
+                >
+                  <MenuIcon className={classes.menuIcon} />
+                </IconButton>
+              )}
             </div>
           )}
         </nav>
@@ -318,6 +347,18 @@ const Nav = ({ appProps }) => {
                   <ListItemText>Blog</ListItemText>
                 </ListItem>
                 <Divider style={{ marginTop: 10 }} />
+                <ListItem
+                  button
+                  className={classes.chromeButton}
+                  component={MuiLink}
+                  href="https://chrome.google.com/webstore/detail/freely-comment/lgbgfbpimhcpkcnghfpjejclkokonbae"
+                  target="_blank"
+                >
+                  <ListItemIcon>
+                    <FiChrome fontSize="20px" color="white" />
+                  </ListItemIcon>
+                  <ListItemText>Get Chrome extension</ListItemText>
+                </ListItem>
               </div>
 
               <div>

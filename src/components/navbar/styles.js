@@ -27,6 +27,14 @@ export default makeStyles((theme) => ({
       color: '#0DDDC9',
     },
   },
+  chromeButton: {
+    backgroundImage:
+      'linear-gradient(90deg, #1f005c, #5b0060, #870160, #ac255e, #ca485c, #e16b5c, #f39060, #ffb56b)',
+    color: 'white',
+    '&:hover': {
+      opacity: '0.9',
+    },
+  },
   link: {
     height: '45px',
   },
@@ -49,7 +57,11 @@ export default makeStyles((theme) => ({
       display: 'none',
     },
   },
-
+  mobileNotificationCounter: {
+    [theme.breakpoints.up('xs')]: {
+      display: 'none',
+    },
+  },
   userInfoContainer: {
     display: 'flex',
     justifyContent: 'space-between',
