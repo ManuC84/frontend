@@ -12,6 +12,7 @@ import About from './pages/about/About';
 import Footer from './components/footer/Footer';
 import { Alert } from '@material-ui/lab';
 import { useGlobalContext } from './context';
+import MetaTags from 'react-meta-tags';
 
 function App(props) {
   const { snackbarOpen, setSnackbarOpen } = useGlobalContext();
@@ -25,6 +26,19 @@ function App(props) {
   };
   return (
     <BrowserRouter>
+      <MetaTags>
+        <meta
+          property="og:title"
+          content="Social site to comment on posts based on url content"
+        />
+        <meta property="og:url" content="https://freelycomment.netlify.app/" />
+        <meta property="”og:type”" content="”website”" />
+        <meta
+          property="”og:description”"
+          content="Social network to comment based on url content"
+        />
+        <meta property="”og:image”" content="/og-image.png" />
+      </MetaTags>
       <Nav appProps={props} />
       <Toolbar id="back-to-top-anchor" />
       <Switch>
