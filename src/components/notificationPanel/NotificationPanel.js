@@ -167,7 +167,7 @@ const NotificationPanel = ({
                 </ListItem>
               </List>
             ))
-            .sort(sortFunctionAsc)
+            .sort(sortFunctionDesc)
         )}
       </Paper>
     </Fade>
