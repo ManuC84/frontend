@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     height: 300,
     width: 300,
     position: 'absolute',
-    top: 200,
+    top: 190,
     left: 100,
     border: '1px solid white',
     background: 'transparent',
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('lg')]: {
       height: 300,
       width: 300,
-      left: 10,
+      left: 15,
     },
     [theme.breakpoints.down('md')]: {
       display: 'none',
