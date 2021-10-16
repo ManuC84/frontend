@@ -353,7 +353,7 @@ const Nav = ({ appProps }) => {
                   component={MuiLink}
                   href="https://chrome.google.com/webstore/detail/freely-comment/lgbgfbpimhcpkcnghfpjejclkokonbae"
                   target="_blank"
-                  style={{ textDecoration: 'none !important' }}
+                  underline="none"
                 >
                   <ListItemIcon>
                     <FiChrome fontSize="20px" color="white" />
