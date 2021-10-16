@@ -26,7 +26,7 @@ export default function Comments({ post, error, postComments }) {
   const [showEditor, setShowEditor] = useState(false);
   const classes = useStyles();
   const user = useState(JSON.parse(localStorage.getItem('profile')));
-  const { isLoading } = useSelector((state) => state.posts);
+  const { isLoading, isNotification } = useSelector((state) => state.posts);
   const { comments } = useSelector((state) => state.comments);
 
   const dispatch = useDispatch();
@@ -74,7 +74,9 @@ export default function Comments({ post, error, postComments }) {
       {postComments.length === 0 ? (
         <Paper>
           <Typography variant="body2" style={{ padding: '1rem' }}>
-            This post has no comments yet. Be the first to comment!
+            {isNotification
+              ? 'This comment was deleted, please refresh the page'
+              : 'This post has no comments yet. Be the first to comment!'}
           </Typography>
         </Paper>
       ) : (
