@@ -2,91 +2,64 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { API } from "../../api/index";
 
 //FETCH ALL COMMENTS
-export const fetchComments = createAsyncThunk(
-  "comments/fetchComments",
-  async (parentPostId) => {
-    const { data } = await API.get(`posts/${parentPostId}/comments`);
+export const fetchComments = createAsyncThunk("comments/fetchComments", async (parentPostId) => {
+  const { data } = await API.get(`posts/${parentPostId}/comments`);
 
-    return data;
-  }
-);
+  return data;
+});
 
 //FETCH SINGLE COMMENT
-export const fetchSingleComment = createAsyncThunk(
-  "comments/fetchSingleComment",
-  async (obj) => {
-    const { postId, commentId } = obj;
-    const { data } = await API.get(`posts/${postId}/comments/${commentId}`);
-    return data;
-  }
-);
+export const fetchSingleComment = createAsyncThunk("comments/fetchSingleComment", async (obj) => {
+  const { postId, commentId } = obj;
+  const { data } = await API.get(`posts/${postId}/comments/${commentId}`);
+  return data;
+});
 
 //CREATE COMMENT
-export const createComment = createAsyncThunk(
-  "comments/createComment",
-  async (obj) => {
-    const { postId, comment, creator } = obj;
-    const { data } = await API.post(`posts/${postId}/comments`, {
-      comment,
-      creator,
-    });
+export const createComment = createAsyncThunk("comments/createComment", async (obj) => {
+  const { postId, comment, creator } = obj;
+  const { data } = await API.post(`posts/${postId}/comments`, {
+    comment,
+    creator,
+  });
 
-    return data;
-  }
-);
+  return data;
+});
 
 //LIKE COMMENT
-export const likeComment = createAsyncThunk(
-  "comments/likeComment",
-  async (obj) => {
-    const { postId, commentId, userId } = obj;
-    const { data } = await API.post(
-      `posts/${postId}/comments/${commentId}/likes`,
-      { userId }
-    );
-    return data;
-  }
-);
+export const likeComment = createAsyncThunk("comments/likeComment", async (obj) => {
+  const { postId, commentId, userId } = obj;
+  const { data } = await API.post(`posts/${postId}/comments/${commentId}/likes`, { userId });
+  return data;
+});
 //DISLIKE COMMENT
-export const dislikeComment = createAsyncThunk(
-  "comments/dislikeComment",
-  async (obj) => {
-    const { postId, commentId, userId } = obj;
-    const { data } = await API.post(
-      `posts/${postId}/comments/${commentId}/dislikes`,
-      { userId }
-    );
+export const dislikeComment = createAsyncThunk("comments/dislikeComment", async (obj) => {
+  const { postId, commentId, userId } = obj;
+  const { data } = await API.post(`posts/${postId}/comments/${commentId}/dislikes`, { userId });
 
-    return data;
-  }
-);
+  return data;
+});
 //EDIT COMMENT
-export const editComment = createAsyncThunk(
-  "comments/editComment",
-  async (obj) => {
-    const { postId, commentId, commentText } = obj;
-    const { data } = await API.put(
-      `posts/${postId}/comments/${commentId}/edit`,
-      {
-        commentText,
-      }
-    );
+export const editComment = createAsyncThunk("comments/editComment", async (obj) => {
+  const { postId, commentId, commentText } = obj;
+  const { data } = await API.put(`posts/${postId}/comments/${commentId}/edit`, {
+    commentText,
+  });
 
-    return data;
-  }
-);
+  return data;
+});
 //DELETE COMMENT
-export const deleteComment = createAsyncThunk(
-  "comments/deleteComment",
-  async (obj) => {
-    const { postId, commentId } = obj;
-    const { data } = await API.delete(
-      `posts/${postId}/comments/${commentId}/delete`
-    );
+export const deleteComment = createAsyncThunk("comments/deleteComment", async (obj) => {
+  const { postId, commentId } = obj;
+  const { data } = await API.delete(`posts/${postId}/comments/${commentId}/delete`);
 
-    return data;
-  }
-);
+  return data;
+});
+//FETCH TOP COMMENTS
+export const fetchTopComments = createAsyncThunk("comments/fetchTopComments", async () => {
+  const { data } = await API.get(`comments/top`);
+  return data;
+});
 
 export const commentsSlice = createSlice({
   name: "commentsReducer",
@@ -94,9 +67,7 @@ export const commentsSlice = createSlice({
 
   reducers: {
     filterNotificationComment: (state, action) => {
-      state.comments = state.comments.filter(
-        (comment) => comment._id === action.payload
-      );
+      state.comments = state.comments.filter((comment) => comment._id === action.payload);
     },
   },
   extraReducers: {
@@ -107,9 +78,7 @@ export const commentsSlice = createSlice({
     [fetchComments.fulfilled]: (state, action) => {
       state.status = "succeeded";
       action.payload.forEach((comment) => {
-        const idx = state.comments.findIndex(
-          (stateComment) => stateComment._id === comment._id
-        );
+        const idx = state.comments.findIndex((stateComment) => stateComment._id === comment._id);
         idx === -1 && state.comments.push(comment);
       });
     },
@@ -178,9 +147,7 @@ export const commentsSlice = createSlice({
     [deleteComment.fulfilled]: (state, action) => {
       state.status = "succeeded";
 
-      state.comments = state.comments.filter(
-        (comment) => comment._id !== action.payload._id
-      );
+      state.comments = state.comments.filter((comment) => comment._id !== action.payload._id);
     },
     [deleteComment.rejected]: (state, action) => {
       state.status = "failed";
