@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
-import ReactPlayer from 'react-player';
-import { Link, TextField, Button } from '@material-ui/core';
-import clsx from 'clsx';
+import React, { useState, useRef, useEffect } from "react";
+import ReactPlayer from "react-player";
+import { Link, TextField, Button } from "@material-ui/core";
+import clsx from "clsx";
 import {
   Card,
   CardHeader,
@@ -16,31 +16,28 @@ import {
   CircularProgress,
   Menu,
   MenuItem,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LinkIcon from '@material-ui/icons/Link';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { ThumbUp, ThumbDown, SettingsPowerTwoTone } from '@material-ui/icons';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import moment from 'moment';
-import { useStyles } from './styles';
-import { addTag } from '../../../actions/posts';
-import { useDispatch, useSelector } from 'react-redux';
-import Comments from '../../comments/Comments';
-import ReadMore from '../../../utils/readMore/ReadMore';
-import { TwitterTweetEmbed } from 'react-twitter-embed';
-import AlertDialog from '../../../utils/AlertDialog';
-import { useGlobalContext } from '../../../context';
-import { getComments } from '../../../actions/comments';
-import { likePost, dislikePost } from '../../../reducers/slice/postsSlice';
-import {
-  fetchComments,
-  filterNotificationComment,
-} from '../../../reducers/slice/commentsSlice';
-import { sortFunctionAsc, sortFunctionDesc } from '../../../utils/Sort';
-import Tags from '../../tags/Tags';
+} from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import LinkIcon from "@material-ui/icons/Link";
+import ShareIcon from "@material-ui/icons/Share";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { ThumbUp, ThumbDown, SettingsPowerTwoTone } from "@material-ui/icons";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import moment from "moment";
+import { useStyles } from "./styles";
+import { addTag } from "../../../actions/posts";
+import { useDispatch, useSelector } from "react-redux";
+import Comments from "../../comments/Comments";
+import ReadMore from "../../../utils/readMore/ReadMore";
+import { TwitterTweetEmbed } from "react-twitter-embed";
+import AlertDialog from "../../../utils/AlertDialog";
+import { useGlobalContext } from "../../../context";
+import { getComments } from "../../../actions/comments";
+import { likePost, dislikePost } from "../../../reducers/slice/postsSlice";
+import { fetchComments, filterNotificationComment } from "../../../reducers/slice/commentsSlice";
+import { sortFunctionAsc, sortFunctionDesc } from "../../../utils/Sort";
+import Tags from "../../tags/Tags";
 import {
   FacebookShareButton,
   FacebookIcon,
@@ -56,7 +53,7 @@ import {
   TwitterIcon,
   WhatsappShareButton,
   WhatsappIcon,
-} from 'react-share';
+} from "react-share";
 
 const Post = ({ post, error, authError, setAuthError }) => {
   const [expanded, setExpanded] = useState(false);
@@ -67,17 +64,16 @@ const Post = ({ post, error, authError, setAuthError }) => {
   const [openTagModal, setOpenTagModal] = React.useState(false);
   const textRef = useRef(null);
 
-  const { posts, isNotification, status } = useSelector((state) => state.posts);
+  const { posts, isNotification, isTopComment } = useSelector((state) => state.posts);
   const { comments } = useSelector((state) => state.comments);
 
-  const [tag, setTag] = useState('');
-  const [addTagError, setAddTagError] = useState({ error: '', bool: false });
+  const [tag, setTag] = useState("");
+  const [addTagError, setAddTagError] = useState({ error: "", bool: false });
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const user = useState(JSON.parse(localStorage.getItem('profile')));
-  const userId =
-    user[0] && (user[0]?.data?.result?.googleId || user[0]?.data?.result?._id);
+  const user = useState(JSON.parse(localStorage.getItem("profile")));
+  const userId = user[0] && (user[0]?.data?.result?.googleId || user[0]?.data?.result?._id);
 
   const handleCloseTagsModal = () => {
     setOpenTagModal(false);
@@ -94,7 +90,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
     );
   };
 
-  const tweetId = post?.url.split('/').slice(-1)[0];
+  const tweetId = post?.url.split("/").slice(-1)[0];
 
   //Dropdown menu
   const handleClick = (event) => {
@@ -116,20 +112,18 @@ const Post = ({ post, error, authError, setAuthError }) => {
 
   //Fetch comments on post render from comments db
   useEffect(() => {
-    if (!isNotification) dispatch(fetchComments(post._id));
+    if (!isNotification && !isTopComment) dispatch(fetchComments(post._id));
   }, []);
 
   //Pending to find solution for error when comment has been deleted and db returns null
   const postComments =
     comments[0] !== null
-      ? comments
-          .filter((comment) => comment.parentPostId === post._id)
-          .sort(sortFunctionDesc)
+      ? comments.filter((comment) => comment.parentPostId === post._id).sort(sortFunctionDesc)
       : [];
 
   useEffect(() => {
-    if (isNotification) setExpanded(true);
-  }, [isNotification]);
+    if (isNotification || isTopComment) setExpanded(true);
+  }, [isNotification, isTopComment]);
 
   //Listen to authError from backend
   useEffect(() => {
@@ -140,17 +134,17 @@ const Post = ({ post, error, authError, setAuthError }) => {
 
   //Use ReactPlayer for streaming urls
   var streamingProviders = [
-    'youtube',
-    'facebook',
-    'twitch',
-    'soundcloud',
-    'vimeo',
-    'wistia',
-    'mixcloud',
-    'dailymotion',
-    'kaltura',
+    "youtube",
+    "facebook",
+    "twitch",
+    "soundcloud",
+    "vimeo",
+    "wistia",
+    "mixcloud",
+    "dailymotion",
+    "kaltura",
   ];
-  var isStreaming = new RegExp(streamingProviders.join('|')).test(post.url);
+  var isStreaming = new RegExp(streamingProviders.join("|")).test(post.url);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -170,18 +164,17 @@ const Post = ({ post, error, authError, setAuthError }) => {
     for (let i = 0; i < posts.length; i++) {
       if (posts[i]._id === post._id && posts[i].tags.includes(tag)) {
         setAddTagError({
-          error: 'This tag already exists',
+          error: "This tag already exists",
           bool: true,
           postsId: posts[i]._id,
         });
         return;
       }
     }
-    if (!tag)
-      return setAddTagError({ error: 'Please enter a tag', bool: true });
+    if (!tag) return setAddTagError({ error: "Please enter a tag", bool: true });
     dispatch(addTag(post._id, { tag: tag }));
-    setTag('');
-    textRef.current.value = '';
+    setTag("");
+    textRef.current.value = "";
     setAddTagError({ bool: false });
   };
 
@@ -197,9 +190,9 @@ const Post = ({ post, error, authError, setAuthError }) => {
   return (
     <>
       <AlertDialog
-        textContent={'Please log in again to proceed'}
-        yesButton={'Go to log in page'}
-        noButton={'cancel'}
+        textContent={"Please log in again to proceed"}
+        yesButton={"Go to log in page"}
+        noButton={"cancel"}
         authError={authError}
         setAuthError={setAuthError}
       />
@@ -229,12 +222,12 @@ const Post = ({ post, error, authError, setAuthError }) => {
                 onClose={handleClose}
                 getContentAnchorEl={null}
                 anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'center',
+                  vertical: "bottom",
+                  horizontal: "center",
                 }}
                 transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'center',
+                  vertical: "top",
+                  horizontal: "center",
                 }}
               >
                 <MenuItem>Report</MenuItem>
@@ -254,10 +247,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
           title={
             <>
               <Link href={post.url} target="_blank" title="Go to website">
-                <Typography
-                  style={{ fontSize: '1rem', display: 'inline' }}
-                  variant="body1"
-                >
+                <Typography style={{ fontSize: "1rem", display: "inline" }} variant="body1">
                   {post.provider}
                 </Typography>
               </Link>
@@ -266,26 +256,26 @@ const Post = ({ post, error, authError, setAuthError }) => {
           subheader={
             <Link
               href={`posts/${post._id}`}
-              style={{ textDecorations: 'none', color: 'inherit' }}
+              style={{ textDecorations: "none", color: "inherit" }}
               title="Go to post"
             >
               <>
                 {post.creator[0]?.name
-                  ? 'Created by ' + post.creator[0]?.name
-                  : 'Created by Annonymous'}
+                  ? "Created by " + post.creator[0]?.name
+                  : "Created by Annonymous"}
 
-                {' - ' + moment(post.createdAt).fromNow()}
+                {" - " + moment(post.createdAt).fromNow()}
               </>
             </Link>
           }
         />
 
         {/* RENDER IMAGE OR VIDEO CONDITIONALLY */}
-        {isStreaming && post?.type?.includes('video') ? (
-          <div style={{ position: 'relative', paddingTop: '56.25%' }}>
+        {isStreaming && post?.type?.includes("video") ? (
+          <div style={{ position: "relative", paddingTop: "56.25%" }}>
             <ReactPlayer
               url={post.url}
-              style={{ position: 'absolute', top: '0', left: '0' }}
+              style={{ position: "absolute", top: "0", left: "0" }}
               width="100%"
               height="100%"
               config={{
@@ -302,15 +292,15 @@ const Post = ({ post, error, authError, setAuthError }) => {
               }}
             />
           </div>
-        ) : post?.provider === 'Twitter' ? (
+        ) : post?.provider === "Twitter" ? (
           <CardContent
             style={{
-              margin: '0 auto',
-              paddingTop: '0',
+              margin: "0 auto",
+              paddingTop: "0",
             }}
           >
             {tweetLoading ? (
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
                 <CircularProgress />
                 <ShowTweetEmbed></ShowTweetEmbed>
               </div>
@@ -320,24 +310,20 @@ const Post = ({ post, error, authError, setAuthError }) => {
           </CardContent>
         ) : (
           <Link href={post.url} target="_blank" title="Go to website">
-            <CardMedia
-              className={classes.media}
-              image={post.image}
-              title="go to website"
-            />
+            <CardMedia className={classes.media} image={post.image} title="go to website" />
           </Link>
         )}
 
-        {post?.provider !== 'Twitter' && (
+        {post?.provider !== "Twitter" && (
           <CardContent>
-            <Typography variant="h6" style={{ fontSize: '1rem' }}>
+            <Typography variant="h6" style={{ fontSize: "1rem" }}>
               {post.title}
             </Typography>
             <ReadMore
               lines={200}
               content={post.description}
-              variant={'body2'}
-              color={'textSecondary'}
+              variant={"body2"}
+              color={"textSecondary"}
             />
           </CardContent>
         )}
@@ -345,9 +331,9 @@ const Post = ({ post, error, authError, setAuthError }) => {
         <CardActions className={classes.cardActionsSocial} disableSpacing>
           <div
             style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
             }}
           >
             <div
@@ -358,7 +344,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
               <IconButton
                 aria-label="Like"
                 disabled={!user[0]}
-                color={post.likes.includes(userId) ? 'primary' : 'default'}
+                color={post.likes.includes(userId) ? "primary" : "default"}
               >
                 <ThumbUp />
               </IconButton>
@@ -372,7 +358,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
               <IconButton
                 aria-label="dislike"
                 disabled={!user[0]}
-                color={post.dislikes.includes(userId) ? 'secondary' : 'default'}
+                color={post.dislikes.includes(userId) ? "secondary" : "default"}
               >
                 <ThumbDown />
               </IconButton>
@@ -392,106 +378,82 @@ const Post = ({ post, error, authError, setAuthError }) => {
                 onClose={handleSocialShareClose}
                 getContentAnchorEl={null}
                 anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'center',
+                  vertical: "top",
+                  horizontal: "center",
                 }}
                 transformOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'center',
+                  vertical: "bottom",
+                  horizontal: "center",
                 }}
               >
                 <MenuItem
                   onClick={() => {
                     navigator.clipboard.writeText(
-                      `https://freelycomment.netlify.app/posts/${post._id}`,
+                      `https://freelycomment.netlify.app/posts/${post._id}`
                     );
-                    alert('Link copied to clipboard');
+                    alert("Link copied to clipboard");
                   }}
                 >
                   <LinkIcon style={{ marginRight: 5 }} />
                   Copy Link
                 </MenuItem>
                 <FacebookShareButton
-                  style={{ display: 'flex', alignItems: 'center' }}
+                  style={{ display: "flex", alignItems: "center" }}
                   url={`https://freelycomment.netlify.app/posts/${post._id}`}
                   title={post.title}
                 >
                   <MenuItem>
-                    <FacebookIcon
-                      size={25}
-                      round={true}
-                      style={{ marginRight: 5 }}
-                    />
+                    <FacebookIcon size={25} round={true} style={{ marginRight: 5 }} />
                     Facebook
                   </MenuItem>
                 </FacebookShareButton>
                 <MenuItem>
                   <TwitterShareButton
-                    style={{ display: 'flex', alignItems: 'center' }}
+                    style={{ display: "flex", alignItems: "center" }}
                     url={`https://freelycomment.netlify.app/posts/${post._id}`}
                     title={post.title}
                   >
-                    <TwitterIcon
-                      size={25}
-                      round={true}
-                      style={{ marginRight: 5 }}
-                    />
+                    <TwitterIcon size={25} round={true} style={{ marginRight: 5 }} />
                     Twitter
                   </TwitterShareButton>
                 </MenuItem>
                 <MenuItem>
                   <RedditShareButton
-                    style={{ display: 'flex', alignItems: 'center' }}
+                    style={{ display: "flex", alignItems: "center" }}
                     url={`https://freelycomment.netlify.app/posts/${post._id}`}
                     title={post.title}
                   >
-                    <RedditIcon
-                      size={25}
-                      round={true}
-                      style={{ marginRight: 5 }}
-                    />
+                    <RedditIcon size={25} round={true} style={{ marginRight: 5 }} />
                     Reddit
                   </RedditShareButton>
                 </MenuItem>
                 <MenuItem>
                   <LinkedinShareButton
-                    style={{ display: 'flex', alignItems: 'center' }}
+                    style={{ display: "flex", alignItems: "center" }}
                     url={`https://freelycomment.netlify.app/posts/${post._id}`}
                     title={post.title}
                   >
-                    <LinkedinIcon
-                      size={25}
-                      round={true}
-                      style={{ marginRight: 5 }}
-                    />
+                    <LinkedinIcon size={25} round={true} style={{ marginRight: 5 }} />
                     Linkedin
                   </LinkedinShareButton>
                 </MenuItem>
                 <MenuItem>
                   <InstapaperShareButton
-                    style={{ display: 'flex', alignItems: 'center' }}
+                    style={{ display: "flex", alignItems: "center" }}
                     url={`https://freelycomment.netlify.app/posts/${post._id}`}
                     title={post.title}
                   >
-                    <InstapaperIcon
-                      size={25}
-                      round={true}
-                      style={{ marginRight: 5 }}
-                    />
+                    <InstapaperIcon size={25} round={true} style={{ marginRight: 5 }} />
                     Instagram
                   </InstapaperShareButton>
                 </MenuItem>
                 <MenuItem>
                   <TelegramShareButton
-                    style={{ display: 'flex', alignItems: 'center' }}
+                    style={{ display: "flex", alignItems: "center" }}
                     url={`https://freelycomment.netlify.app/posts/${post._id}`}
                     title={post.title}
                   >
-                    <TelegramIcon
-                      size={25}
-                      round={true}
-                      style={{ marginRight: 5 }}
-                    />
+                    <TelegramIcon size={25} round={true} style={{ marginRight: 5 }} />
                     Telegram
                   </TelegramShareButton>
                 </MenuItem>
@@ -500,22 +462,14 @@ const Post = ({ post, error, authError, setAuthError }) => {
           </div>
           <div
             style={{
-              display: 'flex',
-              alignItems: 'center',
+              display: "flex",
+              alignItems: "center",
             }}
           >
-            <Typography
-              variant="button"
-              color="textSecondary"
-              style={{ marginRight: '5px' }}
-            >
-              {!expanded ? 'Show Comments' : 'Hide Comments'}
+            <Typography variant="button" color="textSecondary" style={{ marginRight: "5px" }}>
+              {!expanded ? "Show Comments" : "Hide Comments"}
             </Typography>
-            <Typography
-              style={{ lineHeight: '0' }}
-              color="textSecondary"
-              variant="button"
-            >
+            <Typography style={{ lineHeight: "0" }} color="textSecondary" variant="button">
               {postComments.length}
             </Typography>
             <IconButton
@@ -533,15 +487,13 @@ const Post = ({ post, error, authError, setAuthError }) => {
         {/* Like and dislike auth alert */}
         {!user[0] && (
           <Collapse in={showLikeAuthAlert}>
-            <CardContent style={{ padding: '0' }}>
-              <Alert severity="info">
-                Please log in to like and dislike posts
-              </Alert>
+            <CardContent style={{ padding: "0" }}>
+              <Alert severity="info">Please log in to like and dislike posts</Alert>
             </CardContent>
           </Collapse>
         )}
         <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent style={{ paddingTop: '0' }}>
+          <CardContent style={{ paddingTop: "0" }}>
             <Comments post={post} error={error} postComments={postComments} />
           </CardContent>
         </Collapse>

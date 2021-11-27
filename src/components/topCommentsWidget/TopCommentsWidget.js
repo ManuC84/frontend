@@ -6,6 +6,7 @@ import ReadMore from "../../utils/readMore/ReadMore";
 import clsx from "clsx";
 import Trophies from "../../img/trophies.png";
 import { fetchTopComments } from "../../reducers/slice/commentsSlice";
+import { toggleIsTopComment } from "../../reducers/slice/postsSlice";
 import { ThumbUp } from "@material-ui/icons";
 import { fetchSinglePost } from "../../reducers/slice/postsSlice";
 import { fetchSingleComment } from "../../reducers/slice/commentsSlice";
@@ -37,21 +38,21 @@ const useStyles = makeStyles((theme) => ({
     padding: 20,
     marginBottom: 10,
   },
-  avatar1: {
+  avatar3: {
     position: "absolute",
     top: -55,
     right: 15,
     width: theme.spacing(6),
     height: theme.spacing(6),
   },
-  avatar2: {
+  avatar1: {
     position: "absolute",
     top: -65,
     right: 110,
     width: theme.spacing(8),
     height: theme.spacing(8),
   },
-  avatar3: {
+  avatar2: {
     position: "absolute",
     top: -55,
     right: 226,
@@ -68,12 +69,12 @@ const useStyles = makeStyles((theme) => ({
 const TopCommentsWidget = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { comments, topComments, status } = useSelector((state) => state.comments);
+  const { topComments, topCommentStatus } = useSelector((state) => state.comments);
   useEffect(() => {
     dispatch(fetchTopComments());
   }, []);
 
-  return status === "loading" ? (
+  return topCommentStatus === "loading" ? (
     <CircularProgress style={{ position: "absolute", right: 100, top: 230, color: "white" }} />
   ) : (
     <div className={classes.mainContainer}>
@@ -104,6 +105,7 @@ const TopCommentsWidget = () => {
                 dispatch(
                   fetchSingleComment({ postId: comment.parentPostId, commentId: comment._id })
                 );
+                dispatch(toggleIsTopComment(true));
               }}
             >
               <h3 style={{ fontSize: 18 }}>{`${i + 1}st - ` + comment.creator[0].name}</h3>

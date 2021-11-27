@@ -1,81 +1,67 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { API } from '../../api/index';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { API } from "../../api/index";
 
 //FETCH ALL POSTS
-export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-  const { data } = await API.get('/posts');
+export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
+  const { data } = await API.get("/posts");
   return data;
 });
 
 //SORT POSTS
-export const sortPosts = createAsyncThunk('posts/sortPosts', async (type) => {
+export const sortPosts = createAsyncThunk("posts/sortPosts", async (type) => {
   const { data } = await API.get(`/posts/?sort=${type}`);
   return data;
 });
 
 //INFINITE SCROLL
-export const fetchInfiniteScroll = createAsyncThunk(
-  'posts/fetchInfiniteScroll',
-  async (obj) => {
-    const { skip, sort } = obj;
-    const { data } = !sort
-      ? await API.get(`/posts?skip=${skip}`)
-      : await API.get(`/posts?skip=${skip}&sort=${sort}`);
-    return data;
-  },
-);
+export const fetchInfiniteScroll = createAsyncThunk("posts/fetchInfiniteScroll", async (obj) => {
+  const { skip, sort } = obj;
+  const { data } = !sort
+    ? await API.get(`/posts?skip=${skip}`)
+    : await API.get(`/posts?skip=${skip}&sort=${sort}`);
+  return data;
+});
 //CREATE POST
-export const createPost = createAsyncThunk(
-  'posts/createPost',
-  async (payload) => {
-    const { data } = await API.post('/posts', payload);
-    return data;
-  },
-);
+export const createPost = createAsyncThunk("posts/createPost", async (payload) => {
+  const { data } = await API.post("/posts", payload);
+  return data;
+});
 //FETCH SINGLE POST
-export const fetchSinglePost = createAsyncThunk(
-  'posts/fetchSinglePost',
-  async (id) => {
-    const { data } = await API.get(`/posts/${id}`);
-    return data;
-  },
-);
+export const fetchSinglePost = createAsyncThunk("posts/fetchSinglePost", async (id) => {
+  const { data } = await API.get(`/posts/${id}`);
+  return data;
+});
 //FETCH NOTIFICATION POST
-export const fetchNotificationPost = createAsyncThunk(
-  'posts/fetchNotificationPost',
-  async (id) => {
-    const { data } = await API.get(`/posts/${id}`);
-    return data;
-  },
-);
+export const fetchNotificationPost = createAsyncThunk("posts/fetchNotificationPost", async (id) => {
+  const { data } = await API.get(`/posts/${id}`);
+  return data;
+});
 //LIKE POST
-export const likePost = createAsyncThunk('posts/likePost', async (obj) => {
+export const likePost = createAsyncThunk("posts/likePost", async (obj) => {
   const { postId, userId } = obj;
   const { data } = await API.post(`/posts/${postId}/likes`, { userId: userId });
   return data;
 });
 //DISLIKE POST
-export const dislikePost = createAsyncThunk(
-  'posts/dislikePost',
-  async (obj) => {
-    const { postId, userId } = obj;
-    const { data } = await API.post(`/posts/${postId}/dislikes`, {
-      userId: userId,
-    });
-    return data;
-  },
-);
+export const dislikePost = createAsyncThunk("posts/dislikePost", async (obj) => {
+  const { postId, userId } = obj;
+  const { data } = await API.post(`/posts/${postId}/dislikes`, {
+    userId: userId,
+  });
+  return data;
+});
 
 export const postsSlice = createSlice({
-  name: 'posts',
+  name: "posts",
   initialState: {
     posts: [],
-    status: 'idle',
+    status: "idle",
     isLoading: false,
     error: false,
     loadMorePosts: true,
     isNotification: false,
-    sort: '',
+    isTopComment: false,
+    sort: "",
   },
   reducers: {
     startLoading: (state) => {
@@ -90,6 +76,9 @@ export const postsSlice = createSlice({
     },
     toggleIsNotification: (state, action) => {
       state.isNotification = action.payload;
+    },
+    toggleIsTopComment: (state, action) => {
+      state.isTopComment = action.payload;
     },
     isSort: (state, action) => {
       state.sort = action.payload;
@@ -107,9 +96,7 @@ export const postsSlice = createSlice({
       return {
         ...state,
         error: false,
-        posts: state.posts.map((post) =>
-          post._id === action.payload._id ? action.payload : post,
-        ),
+        posts: state.posts.map((post) => (post._id === action.payload._id ? action.payload : post)),
       };
     },
 
@@ -125,33 +112,35 @@ export const postsSlice = createSlice({
   extraReducers: {
     //FETCH ALL POSTS
     [fetchPosts.pending]: (state) => {
-      state.status = 'loading';
+      state.status = "loading";
     },
     [fetchPosts.fulfilled]: (state, action) => {
-      state.status = 'succeeded';
+      state.status = "succeeded";
       state.error = false;
       state.posts = action.payload;
       state.loadMorePosts = true;
       state.isNotification = false;
-      state.sort = '';
+      state.isTopComment = false;
+      state.sort = "";
     },
     [fetchPosts.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.status = "failed";
       state.error = action.error.message;
     },
     //SORT  POSTS
     [sortPosts.pending]: (state) => {
-      state.status = 'loading';
+      state.status = "loading";
     },
     [sortPosts.fulfilled]: (state, action) => {
-      state.status = 'succeeded';
+      state.status = "succeeded";
       state.error = false;
       state.posts = action.payload;
       state.loadMorePosts = true;
       state.isNotification = false;
+      state.isTopComment = false;
     },
     [sortPosts.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.status = "failed";
       state.error = action.error.message;
     },
 
@@ -161,37 +150,37 @@ export const postsSlice = createSlice({
         state.error = "You've reached the end";
         state.loadMorePosts = false;
       }
-      state.status = 'succeeded';
+      state.status = "succeeded";
 
       state.posts = state.posts.concat(action.payload);
     },
     [fetchInfiniteScroll.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.status = "failed";
       state.error = action.error.message;
     },
 
     //CREATE POST
     [createPost.pending]: (state) => {
-      state.status = 'loading';
+      state.status = "loading";
     },
     [createPost.fulfilled]: (state, action) => {
-      state.status = 'succeeded';
+      state.status = "succeeded";
 
       state.posts = action.payload;
       state.error = false;
       state.loadMorePosts = false;
     },
     [createPost.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.status = "failed";
       state.error = action.error.message;
     },
 
     //FETCH SINGLE POST
     [fetchSinglePost.pending]: (state) => {
-      state.status = 'loading';
+      state.status = "loading";
     },
     [fetchSinglePost.fulfilled]: (state, action) => {
-      state.status = 'succeeded';
+      state.status = "succeeded";
 
       state.posts = action.payload;
       state.loadMorePosts = false;
@@ -199,44 +188,44 @@ export const postsSlice = createSlice({
       state.isNotification = false;
     },
     [fetchSinglePost.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.status = "failed";
       state.error = action.error.message;
     },
     //FETCH NOTIFICATION POST
     [fetchNotificationPost.pending]: (state) => {
-      state.status = 'loading';
+      state.status = "loading";
     },
     [fetchNotificationPost.fulfilled]: (state, action) => {
-      state.status = 'succeeded';
+      state.status = "succeeded";
 
       state.posts = action.payload;
       state.loadMorePosts = false;
       state.isNotification = true;
     },
     [fetchNotificationPost.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.status = "failed";
       state.error = action.error.message;
     },
     //LIKE POST
     [likePost.fulfilled]: (state, action) => {
       state.posts = state.posts.map((post) =>
-        post._id === action.payload._id ? action.payload : post,
+        post._id === action.payload._id ? action.payload : post
       );
       state.isNotification = false;
     },
     [likePost.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.status = "failed";
       state.error = action.error.message;
     },
     //DISLIKE POST
     [dislikePost.fulfilled]: (state, action) => {
       state.posts = state.posts.map((post) =>
-        post._id === action.payload._id ? action.payload : post,
+        post._id === action.payload._id ? action.payload : post
       );
       state.isNotification = false;
     },
     [dislikePost.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.status = "failed";
       state.error = action.error.message;
     },
   },
@@ -268,6 +257,7 @@ export const {
   removeError,
   showNotificationContent,
   toggleIsNotification,
+  toggleIsTopComment,
   isSort,
 } = postsSlice.actions;
 

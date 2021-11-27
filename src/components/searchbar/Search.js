@@ -17,6 +17,7 @@ import {
   Chip,
   Select,
   MenuItem,
+  Switch,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import CloseIcon from "@material-ui/icons/Close";
@@ -207,7 +208,7 @@ const Search = () => {
             placeholder={searchType === "url" ? "Search url..." : "Search tags..."}
           />
 
-          <FormControl component="fieldset">
+          {/* <FormControl component="fieldset">
             <RadioGroup row aria-label="position" name="position" defaultValue="top">
               <FormControlLabel
                 value="top"
@@ -224,7 +225,18 @@ const Search = () => {
                 onClick={handleTagsButton}
               />
             </RadioGroup>
-          </FormControl>
+          </FormControl> */}
+          <FormControlLabel
+            control={
+              <Switch
+                checked={searchType === "tags" ? true : false}
+                onChange={searchType === "url" ? handleTagsButton : handleUrlButton}
+                name="checkedB"
+                color="primary"
+              />
+            }
+            label="Tags"
+          />
 
           <Button
             type="submit"

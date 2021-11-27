@@ -63,7 +63,13 @@ export const fetchTopComments = createAsyncThunk("comments/fetchTopComments", as
 
 export const commentsSlice = createSlice({
   name: "commentsReducer",
-  initialState: { comments: [], topComments: [], error: null, status: "idle" },
+  initialState: {
+    comments: [],
+    topComments: [],
+    error: null,
+    status: "idle",
+    topCommentStatus: "idle",
+  },
 
   reducers: {
     filterNotificationComment: (state, action) => {
@@ -155,16 +161,16 @@ export const commentsSlice = createSlice({
     },
     //FETCH TOP COMMENTS
     [fetchTopComments.fulfilled]: (state, action) => {
-      state.status = "succeeded";
+      state.topCommentStatus = "succeeded";
 
       state.topComments = action.payload;
     },
     [fetchTopComments.rejected]: (state, action) => {
-      state.status = "failed";
+      state.topCommentStatus = "failed";
       state.error = action.error.message;
     },
     [fetchTopComments.pending]: (state) => {
-      state.status = "loading";
+      state.topCommentStatus = "loading";
     },
   },
 });
