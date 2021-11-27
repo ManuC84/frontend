@@ -7,14 +7,9 @@ export const useStyles = makeStyles((theme) => ({
       width: 700,
     },
     [theme.breakpoints.down("lg")]: {
-      width: 600,
-    },
-    [theme.breakpoints.down("md")]: {
       maxWidth: 500,
     },
-    [theme.breakpoints.down("sm")]: {
-      maxWidth: 500,
-    },
+
     [theme.breakpoints.down("xs")]: {
       width: "100%",
     },

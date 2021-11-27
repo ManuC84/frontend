@@ -206,6 +206,7 @@ const Search = () => {
             className={classes.searchBar}
             placeholder={searchType === "url" ? "Search url..." : "Search tags..."}
           />
+
           <FormControl component="fieldset">
             <RadioGroup row aria-label="position" name="position" defaultValue="top">
               <FormControlLabel

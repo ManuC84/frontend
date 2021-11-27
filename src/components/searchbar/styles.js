@@ -15,19 +15,19 @@ export default makeStyles((theme) => ({
   paper: {
     display: "flex",
     flexDirection: "column",
-    width: "50%",
+    width: 500,
     [theme.breakpoints.down("xl")]: {
-      width: "60%",
+      width: 700,
     },
     [theme.breakpoints.down("lg")]: {
-      width: "50%",
+      maxWidth: 500,
     },
-    [theme.breakpoints.down("md")]: {
-      width: "50%",
-    },
-    [theme.breakpoints.down("sm")]: {
-      width: "70%",
-    },
+    // [theme.breakpoints.down("md")]: {
+    //   width: "50%",
+    // },
+    // [theme.breakpoints.down("sm")]: {
+    //   width: "70%",
+    // },
     [theme.breakpoints.down("xs")]: {
       width: "100%",
     },
@@ -35,14 +35,22 @@ export default makeStyles((theme) => ({
   sortContainer: {
     display: "flex",
     alignItems: "center",
-    width: "50%",
+    justifyContent: "flex-start",
+    width: 500,
     padding: 10,
-    [theme.breakpoints.down("md")]: {
-      width: "50%",
+
+    [theme.breakpoints.down("xl")]: {
+      width: 700,
     },
-    [theme.breakpoints.down("sm")]: {
-      width: "70%",
+    [theme.breakpoints.down("lg")]: {
+      width: 500,
     },
+    // [theme.breakpoints.down("md")]: {
+    //   width: "50%",
+    // },
+    // [theme.breakpoints.down("sm")]: {
+    //   width: "70%",
+    // },
     [theme.breakpoints.down("xs")]: {
       width: "100%",
     },

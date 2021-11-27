@@ -1,10 +1,14 @@
-import React from "react";
-import { Avatar, Badge, Paper } from "@material-ui/core";
+import React, { useEffect } from "react";
+import { Avatar, Badge, CircularProgress, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ReadMore from "../../utils/readMore/ReadMore";
 import clsx from "clsx";
 import Trophies from "../../img/trophies.png";
+import { fetchTopComments } from "../../reducers/slice/commentsSlice";
+import { ThumbUp } from "@material-ui/icons";
+import { fetchSinglePost } from "../../reducers/slice/postsSlice";
+import { fetchSingleComment } from "../../reducers/slice/commentsSlice";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -12,16 +16,17 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-around",
-    maxWidth: 350,
-    position: "fixed",
+    maxWidth: 250,
+    position: "absolute",
     top: 230,
-    right: 120,
+    right: 50,
 
-    [theme.breakpoints.down("lg")]: {
-      maxWidth: 350,
-      right: 42,
-    },
-    [theme.breakpoints.down("md")]: {
+    // [theme.breakpoints.down("xl")]: {
+    //   maxWidth: 350,
+    //   right: 200,
+    // },
+    //
+    [theme.breakpoints.down("1152")]: {
       display: "none",
     },
   },
@@ -33,44 +38,50 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 10,
   },
   avatar1: {
-    position: "fixed",
-    top: 165,
-    right: 20,
-    width: theme.spacing(8),
-    height: theme.spacing(8),
+    position: "absolute",
+    top: -55,
+    right: 15,
+    width: theme.spacing(6),
+    height: theme.spacing(6),
   },
   avatar2: {
-    position: "fixed",
-    top: 155,
-    right: 135,
-    width: theme.spacing(10),
-    height: theme.spacing(10),
-  },
-  avatar3: {
-    position: "fixed",
-    top: 165,
-    right: 265,
+    position: "absolute",
+    top: -65,
+    right: 110,
     width: theme.spacing(8),
     height: theme.spacing(8),
   },
+  avatar3: {
+    position: "absolute",
+    top: -55,
+    right: 226,
+    width: theme.spacing(6),
+    height: theme.spacing(6),
+  },
   trophies: {
-    position: "fixed",
-    top: 60,
-    right: 0,
+    position: "absolute",
+    top: -150,
+    right: -5,
   },
 }));
 
 const TopCommentsWidget = () => {
   const classes = useStyles();
-  const { comments } = useSelector((state) => state.comments);
-  console.log(comments);
-  return (
+  const dispatch = useDispatch();
+  const { comments, topComments, status } = useSelector((state) => state.comments);
+  useEffect(() => {
+    dispatch(fetchTopComments());
+  }, []);
+
+  return status === "loading" ? (
+    <CircularProgress style={{ position: "absolute", right: 100, top: 230, color: "white" }} />
+  ) : (
     <div className={classes.mainContainer}>
       <Paper className={classes.paper}>
-        <h1>Top Comments</h1>
+        <h1 style={{ fontSize: 24 }}>Top Comments</h1>
         <img src={Trophies} className={classes.trophies} />
 
-        {comments.map((comment, i) => (
+        {topComments.map((comment, i) => (
           <React.Fragment key={comment.id}>
             <Avatar
               src={comment.creator[0].imageUrl}
@@ -85,16 +96,34 @@ const TopCommentsWidget = () => {
                 padding: "20px",
                 marginBottom: "10px",
                 backgroundColor: "#f9fafb",
+                cursor: "pointer",
               }}
               elevation={2}
+              onClick={() => {
+                dispatch(fetchSinglePost(comment.parentPostId));
+                dispatch(
+                  fetchSingleComment({ postId: comment.parentPostId, commentId: comment._id })
+                );
+              }}
             >
-              <h3>{comment.creator[0].name}</h3>
+              <h3 style={{ fontSize: 18 }}>{`${i + 1}st - ` + comment.creator[0].name}</h3>
               <ReadMore
                 lines={200}
                 content={comment.comment}
                 variant={"body2"}
                 color={"textPrimary"}
               />
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  width: 40,
+                }}
+              >
+                <ThumbUp color="primary" />
+                {comment.likes.length}
+              </div>
             </Paper>
           </React.Fragment>
         ))}

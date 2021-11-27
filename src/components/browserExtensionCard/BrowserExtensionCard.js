@@ -10,8 +10,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-around",
     padding: 20,
     height: 300,
-    maxWidth: 300,
-    position: "fixed",
+    maxWidth: 250,
+    position: "absolute",
     top: 150,
     left: 100,
     border: "1px solid white",
@@ -19,10 +19,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 20,
     [theme.breakpoints.down("lg")]: {
       height: 300,
-      maxWidth: 300,
+      maxWidth: 250,
       left: 15,
     },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("1152")]: {
       display: "none",
     },
   },
@@ -33,10 +33,10 @@ const BrowserExtensionCard = () => {
 
   return (
     <div className={classes.container}>
-      <Typography variant="h3" style={{ color: "white", fontSize: "1.6rem", fontWeight: "bolder" }}>
+      <Typography variant="h3" style={{ color: "white", fontSize: "1.4rem", fontWeight: "bolder" }}>
         Get the Chrome extension
       </Typography>
-      <Typography variant="body1" style={{ color: "white" }}>
+      <Typography variant="body1" style={{ color: "white", fontSize: "14px" }}>
         With the Chrome extension (also available for Brave browser) you can check how many likes
         and comments a website has and go directly to the comments without the need of copying the
         url!
@@ -46,7 +46,7 @@ const BrowserExtensionCard = () => {
         target="_blank"
         style={{ textDecoration: "none" }}
       >
-        <Button variant="contained" color="secondary" size="large">
+        <Button variant="contained" color="secondary" size="medium">
           Try it here!
         </Button>
       </Link>
