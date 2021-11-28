@@ -10,6 +10,7 @@ import { toggleIsTopComment } from "../../reducers/slice/postsSlice";
 import { ThumbUp } from "@material-ui/icons";
 import { fetchSinglePost } from "../../reducers/slice/postsSlice";
 import { fetchSingleComment } from "../../reducers/slice/commentsSlice";
+import { useMediaQuery } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -38,17 +39,11 @@ const useStyles = makeStyles((theme) => ({
     padding: 20,
     marginBottom: 10,
   },
-  avatar3: {
-    position: "absolute",
-    top: -55,
-    right: 15,
-    width: theme.spacing(6),
-    height: theme.spacing(6),
-  },
+
   avatar1: {
     position: "absolute",
     top: -65,
-    right: 110,
+    right: 112,
     width: theme.spacing(8),
     height: theme.spacing(8),
   },
@@ -56,6 +51,13 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     top: -55,
     right: 226,
+    width: theme.spacing(6),
+    height: theme.spacing(6),
+  },
+  avatar3: {
+    position: "absolute",
+    top: -55,
+    right: 15,
     width: theme.spacing(6),
     height: theme.spacing(6),
   },
@@ -69,12 +71,25 @@ const useStyles = makeStyles((theme) => ({
 const TopCommentsWidget = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { topComments, topCommentStatus } = useSelector((state) => state.comments);
+  const { comments, topComments, topCommentStatus } = useSelector((state) => state.comments);
+  const { isTopComment } = useSelector((state) => state.posts);
+  const isMobileWidth = useMediaQuery("(max-width:425px)");
+
   useEffect(() => {
     dispatch(fetchTopComments());
   }, []);
 
-  return topCommentStatus === "loading" ? (
+  useEffect(() => {
+    if (isTopComment) {
+      //scroll down 30%
+      window.scrollTo({
+        top: window.scrollY + window.innerHeight * 0.3,
+        behavior: "smooth",
+      });
+    }
+  }, [comments]);
+
+  return topCommentStatus === "loading" && !isMobileWidth ? (
     <CircularProgress style={{ position: "absolute", right: 100, top: 230, color: "white" }} />
   ) : (
     <div className={classes.mainContainer}>
@@ -108,13 +123,26 @@ const TopCommentsWidget = () => {
                 dispatch(toggleIsTopComment(true));
               }}
             >
-              <h3 style={{ fontSize: 18 }}>{`${i + 1}st - ` + comment.creator[0].name}</h3>
-              <ReadMore
-                lines={200}
-                content={comment.comment}
-                variant={"body2"}
-                color={"textPrimary"}
-              />
+              <h3 style={{ fontSize: 18 }}>
+                {i === 0
+                  ? "1st- " + comment.creator[0].name
+                  : i === 1
+                  ? "2nd- " + comment.creator[0].name
+                  : i === 2
+                  ? "3rd- " + comment.creator[0].name
+                  : ""}
+              </h3>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html:
+                    comment.comment.length > 200
+                      ? comment.comment.substring(0, 200) + "..."
+                      : comment.comment,
+                }}
+                variant="body2"
+                color="textPrimary"
+                style={{ fontSize: 14 }}
+              ></p>
               <div
                 style={{
                   display: "flex",

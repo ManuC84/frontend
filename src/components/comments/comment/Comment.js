@@ -36,6 +36,7 @@ import {
   filterNotificationReply,
 } from "../../../reducers/slice/commentRepliesSlice";
 import { sortFunctionAsc, sortFunctionDesc } from "../../../utils/Sort";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const Comment = ({ comment, user, post, error }) => {
   const [expanded, setExpanded] = useState(false);
@@ -49,6 +50,8 @@ const Comment = ({ comment, user, post, error }) => {
   const dispatch = useDispatch();
   const { isNotification } = useSelector((state) => state.posts);
   const { commentReplies, showAllReplies } = useSelector((state) => state.commentReplies);
+  const isMobileWidth = useMediaQuery("(max-width:425px)");
+  const [replyTagUser, setReplyTagUser] = useState({});
 
   //Fetch comment replies on post render from commentReplies db
   useEffect(() => {
@@ -114,7 +117,7 @@ const Comment = ({ comment, user, post, error }) => {
 
   //Change to next page automatically
   useEffect(() => {
-    setPage(Math.ceil(commentCommentReplies.length / 5));
+    if (expanded) setPage(Math.ceil(commentCommentReplies.length / 5));
   }, [commentCommentReplies.length]);
 
   useEffect(() => {
@@ -129,6 +132,8 @@ const Comment = ({ comment, user, post, error }) => {
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+    dispatch(toggleIsNotification(false));
+
     if (!expanded) {
       setShowEditor(false);
       dispatch(fetchCommentReplies({ postId: post._id, commentId: comment._id }));
@@ -182,30 +187,32 @@ const Comment = ({ comment, user, post, error }) => {
               {moment(comment.createdAt).fromNow()}
             </Typography>
             {/* COMMENT BODY */}
-            <Fade in={isEditing} timeout={1000}>
-              {!isEditing ? (
-                <ReadMore
-                  lines={200}
-                  content={comment.comment}
-                  variant={"body2"}
-                  color={"textPrimary"}
-                />
-              ) : (
-                <div>
-                  <TextEditor
-                    post={post}
-                    comment={comment}
-                    user={user}
-                    type={"commentEdition"}
-                    setShowEditor={setShowEditor}
-                    error={error}
-                    isEditing={isEditing}
-                    setIsEditing={setIsEditing}
-                    editText={comment.comment}
+            {!isMobileWidth && (
+              <Fade in={isEditing} timeout={1000}>
+                {!isEditing ? (
+                  <ReadMore
+                    lines={200}
+                    content={comment.comment}
+                    variant={"body2"}
+                    color={"textPrimary"}
                   />
-                </div>
-              )}
-            </Fade>
+                ) : (
+                  <div>
+                    <TextEditor
+                      post={post}
+                      comment={comment}
+                      user={user}
+                      type={"commentEdition"}
+                      setShowEditor={setShowEditor}
+                      error={error}
+                      isEditing={isEditing}
+                      setIsEditing={setIsEditing}
+                      editText={comment.comment}
+                    />
+                  </div>
+                )}
+              </Fade>
+            )}
           </Grid>
           <Grid>
             <IconButton aria-label="settings" onClick={handleClick}>
@@ -257,11 +264,38 @@ const Comment = ({ comment, user, post, error }) => {
             </Menu>
           )}
         </Grid>
+        {isMobileWidth && (
+          <Fade in={isEditing} timeout={1000}>
+            {!isEditing ? (
+              <ReadMore
+                lines={200}
+                content={comment.comment}
+                variant={"body2"}
+                color={"textPrimary"}
+              />
+            ) : (
+              <div>
+                <TextEditor
+                  post={post}
+                  comment={comment}
+                  user={user}
+                  type={"commentEdition"}
+                  setShowEditor={setShowEditor}
+                  error={error}
+                  isEditing={isEditing}
+                  setIsEditing={setIsEditing}
+                  editText={comment.comment}
+                />
+              </div>
+            )}
+          </Fade>
+        )}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            flexDirection: `${isMobileWidth ? "column" : "row"}`,
           }}
         >
           {/* LIKE AND DISLIKE BUTTONS */}
@@ -269,7 +303,7 @@ const Comment = ({ comment, user, post, error }) => {
             style={{
               display: "flex",
               alignItems: "center",
-              marginLeft: "2.5rem",
+              marginLeft: `${isMobileWidth ? "" : "2.5rem"}`,
             }}
           >
             <div onClick={handleLikeComment}>
@@ -342,6 +376,8 @@ const Comment = ({ comment, user, post, error }) => {
               setPage={setPage}
               lastPage={Math.ceil(commentCommentReplies.length / 5)}
               scrollRef={scrollRef}
+              replyTagUser={replyTagUser}
+              setReplyTagUser={setReplyTagUser}
             />
           </Collapse>
           {commentCommentReplies.length === 0 ? (
@@ -362,6 +398,10 @@ const Comment = ({ comment, user, post, error }) => {
                   error={error}
                   setPage={setPage}
                   isNotification={isNotification}
+                  scrollRef={scrollRef}
+                  commentCommentReplies={commentCommentReplies}
+                  setReplyTagUser={setReplyTagUser}
+                  setShowEditor={setShowEditor}
                 />
 
                 {idx === arr.length - 1 && <div className="dummyDiv" ref={scrollRef}></div>}
