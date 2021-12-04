@@ -132,6 +132,7 @@ const Comment = ({ comment, user, post, error }) => {
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+    setReplyTagUser({});
     dispatch(toggleIsNotification(false));
 
     if (!expanded) {
