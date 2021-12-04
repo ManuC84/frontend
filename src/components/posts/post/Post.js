@@ -466,7 +466,11 @@ const Post = ({ post, error, authError, setAuthError }) => {
               alignItems: "center",
             }}
           >
-            <Typography variant="button" color="textSecondary" style={{ marginRight: "5px" }}>
+            <Typography
+              variant="button"
+              color="textSecondary"
+              style={{ marginRight: "5px", lineHeight: "0" }}
+            >
               {!expanded ? "Show Comments" : "Hide Comments"}
             </Typography>
             <Typography style={{ lineHeight: "0" }} color="textSecondary" variant="button">

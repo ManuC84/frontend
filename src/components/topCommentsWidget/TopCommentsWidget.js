@@ -6,7 +6,7 @@ import ReadMore from "../../utils/readMore/ReadMore";
 import clsx from "clsx";
 import Trophies from "../../img/trophies.png";
 import { fetchTopComments } from "../../reducers/slice/commentsSlice";
-import { toggleIsTopComment } from "../../reducers/slice/postsSlice";
+import { toggleError, toggleIsTopComment } from "../../reducers/slice/postsSlice";
 import { ThumbUp } from "@material-ui/icons";
 import { fetchSinglePost } from "../../reducers/slice/postsSlice";
 import { fetchSingleComment } from "../../reducers/slice/commentsSlice";
@@ -42,15 +42,15 @@ const useStyles = makeStyles((theme) => ({
 
   avatar1: {
     position: "absolute",
-    top: -65,
+    top: -64,
     right: 112,
     width: theme.spacing(8),
     height: theme.spacing(8),
   },
   avatar2: {
     position: "absolute",
-    top: -55,
-    right: 226,
+    top: -53,
+    right: 228,
     width: theme.spacing(6),
     height: theme.spacing(6),
   },
@@ -75,6 +75,8 @@ const TopCommentsWidget = () => {
   const { isTopComment } = useSelector((state) => state.posts);
   const isMobileWidth = useMediaQuery("(max-width:425px)");
 
+  console.log("topComments", topComments);
+
   useEffect(() => {
     dispatch(fetchTopComments());
   }, []);
@@ -98,9 +100,10 @@ const TopCommentsWidget = () => {
         <img src={Trophies} className={classes.trophies} />
 
         {topComments.map((comment, i) => (
-          <React.Fragment key={comment.id}>
+          <React.Fragment key={comment._id}>
             <Avatar
-              src={comment.creator[0].imageUrl}
+              src={comment.creator[0].imageUrl ? comment.creator[0].imageUrl : null}
+              alt="test"
               className={clsx({
                 [classes.avatar1]: i === 0,
                 [classes.avatar2]: i === 1,
@@ -116,6 +119,7 @@ const TopCommentsWidget = () => {
               }}
               elevation={2}
               onClick={() => {
+                dispatch(toggleError(false));
                 dispatch(fetchSinglePost(comment.parentPostId));
                 dispatch(
                   fetchSingleComment({ postId: comment.parentPostId, commentId: comment._id })

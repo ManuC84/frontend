@@ -86,6 +86,10 @@ const CommentReplies = ({
   };
 
   const handleReply = () => {
+    if (!user[0]) {
+      setShowEditor(true);
+      return;
+    }
     setReplyTagUser({
       replyCreatorName: commentReply.creator[0]?.name,
       replyCreatorId: commentReply.creator[0]?._id || commentReply.creator[0]?.googleId,

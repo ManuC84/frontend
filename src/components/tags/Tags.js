@@ -1,34 +1,28 @@
-import React from 'react';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Chip from '@material-ui/core/Chip';
-import {
-  Button,
-  IconButton,
-  Collapse,
-  Grow,
-  TextField,
-  Typography,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import { useDispatch } from 'react-redux';
-import { fetchPostsByTags } from '../../actions/posts';
-import CloseIcon from '@material-ui/icons/Close';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Chip from "@material-ui/core/Chip";
+import { Button, IconButton, Collapse, Grow, TextField, Typography } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
+import { useDispatch } from "react-redux";
+import { fetchPostsByTags } from "../../actions/posts";
+import CloseIcon from "@material-ui/icons/Close";
+import { makeStyles } from "@material-ui/core/styles";
+import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles((theme) => ({
   buttonText: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down("xs")]: {
       fontSize: 10,
-      fontWeight: 'bold',
+      fontWeight: "bold",
     },
   },
   addButton: {
-    [theme.breakpoints.down('xs')]: {
-      height: '100%',
+    [theme.breakpoints.down("xs")]: {
+      height: "100%",
     },
   },
 }));
@@ -59,35 +53,30 @@ const Tags = ({
       <Dialog
         open={openTagModal}
         onClose={handleCloseTagsModal}
-        scroll={'paper'}
+        scroll={"paper"}
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
           <DialogTitle id="scroll-dialog-title">Tags</DialogTitle>
-          <IconButton
-            size="medium"
-            onClick={handleCloseTagsModal}
-            style={{ marginRight: 24 }}
-          >
+          <IconButton size="medium" onClick={handleCloseTagsModal} style={{ marginRight: 24 }}>
             <CloseIcon />
           </IconButton>
         </div>
         <DialogContent dividers={true}>
           {post.tags.length > 0 ? (
             <div>
-              {post.tags.map((tag, idx) => (
-                <Grow in={true}>
+              {post.tags.map((tag) => (
+                <Grow key={uuidv4()} in={true}>
                   <Chip
                     label={tag}
-                    key={idx}
-                    style={{ margin: 5, cursor: 'pointer' }}
+                    style={{ margin: 5, cursor: "pointer" }}
                     color="primary"
                     onClick={(e) => {
                       dispatch(fetchPostsByTags({ tags: [tag] }));
@@ -101,7 +90,7 @@ const Tags = ({
             <Alert severity="info">This post has no tags yet, add some!</Alert>
           )}
         </DialogContent>
-        <DialogActions style={{ justifyContent: 'center' }}>
+        <DialogActions style={{ justifyContent: "center" }}>
           <TextField
             variant="outlined"
             size="small"

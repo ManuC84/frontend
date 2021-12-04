@@ -80,6 +80,9 @@ export const postsSlice = createSlice({
     toggleIsTopComment: (state, action) => {
       state.isTopComment = action.payload;
     },
+    toggleError: (state, action) => {
+      state.error = action.payload;
+    },
     isSort: (state, action) => {
       state.sort = action.payload;
     },
@@ -259,6 +262,7 @@ export const {
   toggleIsNotification,
   toggleIsTopComment,
   isSort,
+  toggleError,
 } = postsSlice.actions;
 
 export default postsSlice.reducer;
