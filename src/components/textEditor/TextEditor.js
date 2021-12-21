@@ -186,7 +186,7 @@ const TextEditor = ({
           style={{ marginTop: "5px" }}
         >
           {status === "loading" ? (
-            <CircularProgress color="secondary" size={22} />
+            <CircularProgress style={{ color: "white" }} size={22} />
           ) : (
             <span>Submit</span>
           )}
