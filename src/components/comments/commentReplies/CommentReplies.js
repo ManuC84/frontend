@@ -96,7 +96,7 @@ const CommentReplies = ({
     });
     setShowEditor(true);
     //scroll to element with id "comment-reply-editor"
-    let element = document.getElementById("text-editor");
+    let element = document.getElementById(`comment-${comment._id}`);
     element.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
