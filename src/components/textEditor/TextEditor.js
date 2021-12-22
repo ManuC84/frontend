@@ -49,7 +49,7 @@ const TextEditor = ({
 
   const handleShowEditor = () => {
     setShowEditor(false);
-    setReplyTagUser({});
+    setReplyTagUser && setReplyTagUser({});
     editorValue.data.set("");
   };
 
