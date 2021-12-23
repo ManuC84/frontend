@@ -24,11 +24,12 @@ import CloseIcon from "@material-ui/icons/Close";
 import SearchBar from "material-ui-search-bar";
 import makeStyles from "./styles";
 import { submitSearchUrl, fetchPosts, fetchPostsByTags } from "../../actions/posts";
-import { createPost, isSort, sortPosts } from "../../reducers/slice/postsSlice";
+import { createPost, isLanguage, isSort, sortPosts } from "../../reducers/slice/postsSlice";
 import { invalid } from "moment";
 import { useSelector } from "react-redux";
 import AddIcon from "@material-ui/icons/Add";
 import ClearIcon from "@material-ui/icons/Clear";
+import { languageList } from "../../utils/languageList";
 
 const Search = () => {
   const [searchUrl, setSearchUrl] = useState("");
@@ -39,13 +40,14 @@ const Search = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const user = JSON.parse(localStorage.getItem("profile"));
   const [selectedValue, setSelectedValue] = useState(1);
+  const [languageValue, setLanguageValue] = useState(0);
 
   const userData = user?.data?.result;
 
   const uniqueTags = new Set(tagButtonContent);
 
   const dispatch = useDispatch();
-  const { posts, error, sort } = useSelector((state) => state.posts);
+  const { posts, error, sort, language } = useSelector((state) => state.posts);
   const classes = makeStyles();
   const urlRegex = new RegExp(
     /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i
@@ -275,6 +277,7 @@ const Search = () => {
             flexDirection: "column",
             alignItems: "flex-start",
             width: "150px",
+            marginRight: "15px",
           }}
         >
           <FormControl size="small" variant="standard">
@@ -297,7 +300,7 @@ const Search = () => {
             >
               <MenuItem
                 onClick={() => {
-                  dispatch(sortPosts("new"));
+                  dispatch(sortPosts({ type: "new", language }));
                   dispatch(isSort("new"));
                 }}
                 value={1}
@@ -306,7 +309,7 @@ const Search = () => {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  dispatch(sortPosts("hot"));
+                  dispatch(sortPosts({ type: "hot", language }));
                   dispatch(isSort("hot"));
                 }}
                 value={2}
@@ -315,7 +318,7 @@ const Search = () => {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  dispatch(sortPosts("controversial"));
+                  dispatch(sortPosts({ type: "controversial", language }));
                   dispatch(isSort("controversial"));
                 }}
                 value={3}
@@ -324,7 +327,7 @@ const Search = () => {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  dispatch(sortPosts("most-liked"));
+                  dispatch(sortPosts({ type: "most-liked", language }));
                   dispatch(isSort("most-liked"));
                 }}
                 value={4}
@@ -334,6 +337,47 @@ const Search = () => {
             </Select>
           </FormControl>
         </div>
+        <FormControl size="small" variant="standard">
+          <Select
+            style={{ width: 150, color: "white" }}
+            value={languageValue}
+            label="category"
+            onChange={(event) => setLanguageValue(event.target.value)}
+            MenuProps={{
+              anchorOrigin: {
+                vertical: "bottom",
+                horizontal: "center",
+              },
+              transformOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+              getContentAnchorEl: null,
+            }}
+          >
+            <MenuItem
+              onClick={() => {
+                dispatch(isLanguage(""));
+                dispatch(sortPosts({ type: "new", language: "" }));
+              }}
+              value={0}
+            >
+              Language
+            </MenuItem>
+            {languageList.map((lang, i) => (
+              <MenuItem
+                onClick={() => {
+                  dispatch(sortPosts({ type: sort, language: lang.code }));
+                  dispatch(isLanguage(lang.code));
+                }}
+                key={lang.flag}
+                value={i + 1}
+              >
+                <img style={{ height: 12, marginRight: 5 }} src={lang.flag} /> {lang.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </div>
     </div>
   );

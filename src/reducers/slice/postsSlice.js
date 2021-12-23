@@ -8,17 +8,20 @@ export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
 });
 
 //SORT POSTS
-export const sortPosts = createAsyncThunk("posts/sortPosts", async (type) => {
-  const { data } = await API.get(`/posts/?sort=${type}`);
+export const sortPosts = createAsyncThunk("posts/sortPosts", async (obj) => {
+  const { type, language } = obj;
+  const { data } = await API.get(`/posts/?sort=${type || "new"}&language=${language || ""}`);
+
   return data;
 });
 
 //INFINITE SCROLL
 export const fetchInfiniteScroll = createAsyncThunk("posts/fetchInfiniteScroll", async (obj) => {
-  const { skip, sort } = obj;
-  const { data } = !sort
-    ? await API.get(`/posts?skip=${skip}`)
-    : await API.get(`/posts?skip=${skip}&sort=${sort}`);
+  const { skip, sort, language } = obj;
+  const { data } =
+    !sort && !language
+      ? await API.get(`/posts?skip=${skip}`)
+      : await API.get(`/posts?skip=${skip}&sort=${sort || "new"}&language=${language || ""}`);
   return data;
 });
 //CREATE POST
@@ -62,6 +65,7 @@ export const postsSlice = createSlice({
     isNotification: false,
     isTopComment: false,
     sort: "",
+    language: "",
   },
   reducers: {
     startLoading: (state) => {
@@ -85,6 +89,9 @@ export const postsSlice = createSlice({
     },
     isSort: (state, action) => {
       state.sort = action.payload;
+    },
+    isLanguage: (state, action) => {
+      state.language = action.payload;
     },
 
     fetchByTag: (state, action) => {
@@ -263,6 +270,7 @@ export const {
   toggleIsTopComment,
   isSort,
   toggleError,
+  isLanguage,
 } = postsSlice.actions;
 
 export default postsSlice.reducer;

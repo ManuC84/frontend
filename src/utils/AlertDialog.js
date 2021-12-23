@@ -11,13 +11,7 @@ import { hasError } from "../reducers/slice/postsSlice";
 import { useSelector } from "react-redux";
 import { setAuthAlert } from "../reducers/slice/authSlice";
 
-export default function AlertDialog({
-  textContent,
-  yesButton,
-  noButton,
-  authError,
-  setAuthError,
-}) {
+export default function AlertDialog({ textContent, yesButton, noButton, authError, setAuthError }) {
   const { authAlert } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -29,18 +23,14 @@ export default function AlertDialog({
   return (
     <div>
       <Dialog
-        open={authAlert}
+        open={authAlert || false}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Token authorization expired"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Token authorization expired"}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {textContent}
-          </DialogContentText>
+          <DialogContentText id="alert-dialog-description">{textContent}</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

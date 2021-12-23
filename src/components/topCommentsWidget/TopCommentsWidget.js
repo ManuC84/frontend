@@ -75,8 +75,6 @@ const TopCommentsWidget = () => {
   const { isTopComment } = useSelector((state) => state.posts);
   const isMobileWidth = useMediaQuery("(max-width:425px)");
 
-  console.log("topComments", topComments);
-
   useEffect(() => {
     dispatch(fetchTopComments());
   }, []);
