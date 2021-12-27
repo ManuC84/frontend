@@ -280,7 +280,8 @@ const Search = () => {
             marginRight: "15px",
           }}
         >
-          <FormControl size="small" variant="standard">
+          <FormControl size="small" variant="filled">
+            <InputLabel htmlFor="sort-select">Sort</InputLabel>
             <Select
               style={{ width: 150, color: "white" }}
               value={selectedValue}
@@ -337,11 +338,12 @@ const Search = () => {
             </Select>
           </FormControl>
         </div>
-        <FormControl size="small" variant="standard">
+        <FormControl size="small" variant="filled">
+          <InputLabel htmlFor="language-select">Language</InputLabel>
           <Select
             style={{ width: 150, color: "white" }}
             value={languageValue}
-            label="category"
+            label="language"
             onChange={(event) => setLanguageValue(event.target.value)}
             MenuProps={{
               anchorOrigin: {
@@ -354,15 +356,19 @@ const Search = () => {
               },
               getContentAnchorEl: null,
             }}
+            inputProps={{
+              name: "language",
+              id: "language-select",
+            }}
           >
             <MenuItem
               onClick={() => {
                 dispatch(isLanguage(""));
                 dispatch(sortPosts({ type: "new", language: "" }));
               }}
-              value={0}
+              value=""
             >
-              Language
+              None
             </MenuItem>
             {languageList.map((lang, i) => (
               <MenuItem

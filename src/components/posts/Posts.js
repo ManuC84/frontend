@@ -53,7 +53,7 @@ const Posts = () => {
         Heroku dynos loading, please be patient
       </Typography>
     </div>
-  ) : filteredPosts.length === 0 && status === "suceeded" ? (
+  ) : filteredPosts.length === 0 && status === "succeeded" ? (
     <div className={classes.errorMessage}>
       <Alert severity="info">
         <Typography>There's no posts to show</Typography>
@@ -87,7 +87,10 @@ const Posts = () => {
         endMessage={
           error === "You've reached the end" &&
           !isNotification && (
-            <Alert style={{ display: "flex", justifyContent: "center" }} severity="info">
+            <Alert
+              style={{ display: "flex", justifyContent: "center", marginTop: 30 }}
+              severity="info"
+            >
               <Typography>{error}</Typography>
             </Alert>
           )
