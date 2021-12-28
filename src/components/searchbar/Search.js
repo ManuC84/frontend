@@ -366,7 +366,7 @@ const Search = () => {
                 dispatch(isLanguage(""));
                 dispatch(sortPosts({ type: "new", language: "" }));
               }}
-              value=""
+              value={0}
             >
               None
             </MenuItem>

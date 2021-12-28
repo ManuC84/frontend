@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -8,7 +8,7 @@ import Chip from "@material-ui/core/Chip";
 import { Button, IconButton, Collapse, Grow, TextField, Typography } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useDispatch } from "react-redux";
-import { fetchPostsByTags } from "../../actions/posts";
+import { addTag, fetchPostsByTags } from "../../actions/posts";
 import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@material-ui/core/styles";
 import { v4 as uuidv4 } from "uuid";
@@ -27,19 +27,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Tags = ({
-  openTagModal,
-  handleCloseTagsModal,
-  post,
-  setTag,
-  handleAddTags,
-  textRef,
-  addTagError,
-}) => {
+const Tags = ({ openTagModal, setOpenTagModal, posts, post }) => {
+  const [tag, setTag] = useState("");
+  const [addTagError, setAddTagError] = useState({ error: "", bool: false });
+
   const classes = useStyles();
   const descriptionElementRef = React.useRef(null);
   const dispatch = useDispatch();
-  React.useEffect(() => {
+
+  useEffect(() => {
     if (openTagModal) {
       const { current: descriptionElement } = descriptionElementRef;
       if (descriptionElement !== null) {
@@ -47,6 +43,47 @@ const Tags = ({
       }
     }
   }, [openTagModal]);
+
+  // Set timeout for addTag error
+  useEffect(() => {
+    if (addTagError.bool) {
+      setTimeout(() => {
+        setAddTagError({ bool: false });
+      }, 5000);
+    }
+  }, [addTagError.bool]);
+
+  const handleAddTags = (e) => {
+    e.preventDefault();
+    for (let i = 0; i < posts.length; i++) {
+      if (posts[i]._id === post._id && posts[i].tags.includes(tag)) {
+        setAddTagError({
+          error: "This tag already exists",
+          bool: true,
+          postsId: posts[i]._id,
+        });
+        return;
+      }
+    }
+    if (tag.length > 20) {
+      return setAddTagError({
+        error: "Tag must be 20 characters or less",
+        bool: true,
+        postsId: post._id,
+      });
+    }
+    if (!tag) return setAddTagError({ error: "Please enter a tag", bool: true });
+
+    dispatch(addTag(post._id, { tag: tag }));
+    setTag("");
+
+    setAddTagError({ bool: false });
+  };
+
+  const handleCloseTagsModal = () => {
+    setOpenTagModal(false);
+    setTag("");
+  };
 
   return (
     <div>
@@ -73,17 +110,15 @@ const Tags = ({
           {post.tags.length > 0 ? (
             <div>
               {post.tags.map((tag) => (
-                <Grow key={uuidv4()} in={true}>
-                  <Chip
-                    label={tag}
-                    style={{ margin: 5, cursor: "pointer" }}
-                    color="primary"
-                    onClick={(e) => {
-                      dispatch(fetchPostsByTags({ tags: [tag] }));
-                      handleCloseTagsModal();
-                    }}
-                  />
-                </Grow>
+                <Chip
+                  label={tag}
+                  style={{ margin: 5, cursor: "pointer" }}
+                  color="primary"
+                  onClick={(e) => {
+                    dispatch(fetchPostsByTags({ tags: [tag] }));
+                    handleCloseTagsModal();
+                  }}
+                />
               ))}
             </div>
           ) : (
@@ -96,7 +131,7 @@ const Tags = ({
             size="small"
             type="text"
             onChange={(e) => setTag(e.target.value)}
-            inputRef={textRef}
+            value={tag}
           />
           <Button
             className={classes.addButton}

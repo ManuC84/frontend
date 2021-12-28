@@ -67,17 +67,11 @@ const Post = ({ post, error, authError, setAuthError }) => {
   const { posts, isNotification, isTopComment } = useSelector((state) => state.posts);
   const { comments } = useSelector((state) => state.comments);
 
-  const [tag, setTag] = useState("");
-  const [addTagError, setAddTagError] = useState({ error: "", bool: false });
   const dispatch = useDispatch();
   const classes = useStyles();
 
   const user = useState(JSON.parse(localStorage.getItem("profile")));
   const userId = user[0] && (user[0]?.data?.result?.googleId || user[0]?.data?.result?._id);
-
-  const handleCloseTagsModal = () => {
-    setOpenTagModal(false);
-  };
 
   const ShowTweetEmbed = () => {
     return (
@@ -159,34 +153,6 @@ const Post = ({ post, error, authError, setAuthError }) => {
     if (user[0]) dispatch(dislikePost({ postId: post._id, userId: userId }));
   };
 
-  const handleAddTags = (e) => {
-    e.preventDefault();
-    for (let i = 0; i < posts.length; i++) {
-      if (posts[i]._id === post._id && posts[i].tags.includes(tag)) {
-        setAddTagError({
-          error: "This tag already exists",
-          bool: true,
-          postsId: posts[i]._id,
-        });
-        return;
-      }
-    }
-    if (!tag) return setAddTagError({ error: "Please enter a tag", bool: true });
-    dispatch(addTag(post._id, { tag: tag }));
-    setTag("");
-    textRef.current.value = "";
-    setAddTagError({ bool: false });
-  };
-
-  // Set timeout for addTag error
-  useEffect(() => {
-    if (addTagError.bool) {
-      setTimeout(() => {
-        setAddTagError({ bool: false });
-      }, 5000);
-    }
-  }, [addTagError.bool]);
-
   return (
     <>
       <AlertDialog
@@ -235,12 +201,9 @@ const Post = ({ post, error, authError, setAuthError }) => {
               </Menu>
               <Tags
                 openTagModal={openTagModal}
-                handleCloseTagsModal={handleCloseTagsModal}
+                setOpenTagModal={setOpenTagModal}
                 post={post}
-                setTag={setTag}
-                handleAddTags={handleAddTags}
-                textRef={textRef}
-                addTagError={addTagError}
+                posts={posts}
               />
             </>
           }
