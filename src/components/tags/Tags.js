@@ -110,15 +110,17 @@ const Tags = ({ openTagModal, setOpenTagModal, posts, post }) => {
           {post.tags.length > 0 ? (
             <div>
               {post.tags.map((tag) => (
-                <Chip
-                  label={tag}
-                  style={{ margin: 5, cursor: "pointer" }}
-                  color="primary"
-                  onClick={(e) => {
-                    dispatch(fetchPostsByTags({ tags: [tag] }));
-                    handleCloseTagsModal();
-                  }}
-                />
+                <Grow key={tag} in={true} timeout={500}>
+                  <Chip
+                    label={tag}
+                    style={{ margin: 5, cursor: "pointer" }}
+                    color="primary"
+                    onClick={(e) => {
+                      dispatch(fetchPostsByTags({ tags: [tag] }));
+                      handleCloseTagsModal();
+                    }}
+                  />
+                </Grow>
               ))}
             </div>
           ) : (
