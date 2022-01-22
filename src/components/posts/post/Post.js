@@ -222,13 +222,7 @@ const Post = ({ post, error, authError, setAuthError }) => {
               style={{ textDecorations: "none", color: "inherit" }}
               title="Go to post"
             >
-              <>
-                {post.creator[0]?.name
-                  ? "Created by " + post.creator[0]?.name
-                  : "Created by Annonymous"}
-
-                {" - " + moment(post.createdAt).fromNow()}
-              </>
+              {"Created - " + moment(post.createdAt).fromNow()}
             </Link>
           }
         />
