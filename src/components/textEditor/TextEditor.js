@@ -38,8 +38,10 @@ const TextEditor = ({
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const history = useHistory();
-  const { status } = useSelector((state) => state.comments);
-  const { error: commentReplyError } = useSelector((state) => state.commentReplies);
+  const { status: commentStatus } = useSelector((state) => state.comments);
+  const { error: commentReplyError, status: commentReplyStatus } = useSelector(
+    (state) => state.commentReplies
+  );
   const userData = user[0]?.data?.result;
 
   const replyCreatorId =
@@ -158,6 +160,7 @@ const TextEditor = ({
     setErrorMessage(null);
     if (error.authError) return;
     editorValue.data.set("");
+    if (commentStatus === "succeeded" || commentReplyStatus === "succeeded") setShowEditor(false);
   };
 
   return !user[0] ? (
@@ -185,7 +188,7 @@ const TextEditor = ({
           type="submit"
           style={{ marginTop: "5px" }}
         >
-          {status === "loading" ? (
+          {commentReplyStatus === "loading" || commentStatus === "loading" ? (
             <CircularProgress style={{ color: "white" }} size={22} />
           ) : (
             <span>Submit</span>
