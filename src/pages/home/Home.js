@@ -9,6 +9,7 @@ import { fetchComments } from "../../reducers/slice/commentsSlice";
 import { useDispatch } from "react-redux";
 import BrowserExtensionCard from "../../components/browserExtensionCard/BrowserExtensionCard";
 import TopCommentsWidget from "../../components/topCommentsWidget/TopCommentsWidget";
+import TrendingTopics from "../../components/TrendingTopics/TrendingTopics";
 
 const Home = (props) => {
   const classes = useStyles();
@@ -20,6 +21,7 @@ const Home = (props) => {
       <Search />
       <BrowserExtensionCard />
       <TopCommentsWidget />
+      <TrendingTopics />
       <Posts />
     </Container>
   );

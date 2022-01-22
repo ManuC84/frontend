@@ -54,6 +54,12 @@ export const dislikePost = createAsyncThunk("posts/dislikePost", async (obj) => 
   return data;
 });
 
+//FETCH TRENDING TAGS
+export const fetchTrendingTags = createAsyncThunk("posts/fetchTrendingTags", async () => {
+  const { data } = await API.get("/posts/tags/trending-tags");
+  return data;
+});
+
 export const postsSlice = createSlice({
   name: "posts",
   initialState: {
@@ -66,6 +72,8 @@ export const postsSlice = createSlice({
     isTopComment: false,
     sort: "",
     language: "",
+    trendingTags: [],
+    trendingTagsStatus: "idle",
   },
   reducers: {
     startLoading: (state) => {
@@ -237,6 +245,17 @@ export const postsSlice = createSlice({
     [dislikePost.rejected]: (state, action) => {
       state.status = "failed";
       state.error = action.error.message;
+    },
+    //FETCH TRENDING TAGS
+    [fetchTrendingTags.pending]: (state) => {
+      state.trendingTagsStatus = "loading";
+    },
+    [fetchTrendingTags.fulfilled]: (state, action) => {
+      state.trendingTagsStatus = "succeeded";
+      state.trendingTags = action.payload;
+    },
+    [fetchTrendingTags.rejected]: (state) => {
+      state.trendingTagsStatus = "failed";
     },
   },
 });

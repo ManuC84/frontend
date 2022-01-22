@@ -18,8 +18,6 @@ const useStyles = makeStyles((theme) => ({
     background: "transparent",
     borderRadius: 20,
     [theme.breakpoints.down("lg")]: {
-      height: 300,
-      maxWidth: 250,
       left: 15,
     },
     [theme.breakpoints.down("1152")]: {
@@ -33,7 +31,10 @@ const BrowserExtensionCard = () => {
 
   return (
     <div className={classes.container}>
-      <Typography variant="h3" style={{ color: "white", fontSize: "1.4rem", fontWeight: "bolder" }}>
+      <Typography
+        variant="h3"
+        style={{ color: "white", fontSize: "1.4rem", fontWeight: "bolder", textAlign: "center" }}
+      >
         Get the Chrome extension
       </Typography>
       <Typography variant="body1" style={{ color: "white", fontSize: "14px" }}>
