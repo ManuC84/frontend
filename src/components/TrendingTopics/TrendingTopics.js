@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core";
+import { CircularProgress, makeStyles } from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
 import Marquee from "react-fast-marquee";
 import { useSelector, useDispatch } from "react-redux";
@@ -60,10 +60,18 @@ const useStyles = makeStyles((theme) => ({
     // backgroundColor: "#5ffbf1",
     // color: "#424242",
   },
+
+  circularProgress: {
+    color: "white",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  },
 }));
 
 const TrendingTopics = () => {
-  const { posts, trendingTags } = useSelector((state) => state.posts);
+  const { posts, trendingTags, trendingTagsStatus } = useSelector((state) => state.posts);
   const classes = useStyles();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -75,66 +83,82 @@ const TrendingTopics = () => {
       <div className={classes.header}>
         <h1 style={{ color: "white" }}>Trending Topics</h1>
       </div>
-      <Marquee gradient={true} gradientWidth={10} gradientColor={[66, 66, 66]} pauseOnHover={true}>
-        <div className={classes.chips}>
-          {trendingTags.slice(0, 9).map((value, i) => (
-            <Chip
-              onClick={() => dispatch(fetchPostsByTags({ tags: [value] }))}
-              className={classes.chip}
-              key={value}
-              label={value}
-            />
-          ))}
-        </div>
-      </Marquee>
-      <Marquee
-        gradient={true}
-        gradientWidth={10}
-        gradientColor={[66, 66, 66]}
-        speed={15}
-        pauseOnHover={true}
-      >
-        <div className={classes.chips2}>
-          {trendingTags.slice(10, 20).map((value, i) => (
-            <Chip
-              onClick={() => dispatch(fetchPostsByTags({ tags: [value] }))}
-              className={classes.chip}
-              key={value}
-              label={value}
-            />
-          ))}
-        </div>
-      </Marquee>
-      <Marquee gradient={true} gradientWidth={10} gradientColor={[66, 66, 66]} pauseOnHover={true}>
-        <div className={classes.chips}>
-          {trendingTags.slice(21, 30).map((value, i) => (
-            <Chip
-              onClick={() => dispatch(fetchPostsByTags({ tags: [value] }))}
-              className={classes.chip}
-              key={value}
-              label={value}
-            />
-          ))}
-        </div>
-      </Marquee>
-      <Marquee
-        gradient={true}
-        gradientWidth={10}
-        gradientColor={[66, 66, 66]}
-        speed={15}
-        pauseOnHover={true}
-      >
-        <div className={classes.chips2}>
-          {trendingTags.slice(31, 40).map((value, i) => (
-            <Chip
-              onClick={() => dispatch(fetchPostsByTags({ tags: [value] }))}
-              className={classes.chip}
-              key={value}
-              label={value}
-            />
-          ))}
-        </div>
-      </Marquee>
+      {trendingTagsStatus === "loading" ? (
+        <CircularProgress className={classes.circularProgress} />
+      ) : (
+        <>
+          <Marquee
+            gradient={true}
+            gradientWidth={10}
+            gradientColor={[66, 66, 66]}
+            pauseOnHover={true}
+          >
+            <div className={classes.chips}>
+              {trendingTags.slice(0, 9).map((value, i) => (
+                <Chip
+                  onClick={() => dispatch(fetchPostsByTags({ tags: [value] }))}
+                  className={classes.chip}
+                  key={value}
+                  label={value}
+                />
+              ))}
+            </div>
+          </Marquee>
+          <Marquee
+            gradient={true}
+            gradientWidth={10}
+            gradientColor={[66, 66, 66]}
+            speed={15}
+            pauseOnHover={true}
+          >
+            <div className={classes.chips2}>
+              {trendingTags.slice(10, 20).map((value, i) => (
+                <Chip
+                  onClick={() => dispatch(fetchPostsByTags({ tags: [value] }))}
+                  className={classes.chip}
+                  key={value}
+                  label={value}
+                />
+              ))}
+            </div>
+          </Marquee>
+          <Marquee
+            gradient={true}
+            gradientWidth={10}
+            gradientColor={[66, 66, 66]}
+            pauseOnHover={true}
+          >
+            <div className={classes.chips}>
+              {trendingTags.slice(21, 30).map((value, i) => (
+                <Chip
+                  onClick={() => dispatch(fetchPostsByTags({ tags: [value] }))}
+                  className={classes.chip}
+                  key={value}
+                  label={value}
+                />
+              ))}
+            </div>
+          </Marquee>
+          <Marquee
+            gradient={true}
+            gradientWidth={10}
+            gradientColor={[66, 66, 66]}
+            speed={15}
+            pauseOnHover={true}
+          >
+            <div className={classes.chips2}>
+              {trendingTags.slice(31, 40).map((value, i) => (
+                <Chip
+                  onClick={() => dispatch(fetchPostsByTags({ tags: [value] }))}
+                  className={classes.chip}
+                  key={value}
+                  label={value}
+                />
+              ))}
+            </div>
+          </Marquee>
+        </>
+      )}
     </div>
   );
 };
