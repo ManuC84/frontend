@@ -81,7 +81,7 @@ const TrendingTopics = () => {
   return (
     <div className={classes.container}>
       <div className={classes.header}>
-        <h1 style={{ color: "white" }}>Trending Topics</h1>
+        <h1 style={{ color: "white", fontSize: 28 }}>Trending Topics</h1>
       </div>
       {trendingTagsStatus === "loading" ? (
         <CircularProgress className={classes.circularProgress} />

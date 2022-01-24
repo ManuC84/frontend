@@ -94,7 +94,7 @@ const TopCommentsWidget = () => {
   ) : (
     <div className={classes.mainContainer}>
       <Paper className={classes.paper}>
-        <h1 style={{ fontSize: 32 }}>Top Comments</h1>
+        <h1 style={{ fontSize: 28 }}>Top Comments</h1>
         <img src={Trophies} className={classes.trophies} />
 
         {topComments.map((comment, i) => (
