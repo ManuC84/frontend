@@ -33,7 +33,7 @@ const BrowserExtensionCard = () => {
     <div className={classes.container}>
       <Typography
         variant="h3"
-        style={{ color: "white", fontSize: "1.4rem", fontWeight: "bolder", textAlign: "center" }}
+        style={{ color: "white", fontSize: "32px", fontWeight: "bolder", textAlign: "center" }}
       >
         Get the Chrome extension
       </Typography>
