@@ -50,7 +50,7 @@ const Posts = () => {
     <div className={classes.progress}>
       <CircularProgress color="secondary" />
       <Typography style={{ color: "white", marginTop: 10 }}>
-        Heroku dynos loading, please be patient
+        Loading posts, please wait...
       </Typography>
     </div>
   ) : filteredPosts.length === 0 && status === "succeeded" ? (
